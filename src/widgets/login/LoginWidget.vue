@@ -26,8 +26,10 @@
             :rules="requiredField"
             v-model="loginObj.password"
           />
-
-          <p class="color-violet-600 font-semibold mt-16">
+          <p
+            class="color-violet-600 font-semibold mt-16"
+            @click="onForgetPassword"
+          >
             {{ $t("lang-11d828ce-a252-4271-a12c-9291c52de2bd") }}
           </p>
         </div>
@@ -52,10 +54,11 @@ import { SButton, SForm, SInput } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { requiredField } from "@/shared/lib/utils/rules";
-import { useAuthStore } from "@/shared/store/auth";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { vMaska } from "maska";
+import { useAuthStore } from "@/shared/store/auth";
+import { getItem } from "@/shared/lib/utils/persistanceStorage";
 
 const options = reactive({
   mask: "996-(###)-##-##-##",
@@ -69,6 +72,10 @@ const router = useRouter();
 
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
+
+const onForgetPassword = () => {
+  router.push("/password-reset");
+};
 
 const onSubmitLogin = () => {
   console.log(loginObj.pin);
