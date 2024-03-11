@@ -18,7 +18,7 @@ export interface ILoginResultFail {
 }
 
 export interface ILogin {
-  login: string;
+  pin: string;
   password: string;
 }
 

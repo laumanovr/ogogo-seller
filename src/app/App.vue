@@ -10,7 +10,7 @@
 import Layout from "@/shared/ui/layouts/Layout.vue";
 import Empty from "@/shared/ui/layouts/Empty.vue";
 import Loader from "@/shared/ui/components/Loader.vue";
-import { ref, watch } from "vue";
+import { ref, shallowRef, watch } from "vue";
 import { SToaster } from "@tumarsoft/ogogo-ui";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
@@ -21,7 +21,7 @@ const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();
 const toaster = ref(null);
 
-let currentComponent = ref(Empty);
+let currentComponent = shallowRef(Empty);
 
 const route = useRoute();
 

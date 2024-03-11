@@ -34,7 +34,7 @@ export const useAuthStore = defineStore("auth", {
     };
   },
   getters: {
-    isLoggedIn(): boolean {
+    getIsLoggedIn(): boolean {
       return this.isLoggedIn;
     },
     getFullName(): string {

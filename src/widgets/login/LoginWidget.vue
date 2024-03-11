@@ -90,7 +90,7 @@ const onSubmitLogin = () => {
       .login(loginObj)
       .then(() => {
         loaderStore.setLoaderState(false);
-        router.push("/property");
+        router.push("/profile");
       })
       .catch((err: any) => {
         loaderStore.setLoaderState(false);
