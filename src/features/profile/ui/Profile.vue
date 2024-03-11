@@ -24,7 +24,7 @@
           <img src="../../../app/assets/img/user-edit.svg" alt="" />
           <span :class="{ active: tab === 'help' }">Помощь</span>
         </div>
-        <div class="tab">
+        <div class="tab" @click="logout">
           <img src="../../../app/assets/img/user-edit.svg" alt="" />
           <span>Выйти</span>
         </div>
@@ -66,23 +66,25 @@
             Эта информация будет доступна для просмотра клиентами на
             маркетплейсе
           </div>
-          <div><input type="text" /></div>
-          <div><input type="text" /></div>
-          <button>Запросить изменения</button>
+          <div class="mb-16"><SInput label="Наименование" width="100%" /></div>
+          <div><STextArea label="Описание" width="100%" /></div>
+          <SButton color="violet" size="large" class="mt-20">
+            Запросить изменения
+          </SButton>
         </div>
 
         <div class="content-block" v-if="tab === 'password'">
           <div class="data-title mb-20">Изменить пароль</div>
-          <div>
-            <input type="text" />
+          <div class="mb-16">
+            <SInput label="Старый пароль" width="100%" />
           </div>
-          <div>
-            <input type="text" />
+          <div class="mb-16">
+            <SInput label="Новый пароль" width="100%" />
           </div>
-          <div>
-            <input type="text" />
+          <div class="mb-40">
+            <SInput label="Еще раз новый пароль" width="100%" />
           </div>
-          <button>Save</button>
+          <SButton color="violet" size="medium">Изменить</SButton>
         </div>
 
         <div class="content-block" v-if="tab === 'session'">
@@ -103,7 +105,10 @@
 
 <script lang="ts" setup>
 import { ref, computed } from "vue";
+import { SButton, SInput, STextArea } from "@tumarsoft/ogogo-ui";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const tab = ref("");
 const profileObj = ref({ image: null });
 
@@ -136,6 +141,11 @@ const onSelectFile = async (e: any) => {
     profileObj.value.image = await convertToBase64(file);
   }
 };
+
+const logout = () => {
+  router.push("/");
+  window.localStorage.removeItem("sessionId");
+};
 </script>
 
 <style lang="scss" scoped>
@@ -151,6 +161,7 @@ const onSelectFile = async (e: any) => {
   }
   .profile-tabs {
     margin-right: 40px;
+    min-width: 280px;
     .tab {
       font-weight: 600;
       font-size: 16px;
@@ -172,6 +183,7 @@ const onSelectFile = async (e: any) => {
   }
   .profile-data {
     padding-top: 12px;
+    min-width: 550px;
   }
   .divider {
     border-bottom: 2px dotted $gray-200;
@@ -226,6 +238,9 @@ const onSelectFile = async (e: any) => {
     border-radius: 8px;
     border: 1px solid $gray-200;
     cursor: pointer;
+  }
+  .textarea-container {
+    width: 100%;
   }
 }
 </style>
