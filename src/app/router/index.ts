@@ -3,22 +3,16 @@ import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
 import Chain from "./middlware/chain";
 import { flattenRoutes, transformToRouter } from "@/shared/lib/utils/route";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-// import categoryRoute from "@/pages/category/router/router";
-// import propertyRoutes from "@/pages/property/router";
 import loginRoutes from "@/pages/login/router";
 import passwordReset from "@/pages/password-reset/router";
 import profileRoutes from "@/pages/profile/router";
-// import shopRoutes from "@/pages/shop/router";
-// import productRoutes from "@/pages/product/router";
+import orderRoutes from "@/pages/order/router";
 
 const routes: RouteRecordRaw[] = [
-  // ...categoryRoute,
-  // ...propertyRoutes,
   ...loginRoutes,
   ...passwordReset,
   ...profileRoutes,
-  // ...shopRoutes,
-  // ...productRoutes,
+  ...orderRoutes,
 ];
 
 const router = createRouter({
