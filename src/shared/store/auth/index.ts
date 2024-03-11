@@ -61,6 +61,7 @@ export const useAuthStore = defineStore("auth", {
       return new Promise((resolve, reject) => {
         login(payload)
           .then((result) => {
+            const isAuthenticated = Boolean(getItem("sessionId"));
 
             const needChangePassword = result?.needChangePassword ?? false;
             setItem("needChangePassword", needChangePassword);
@@ -87,9 +88,11 @@ export const useAuthStore = defineStore("auth", {
                 }
 
                 setItem("active-session", true);
-                resolve(user)
-              }).catch(reject);
-          }).catch((err) => {
+                resolve(user);
+              })
+              .catch(reject);
+          })
+          .catch((err) => {
             if (axios.isAxiosError(err)) {
               reject(err?.response?.data);
             } else {
@@ -113,7 +116,7 @@ export const useAuthStore = defineStore("auth", {
             //   (lastUserId && lastUserId !== this.currentUser.id)
             // ) {
             // }
-            resolve(user)
+            resolve(user);
           })
           .catch((error) => {
             reject(error);
@@ -123,8 +126,10 @@ export const useAuthStore = defineStore("auth", {
 
     logout(): Promise<boolean> {
       this.user = null;
-      this.isLoggedIn = false;
+      // this.isLoggedIn = false;
       this.accessRequestIds = {};
+      setItem("active-session", false);
+      setItem("sessionId", null);
 
       const alertStore = useAlertStore();
       alertStore.clearAlerts();
