@@ -8,51 +8,36 @@
         class="cursor-pointer d-flex flex-col items-center"
       >
         <SIconRender :color="isProductsActive.substr(6)" :name="'BoxIcon'" />
-        <p :class="`${isProductsActive} font-size-12`">
-          {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
+        <p :class="`${isProductsActive} font-size-12 mt-4`">
+          {{ $t("lang-d7069093-a1a5-4544-8a29-e516288d719b") }}
         </p>
       </div>
       <div
-        @click="onMenuItemChange(MenuItems.Stores)"
+        @click="onMenuItemChange(MenuItems.Orders)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isStoresActive.substr(6)" :name="'ShopIcon'" />
-        <p :class="`${isStoresActive} font-size-12`">
-          {{ $t("lang-425a5a16-bf0a-4ded-a7bc-cbe7490b659a") }}
+        <SIconRender :color="isOrdersActive.substr(6)" :name="'ShopIcon'" />
+        <p :class="`${isOrdersActive} font-size-12 mt-4`">
+          {{ $t("lang-6f853bc8-3f4e-44d2-9770-49d98347fc6b") }}
         </p>
       </div>
       <div
-        @click="onMenuItemChange(MenuItems.Category)"
+        @click="onMenuItemChange(MenuItems.Notifications)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isCategoryActive.substr(6)" :name="'GridIcon'" />
-        <p :class="`${isCategoryActive} font-size-12`">
-          {{ $t("lang-75805fdb-eac2-4c87-b481-563e318789b5") }}
+        <SIconRender :color="isNotifyActive.substr(6)" :name="'GridIcon'" />
+        <p :class="`${isNotifyActive} font-size-12 mt-4`">
+          {{ $t("lang-12ebb268-22bc-470c-b696-394bd7c1a45f") }}
         </p>
       </div>
       <div
-        @click="onMenuItemChange(MenuItems.Properties)"
+        @click="onMenuItemChange(MenuItems.Cabinet)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender
-          :color="isPropertyActive.substr(6)"
-          :name="'PropertyIcon'"
-        />
-        <p :class="`${isPropertyActive} font-size-12`">
-          {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }}
+        <img src="../../../app/assets/img/empty-ava.svg" alt="" />
+        <p :class="`${isCabinetActive} font-size-12 mt-4`">
+          {{ $t("lang-2a4d7ca8-dd13-4463-89cd-38ecb17f6fec") }}
         </p>
-      </div>
-      <div class="header-profile d-flex justify-between items-center">
-        <div class="profile-block">
-          <div class="profile-name">Админ</div>
-          <div class="profile-number color-gray-500">+996777446688</div>
-        </div>
-        <img
-          src="../../ui/assets/logout.svg"
-          alt="logout"
-          class="ml-20 cursor-pointer"
-          @click="logOut"
-        />
       </div>
     </div>
   </div>
@@ -63,7 +48,6 @@ import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { MenuItems } from "@/shared/lib/utils/enums";
 import { computed, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { useAuthStore } from "@/shared/store/auth";
 
 const route = useRoute();
 const router = useRouter();
@@ -81,40 +65,26 @@ const isProductsActive = computed(() => {
     ? "color-violet-700"
     : "gray-400";
 });
-const isStoresActive = computed(() => {
-  return activeButton.value === MenuItems.Stores
+const isOrdersActive = computed(() => {
+  return activeButton.value === MenuItems.Orders
     ? "color-violet-700"
     : "gray-400";
 });
-const isCategoryActive = computed(() => {
-  return activeButton.value === MenuItems.Category
+const isNotifyActive = computed(() => {
+  return activeButton.value === MenuItems.Notifications
     ? "color-violet-700"
     : "gray-400";
 });
-const isPropertyActive = computed(() => {
-  return activeButton.value === MenuItems.Properties
+const isCabinetActive = computed(() => {
+  return activeButton.value === MenuItems.Cabinet
     ? "color-violet-700"
     : "gray-400";
 });
 
 function onMenuItemChange(value: MenuItems) {
-  if (value === MenuItems.Category) {
-    router.push("/" + value + "/" + "empty");
-  } else {
-    router.push("/" + value);
-  }
-
+  router.push("/" + value);
   activeButton.value = value;
 }
-
-const authStore = useAuthStore();
-
-const logOut = () => {
-  authStore.logout().then(() => {
-    console.log("eee");
-    router.push("/");
-  });
-};
 </script>
 
 <style lang="scss" scoped>
