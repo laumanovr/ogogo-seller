@@ -2,9 +2,9 @@ import { findComponent } from "@/shared/lib/utils/findComponent";
 
 const routes = [
   {
-    path: "/",
-    name: "login",
-    component: findComponent("login", "Login"),
+    path: "/profile",
+    name: "profile",
+    component: findComponent("profile", "Profile"),
   },
 ];
 

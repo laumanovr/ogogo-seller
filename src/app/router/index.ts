@@ -6,6 +6,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 // import categoryRoute from "@/pages/category/router/router";
 // import propertyRoutes from "@/pages/property/router";
 import loginRoutes from "@/pages/login/router";
+import profileRoutes from "@/pages/profile/router";
 // import shopRoutes from "@/pages/shop/router";
 // import productRoutes from "@/pages/product/router";
 
@@ -13,6 +14,7 @@ const routes: RouteRecordRaw[] = [
   // ...categoryRoute,
   // ...propertyRoutes,
   ...loginRoutes,
+  ...profileRoutes,
   // ...shopRoutes,
   // ...productRoutes,
 ];
