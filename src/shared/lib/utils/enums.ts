@@ -1,6 +1,6 @@
 export enum MenuItems {
-  Category = "category",
-  Stores = "shops",
   Products = "products",
-  Properties = "property"
+  Orders = "orders",
+  Notifications = "notifications",
+  Cabinet = "profile",
 }
