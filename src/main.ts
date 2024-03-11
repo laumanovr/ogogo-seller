@@ -29,7 +29,7 @@ router.beforeEach(
       }
       next();
     } else if (to.path === "/" && isAuthenticated) {
-      next("/property");
+      next("/profile");
     } else {
       next();
     }
