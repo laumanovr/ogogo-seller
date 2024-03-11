@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-row justify-between padding-16-40 h-80">
+  <div class="d-flex flex-row justify-between padding-16-40 h-80 mb-20">
     <img src="../../ui/assets/Ogogo-logo.png" class="ogogo-img" />
 
     <div class="header-navigation">
