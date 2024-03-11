@@ -58,7 +58,6 @@ import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { vMaska } from "maska";
 import { useAuthStore } from "@/shared/store/auth";
-import { getItem } from "@/shared/lib/utils/persistanceStorage";
 
 const options = reactive({
   mask: "996-(###)-##-##-##",

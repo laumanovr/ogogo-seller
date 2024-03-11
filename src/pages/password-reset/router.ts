@@ -5,6 +5,7 @@ const routes = [
     path: "/password-reset",
     name: "password-reset",
     component: findComponent("password-reset", "PasswordReset"),
+    meta: { requiresAuth: true },
   },
 ];
 
