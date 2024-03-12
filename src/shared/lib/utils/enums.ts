@@ -3,4 +3,6 @@ export enum MenuItems {
   Orders = "orders",
   Notifications = "notifications",
   Cabinet = "profile",
+  ModerateProducts = "moderate-products",
+  ModerateTemplates = "moderate-templates",
 }
