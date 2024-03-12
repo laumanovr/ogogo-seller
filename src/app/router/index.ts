@@ -5,6 +5,7 @@ import { flattenRoutes, transformToRouter } from "@/shared/lib/utils/route";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import loginRoutes from "@/pages/login/router";
 import passwordReset from "@/pages/password-reset/router";
+import sellerRegistration from "@/pages/seller-registration/router";
 import profileRoutes from "@/pages/profile/router";
 import orderRoutes from "@/pages/order/router";
 import productRoutes from "@/pages/product/router";
@@ -15,6 +16,7 @@ import moderationTemplateRoutes from "@/pages/moderation-template/router";
 const routes: RouteRecordRaw[] = [
   ...loginRoutes,
   ...passwordReset,
+  ...sellerRegistration,
   ...profileRoutes,
   ...orderRoutes,
   ...productRoutes,
