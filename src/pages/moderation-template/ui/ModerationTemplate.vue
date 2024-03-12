@@ -5,5 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ModerationTemplate } from "@/features/moderation-template";
+import { ModerationTemplate } from "@/widgets/moderation-template";
 </script>
+@/widgets/moderation-template

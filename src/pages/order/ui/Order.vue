@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Order } from "@/features/order";
+import { Order } from "@/widgets/order";
 </script>
 
 <style lang="scss"></style>

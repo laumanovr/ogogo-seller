@@ -58,8 +58,7 @@ const options = reactive({
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
 
-
-const onSubmitPasswordReset = () => {
+const onSubmitPasswordReset = () => {};
 </script>
 
 <style lang="scss" scoped>

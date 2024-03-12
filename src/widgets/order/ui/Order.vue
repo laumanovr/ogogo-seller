@@ -41,9 +41,7 @@
 <script lang="ts" setup>
 import { STable, STabs, STabItem, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
-import FilterSearch from "@/widgets/filter-search/FilterSearch.vue";
-import { log } from "console";
-import { CLIENT_RENEG_LIMIT } from "tls";
+import { FilterSearch } from "@/features/filter-search";
 
 const tab = ref("one");
 

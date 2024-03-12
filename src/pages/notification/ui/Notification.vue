@@ -5,5 +5,5 @@
 </template>
 
 <script lang="ts" setup>
-import { Notification } from "@/features/notification";
+import { Notification } from "@/widgets/notification";
 </script>

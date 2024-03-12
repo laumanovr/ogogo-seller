@@ -1,7 +1,7 @@
 <template>
   <div class="empty-container">
     <div class="empty-action">
-      <img src="../../app/assets/img/empty-folder.svg" alt="empty" />
+      <img src="@/app/assets/img/empty-folder.svg" alt="empty" />
       <p>{{ props.text }}</p>
       <SButton size="large" color="violet" @click="addData">
         + {{ props.buttonTitle }}

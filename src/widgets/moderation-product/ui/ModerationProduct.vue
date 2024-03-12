@@ -30,8 +30,8 @@
 <script lang="ts" setup>
 import { STable, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
-import FilterSearch from "../../../widgets/filter-search/FilterSearch.vue";
-import FilterModal from "../../../widgets/filter-modal/FilterModal.vue";
+import { FilterSearch } from "@/features/filter-search";
+import FilterModal from "@/features/filter-modal/FilterModal.vue";
 
 const filterModal = ref(null);
 

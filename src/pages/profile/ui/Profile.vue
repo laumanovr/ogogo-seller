@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Profile } from "../../../features/profile";
+import { Profile } from "@/widgets/profile";
 </script>
 
 <style lang="scss"></style>
