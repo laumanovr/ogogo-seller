@@ -41,7 +41,7 @@
 <script lang="ts" setup>
 import { STable, STabs, STabItem, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
-import { FilterSearch } from "@/features/filter-search";
+import { FilterSearch } from "@/shared/ui/components/filter-search";
 
 const tab = ref("one");
 

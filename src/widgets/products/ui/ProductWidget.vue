@@ -26,8 +26,8 @@
 </template>
 
 <script lang="ts" setup>
-import { EmptyData } from "@/features/empty-data";
-import { FilterSearch } from "@/features/filter-search";
+import { EmptyData } from "@/shared/ui/components/empty-data";
+import { FilterSearch } from "@/shared/ui/components/filter-search";
 import { ref } from "vue";
 import { SModal, SSelect, SButton } from "@tumarsoft/ogogo-ui";
 

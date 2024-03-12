@@ -81,7 +81,7 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-@import "../../app/style/colors.scss";
+@import "@/app/style/colors.scss";
 
 .filter-modal {
   .modal-content {

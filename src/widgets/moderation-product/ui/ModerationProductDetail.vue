@@ -192,7 +192,7 @@ import {
   SSelect,
   SIconRender,
 } from "@tumarsoft/ogogo-ui";
-import BreadCrumbs from "@/features/Breadcrumbs/Breadcrumbs.vue";
+import BreadCrumbs from "@/shared/ui/components/Breadcrumbs/Breadcrumbs.vue";
 import { ref, reactive, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 

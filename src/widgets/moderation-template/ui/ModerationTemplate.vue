@@ -28,8 +28,8 @@
 <script lang="ts" setup>
 import { STable, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
-import { FilterSearch } from "@/features/filter-search";
-import FilterModal from "@/features/filter-modal/FilterModal.vue";
+import { FilterSearch } from "@/shared/ui/components/filter-search";
+import FilterModal from "@/shared/ui/components/filter-modal/FilterModal.vue";
 
 const filterModal = ref(null);
 
