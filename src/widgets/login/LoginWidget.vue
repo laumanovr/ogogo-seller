@@ -9,7 +9,6 @@
           {{ $t("lang-eff9e30c-a766-47df-b026-189d888586b8") }}
         </div>
         <div class="flex justify-between">
-          <!-- :label="$t('lang-5b5360db-a6ff-43a7-a8d4-f35517b9c4a8')" -->
           <SInput
             class="w-p-100"
             :rules="requiredField"
@@ -27,7 +26,7 @@
             v-model="loginObj.password"
           />
           <p
-            class="color-violet-600 font-semibold mt-16"
+            class="color-violet-600 font-semibold mt-16 cursor-pointer"
             @click="onForgetPassword"
           >
             {{ $t("lang-11d828ce-a252-4271-a12c-9291c52de2bd") }}
@@ -41,7 +40,7 @@
         >
           {{ $t("lang-91041855-c915-481e-a265-42816765bf51") }}
         </SButton>
-        <SButton size="large" color="grey" @click="onSubmitLogin">
+        <SButton size="large" color="grey" @click="onSellerRegistration">
           {{ $t("lang-dff486df-0927-4f56-afc7-d543d3ba89e7") }}
         </SButton>
       </SForm>
@@ -76,9 +75,11 @@ const onForgetPassword = () => {
   router.push("/password-reset");
 };
 
-const onSubmitLogin = () => {
-  console.log(loginObj.pin);
+const onSellerRegistration = () => {
+  router.push("/seller-registration");
+};
 
+const onSubmitLogin = () => {
   const removedDashesAndBrackets = loginObj.pin.replace(/\D/g, "");
 
   loginObj.pin = removedDashesAndBrackets;
@@ -97,41 +98,6 @@ const onSubmitLogin = () => {
       });
   }
 };
-
-// @Prop({ type: String, default: null })
-// tooltip
-
-// @Prop({ type: Boolean, default: false })
-// required
-
-//   get commonAttrs() {
-//     return {
-//       value: '996 (',
-//       dense: true,
-//       outlined: true,
-//       'validate-on-blur': true,
-//       autocomplete: 'off',
-//       hint: '996 (700) 12-34-56',
-//       rules: Rules.getRule()[this.required ? 'mobile' : 'notRequiredMobile'].concat(
-//         Array.isArray(this.$attrs.rules) ? this.$attrs.rules : []
-//       )
-//     }
-//   }
-
-//  {
-//   }
-
-//   onPaste(event: ClipboardEvent) {
-//     const data = event.clipboardData.getData('text')
-//     const target = event.target as HTMLInputElement
-
-//     let phoneNumber = formatPhoneNumber(data)
-//     if (phoneNumber.length > 9) {
-//       phoneNumber = phoneNumber.slice(phoneNumber.length - 9)
-//     }
-
-//     target.value = conformPhoneNumber(phoneNumber)
-//   }
 </script>
 
 <style lang="scss" scoped>

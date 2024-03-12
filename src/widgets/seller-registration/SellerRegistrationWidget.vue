@@ -6,27 +6,41 @@
       </div>
       <SForm class="form-block" ref="loginForm">
         <div class="form-title">
-          {{ $t("lang-cee0b1ca-cad5-4827-955b-ebd6a3dbf660") }}
+          {{ $t("lang-d3d23ff7-606a-47c3-aa39-0e6ee4c00752") }}
         </div>
 
         <p class="">
-          {{ $t("lang-71ebd9a8-09f5-4a3a-a45d-7420459d2b4b") }}
+          {{ $t("lang-5a7148a6-bad0-43eb-bed7-f9e92158b53a") }}
         </p>
-        <div class="flex justify-between">
+        <div class="flex flex-col">
           <SInput
-            class="w-p-100 mt-18 mb-44"
+            class="w-p-100 mt-19"
             :rules="requiredField"
             v-model="loginObj.pin"
             v-maska:[options]
             :label="$t('lang-c53d0190-9e48-42e2-b346-ee9ea934955c')"
           />
+          <SInput
+            class="w-p-100 mt-19"
+            :rules="requiredField"
+            v-model="loginObj.pin"
+            v-maska:[options]
+            :label="$t('lang-6b722e0f-5196-40cc-856b-39635c043750')"
+          />
+          <SSelect
+            :label="$t('lang-d0c19d1f-b018-45d1-93fa-2dc4a8b6878e')"
+            class="w-p-100 mt-19"
+          />
+          <SCheckbox class="w-p-100 mt-19" placeholder="emir">
+            {{ $t("lang-33c946fe-b106-4901-b3a0-356c7b421566") }}
+          </SCheckbox>
         </div>
 
         <SButton
           size="large"
           color="violet"
-          @click="onSubmitPasswordReset"
-          class="mb-8 w-p50"
+          @click="onSubmitSellerRegistration"
+          class="mb-8 w-p50 mt-19"
         >
           {{ $t("lang-c4fdfffa-0730-4213-869b-e689860fa95d") }}
         </SButton>
@@ -36,7 +50,13 @@
 </template>
 
 <script lang="ts" setup>
-import { SButton, SForm, SInput } from "@tumarsoft/ogogo-ui";
+import {
+  SButton,
+  SForm,
+  SInput,
+  SSelect,
+  SCheckbox,
+} from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 // import { useRouter } from "vue-router";
 import { requiredField } from "@/shared/lib/utils/rules";
@@ -58,8 +78,7 @@ const options = reactive({
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
 
-
-const onSubmitPasswordReset = () => {
+const onSubmitSellerRegistration = () => {};
 </script>
 
 <style lang="scss" scoped>

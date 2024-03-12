@@ -24,11 +24,15 @@ router.beforeEach(
     // currentMenu = getItem("auth")?.uiElements ?? [];
 
     if (!isAuthenticated) {
-      if (requiresAuth) {
+      if (
+        requiresAuth &&
+        to.path !== "/password-reset" &&
+        to.path !== "/seller-registration"
+      ) {
         return next("/");
       }
       next();
-    } else if (to.path === "/" && isAuthenticated) {
+    } else if (to.path === "/" && !isAuthenticated) {
       next("/profile");
     } else {
       next();
