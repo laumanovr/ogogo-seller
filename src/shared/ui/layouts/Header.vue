@@ -4,6 +4,31 @@
 
     <div class="header-navigation">
       <div
+        @click="onMenuItemChange(MenuItems.ModerateProducts)"
+        class="cursor-pointer d-flex flex-col items-center"
+      >
+        <SIconRender
+          :color="isModerateProductsActive.substr(6)"
+          :name="'BoxIcon'"
+        />
+        <p :class="`${isModerateProductsActive} font-size-12 mt-4`">
+          {{ $t("lang-9167bd63-d7b6-4f9c-8d68-80ec6d00580c") }}
+        </p>
+      </div>
+      <div
+        @click="onMenuItemChange(MenuItems.ModerateTemplates)"
+        class="cursor-pointer d-flex flex-col items-center"
+      >
+        <SIconRender
+          :color="isModerateTemplatesActive.substr(6)"
+          :name="'BoxIcon'"
+        />
+        <p :class="`${isModerateTemplatesActive} font-size-12 mt-4`">
+          {{ $t("lang-fa1bcc3d-fe84-4e09-836e-eef57745df44") }}
+        </p>
+      </div>
+
+      <div
         @click="onMenuItemChange(MenuItems.Products)"
         class="cursor-pointer d-flex flex-col items-center"
       >
@@ -77,6 +102,16 @@ const isNotifyActive = computed(() => {
 });
 const isCabinetActive = computed(() => {
   return activeButton.value === MenuItems.Cabinet
+    ? "color-violet-700"
+    : "gray-400";
+});
+const isModerateProductsActive = computed(() => {
+  return activeButton.value === MenuItems.ModerateProducts
+    ? "color-violet-700"
+    : "gray-400";
+});
+const isModerateTemplatesActive = computed(() => {
+  return activeButton.value === MenuItems.ModerateTemplates
     ? "color-violet-700"
     : "gray-400";
 });
