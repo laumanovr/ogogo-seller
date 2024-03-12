@@ -11,7 +11,7 @@
       <p class="font-bold">Добавить товар</p>
       <SSelect
         :label="$t('lang-75805fdb-eac2-4c87-b481-563e318789b5')"
-        class="w-p-100 mt-19"
+        class="w-p-100"
       ></SSelect>
       <div class="flex flex-row w-p-100 gap-2 mt-36 justify-between">
         <SButton color="gray" class="button w-p-49" @click="onClose">
