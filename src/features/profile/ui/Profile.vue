@@ -104,13 +104,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { SButton, SInput, STextArea } from "@tumarsoft/ogogo-ui";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const tab = ref("");
 const profileObj = ref({ image: null });
+
+onMounted(() => {
+  changeTab("general");
+});
 
 const changeTab = (val: string) => {
   tab.value = val;
