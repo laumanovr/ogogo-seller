@@ -7,12 +7,14 @@ import loginRoutes from "@/pages/login/router";
 import passwordReset from "@/pages/password-reset/router";
 import profileRoutes from "@/pages/profile/router";
 import orderRoutes from "@/pages/order/router";
+import productOrders from "@/pages/product/router";
 
 const routes: RouteRecordRaw[] = [
   ...loginRoutes,
   ...passwordReset,
   ...profileRoutes,
   ...orderRoutes,
+  ...productOrders,
 ];
 
 const router = createRouter({
