@@ -9,6 +9,7 @@ import profileRoutes from "@/pages/profile/router";
 import orderRoutes from "@/pages/order/router";
 import productRoutes from "@/pages/product/router";
 import notificationRoutes from "@/pages/notification/router";
+import moderationProductRoutes from "@/pages/moderation-product/router";
 
 const routes: RouteRecordRaw[] = [
   ...loginRoutes,
@@ -17,6 +18,7 @@ const routes: RouteRecordRaw[] = [
   ...orderRoutes,
   ...productRoutes,
   ...notificationRoutes,
+  ...moderationProductRoutes,
 ];
 
 const router = createRouter({
