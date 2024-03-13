@@ -4,28 +4,40 @@
     <div class="profile-info-block">
       <div class="profile-tabs">
         <div class="tab" @click="changeTab('general')">
-          <img src="../../../app/assets/img/user-edit.svg" alt="" />
+          <SIconRender
+            name="ProfileEditIcon"
+            :color="tab === 'general' ? 'violet' : ''"
+          />
           <span :class="{ active: tab === 'general' }">Общие данные</span>
         </div>
         <div class="tab" @click="changeTab('shop')">
-          <img src="../../../app/assets/img/user-edit.svg" alt="" />
+          <SIconRender
+            name="ShopIcon"
+            :color="tab === 'shop' ? 'violet' : 'black'"
+          />
           <span :class="{ active: tab === 'shop' }">Мой магазин</span>
         </div>
         <div class="tab" @click="changeTab('password')">
-          <img src="../../../app/assets/img/user-edit.svg" alt="" />
+          <SIconRender
+            name="PasswordIcon"
+            :color="tab === 'password' ? 'violet' : ''"
+          />
           <span :class="{ active: tab === 'password' }">Пароль</span>
         </div>
         <div class="tab" @click="changeTab('session')">
-          <img src="../../../app/assets/img/user-edit.svg" alt="" />
+          <SIconRender
+            name="SessionIcon"
+            :color="tab === 'session' ? 'violet' : ''"
+          />
           <span :class="{ active: tab === 'session' }">Активные сессии</span>
         </div>
         <div class="divider"></div>
         <div class="tab">
-          <img src="../../../app/assets/img/user-edit.svg" alt="" />
+          <SIconRender name="WhatsAppIcon" />
           <span :class="{ active: tab === 'help' }">Помощь</span>
         </div>
         <div class="tab" @click="logout">
-          <img src="../../../app/assets/img/user-edit.svg" alt="" />
+          <SIconRender name="LogoutIcon" />
           <span>Выйти</span>
         </div>
       </div>
@@ -105,7 +117,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from "vue";
-import { SButton, SInput, STextArea } from "@tumarsoft/ogogo-ui";
+import { SButton, SInput, STextArea, SIconRender } from "@tumarsoft/ogogo-ui";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -173,12 +185,8 @@ const logout = () => {
       align-items: center;
       cursor: pointer;
       padding: 12px 50px 12px 0;
-      img,
-      svg {
-        // delete later
-        width: 24px;
-        height: 24px;
-        margin-right: 16px;
+      span {
+        margin-left: 16px;
       }
       .active {
         color: $violet-600;
