@@ -1,6 +1,8 @@
 <template>
   <div class="profile-content">
-    <div class="profile-title">Личный кабинет</div>
+    <div class="profile-title">
+      {{ $t("lang-82e229f2-c516-4ca4-aeae-b04cbf3f0bcf") }}
+    </div>
     <div class="profile-info-block">
       <div class="profile-tabs">
         <div class="tab" @click="changeTab('general')">
@@ -8,53 +10,71 @@
             name="ProfileEditIcon"
             :color="tab === 'general' ? 'violet' : ''"
           />
-          <span :class="{ active: tab === 'general' }">Общие данные</span>
+          <span :class="{ active: tab === 'general' }">{{
+            $t("lang-41ad3377-6945-4978-8a3a-ad8d08292155")
+          }}</span>
         </div>
         <div class="tab" @click="changeTab('shop')">
           <SIconRender
             name="ShopIcon"
             :color="tab === 'shop' ? 'violet' : 'black'"
           />
-          <span :class="{ active: tab === 'shop' }">Мой магазин</span>
+          <span :class="{ active: tab === 'shop' }">
+            {{ $t("lang-595227fd-b603-43ea-a918-0b7f9edc6bac") }}</span
+          >
         </div>
         <div class="tab" @click="changeTab('password')">
           <SIconRender
             name="PasswordIcon"
             :color="tab === 'password' ? 'violet' : ''"
           />
-          <span :class="{ active: tab === 'password' }">Пароль</span>
+          <span :class="{ active: tab === 'password' }">
+            {{ $t("lang-ad3a8ec6-bcb6-4dce-9ff6-a3ccc17c1e8d") }}
+          </span>
         </div>
         <div class="tab" @click="changeTab('session')">
           <SIconRender
             name="SessionIcon"
             :color="tab === 'session' ? 'violet' : ''"
           />
-          <span :class="{ active: tab === 'session' }">Активные сессии</span>
+          <span :class="{ active: tab === 'session' }">
+            {{ $t("lang-3d338844-bc4d-4147-bfd3-c4d72659611e") }}
+          </span>
         </div>
         <div class="divider"></div>
         <div class="tab">
           <SIconRender name="WhatsAppIcon" />
-          <span :class="{ active: tab === 'help' }">Помощь</span>
+          <span :class="{ active: tab === 'help' }">
+            {{ $t("lang-53b4af08-0a92-4732-abc4-544486b1887a") }}
+          </span>
         </div>
         <div class="tab" @click="logout">
           <SIconRender name="LogoutIcon" />
-          <span>Выйти</span>
+          <span>{{ $t("lang-3cca1d55-3859-4aad-8f7a-2dc7e81dd716") }}</span>
         </div>
       </div>
 
       <div class="profile-data">
         <div class="content-block" v-if="tab === 'general'">
-          <div class="data-title">Общие данные</div>
+          <div class="data-title">
+            {{ $t("lang-41ad3377-6945-4978-8a3a-ad8d08292155") }}
+          </div>
           <div class="data-block">
-            <div class="data-label">Номер телефона</div>
+            <div class="data-label">
+              {{ $t("lang-c53d0190-9e48-42e2-b346-ee9ea934955c") }}
+            </div>
             <div class="data-info">+996 775 899 080</div>
           </div>
           <div class="data-block">
-            <div class="data-label">ФИО</div>
+            <div class="data-label">
+              {{ $t("lang-6b722e0f-5196-40cc-856b-39635c043750") }}
+            </div>
             <div class="data-info">Иван Иванов Иванович</div>
           </div>
           <div class="data-block">
-            <div class="data-label">Тип товара</div>
+            <div class="data-label">
+              {{ $t("lang-c295a98f-59c2-4da0-87ee-2d38af296c8b") }}
+            </div>
             <div class="data-info">Категории товаров</div>
           </div>
         </div>
@@ -63,30 +83,34 @@
           <div class="photo d-flex items-center mb-40">
             <img :src="profileImageUrl" alt="" />
             <div class="photo-action ml-24">
-              <div class="hint gray mb-12">
-                Формат: jpg, png. Максимальный размер файла: 2Mb. <br />
-                Рекомендованный размер 200х200px.
+              <div class="hint gray mb-12 mw-400">
+                {{ $t("lang-f1c8caf8-4ba1-45c7-94a5-42c4ec1bd59b") }}
               </div>
               <label for="file">
                 <input type="file" id="file" @change="onSelectFile" />
-                <span class="upload-btn">Загрузить</span>
+                <span class="upload-btn">
+                  {{ $t("lang-c1d4974f-d48f-4107-99d8-d6a188b31129") }}
+                </span>
               </label>
             </div>
           </div>
-          <div class="data-title mb-8">Общие данные магазина</div>
+          <div class="data-title mb-8">
+            {{ $t("lang-b9b9a34d-ccef-4f0a-bf1d-a0c0ee522954") }}
+          </div>
           <div class="hint mb-20">
-            Эта информация будет доступна для просмотра клиентами на
-            маркетплейсе
+            {{ $t("lang-6711b6ad-a725-48d6-b231-1b8f90f23cf3") }}
           </div>
           <div class="mb-16"><SInput label="Наименование" width="100%" /></div>
           <div><STextArea label="Описание" width="100%" /></div>
           <SButton color="violet" size="large" class="mt-20">
-            Запросить изменения
+            {{ $t("lang-a7a081b0-bf2e-421d-9393-443f97ae0ef0") }}
           </SButton>
         </div>
 
         <div class="content-block" v-if="tab === 'password'">
-          <div class="data-title mb-20">Изменить пароль</div>
+          <div class="data-title mb-20">
+            {{ $t("lang-df4b9d52-4813-4ed9-9111-278577ba5cf7") }}
+          </div>
           <div class="mb-16">
             <SInput label="Старый пароль" width="100%" />
           </div>
@@ -96,7 +120,9 @@
           <div class="mb-40">
             <SInput label="Еще раз новый пароль" width="100%" />
           </div>
-          <SButton color="violet" size="medium">Изменить</SButton>
+          <SButton color="violet" size="medium">
+            {{ $t("lang-fe4564b9-e2c0-4905-8dac-30f81dd94081") }}
+          </SButton>
         </div>
 
         <div class="content-block" v-if="tab === 'session'">
@@ -253,6 +279,9 @@ const logout = () => {
   }
   .textarea-container {
     width: 100%;
+  }
+  .mw-400 {
+    max-width: 400px;
   }
 }
 </style>
