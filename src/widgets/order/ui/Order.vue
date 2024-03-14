@@ -1,20 +1,22 @@
 <template>
   <div class="order-content">
-    <div class="head-title">Заказы</div>
+    <div class="head-title">
+      {{ $t("lang-6f853bc8-3f4e-44d2-9770-49d98347fc6b") }}
+    </div>
     <FilterSearch />
 
     <STabs :tab-mode="'filter-tabs'" class="mb-20">
       <STabItem value="one" :active-tab="tab" @changeTab="selectTab">
-        Активные
+        {{ $t("lang-dd1a9bc2-31f2-4197-9a7d-01a23229ea82") }}
       </STabItem>
       <STabItem value="two" :active-tab="tab" @changeTab="selectTab">
-        Все
+        {{ $t("lang-7db32df9-54d2-4561-ba8b-c43073ee42e9") }}
       </STabItem>
       <STabItem value="three" :active-tab="tab" @changeTab="selectTab">
-        Отмененные
+        {{ $t("lang-b5ea90d6-b263-4058-b295-b41b2d72c542") }}
       </STabItem>
       <STabItem value="four" :active-tab="tab" @changeTab="selectTab">
-        Архив
+        {{ $t("lang-9801cd40-7281-47f7-8478-6731dc9d8388") }}
       </STabItem>
     </STabs>
 
