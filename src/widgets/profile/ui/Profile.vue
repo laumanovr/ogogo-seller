@@ -100,8 +100,18 @@
           <div class="hint mb-20">
             {{ $t("lang-6711b6ad-a725-48d6-b231-1b8f90f23cf3") }}
           </div>
-          <div class="mb-16"><SInput label="Наименование" width="100%" /></div>
-          <div><STextArea label="Описание" width="100%" /></div>
+          <div class="mb-16">
+            <SInput
+              :label="$t('lang-4572af8e-fb1f-4f76-a997-de5bc6aa89fb')"
+              width="100%"
+            />
+          </div>
+          <div>
+            <STextArea
+              :label="$t('lang-b1c420fe-8beb-4452-bf7c-165f69e8eabf')"
+              width="100%"
+            />
+          </div>
           <SButton color="violet" size="large" class="mt-20">
             {{ $t("lang-a7a081b0-bf2e-421d-9393-443f97ae0ef0") }}
           </SButton>
@@ -112,13 +122,22 @@
             {{ $t("lang-df4b9d52-4813-4ed9-9111-278577ba5cf7") }}
           </div>
           <div class="mb-16">
-            <SInput label="Старый пароль" width="100%" />
+            <SInput
+              :label="$t('lang-701623e1-52b5-40a1-b912-4e49b4ff56ce')"
+              width="100%"
+            />
           </div>
           <div class="mb-16">
-            <SInput label="Новый пароль" width="100%" />
+            <SInput
+              :label="$t('lang-9dc6d3da-f6ff-4700-8b46-9b52d75deae0')"
+              width="100%"
+            />
           </div>
           <div class="mb-40">
-            <SInput label="Еще раз новый пароль" width="100%" />
+            <SInput
+              :label="$t('lang-0184de30-27b6-48af-bafc-3995afbb020d')"
+              width="100%"
+            />
           </div>
           <SButton color="violet" size="medium">
             {{ $t("lang-fe4564b9-e2c0-4905-8dac-30f81dd94081") }}
