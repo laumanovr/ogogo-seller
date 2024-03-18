@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:test": "vue-tsc && vite build --mode=test",
+    "build:prod": "vue-tsc && vite build --mode=prod",
+    "build:pretest": "vue-tsc && vite build --mode=pretest"
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.9",
