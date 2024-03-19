@@ -21,28 +21,26 @@ export interface IHandler {
 export class BaseHandler implements IHandler {
   nextHandler: IHandler = null;
 
-  handle(
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
-    next: Function,
-    routes: IRoute[] = []
-  ): void {
-    next();
+  handle() // to: RouteLocationNormalized,
+  // from: RouteLocationNormalized,
+  // next: Function
+  // routes: IRoute[] = []
+  : void {
+    // next();
   }
 
   setNext(h: IHandler): void {
     this.nextHandler = h;
   }
 
-  handleLast(
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
-    next: Function,
-    routes: IRoute[] = []
-  ) {
-    if (this.nextHandler === null) {
-      next();
-    }
+  handleLast() // to: RouteLocationNormalized,
+  // from: RouteLocationNormalized,
+  // next: Function
+  // routes: IRoute[] = []
+  {
+    // if (this.nextHandler === null) {
+    //   // next();
+    // }
   }
 }
 

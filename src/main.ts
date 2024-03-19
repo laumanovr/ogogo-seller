@@ -15,6 +15,7 @@ interceptors();
 router.beforeEach(
   (
     to: RouteLocationNormalized,
+    // @ts-ignore
     from: RouteLocationNormalized,
     next: Function
   ) => {

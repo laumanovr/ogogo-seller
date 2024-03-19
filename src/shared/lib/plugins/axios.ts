@@ -1,15 +1,22 @@
 import { useI18n } from "vue-i18n";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { getItem } from "../utils/persistanceStorage";
 import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from "@/app/router/index.type";
 import { useAuthStore } from "@/shared/store/auth";
 
 import router from "@/app/router/";
+import { ErrorCodeEnum } from "../utils/error-dictionary";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_SERVER;
 
-function runWhen(error) {
+interface ErrorResponse {
+  error: {
+    errorCode: ErrorCodeEnum;
+  };
+}
+
+function runWhen(error: AxiosError<ErrorResponse>) {
   const errorCode = error?.response?.data?.error?.errorCode;
   if (errorCode && INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES.includes(errorCode))
     return false;
@@ -43,7 +50,7 @@ export default function setup() {
     async function (error) {
       if (!runWhen(error)) return Promise.reject(error);
 
-      const errorCode = error?.response?.data?.error?.errorCode;
+      // const errorCode = error?.response?.data?.error?.errorCode;
 
       // const customMessage = getCustomErrorMessage(errorCode);
       const certificatePing = error?.response?.request?.responseURL?.includes(

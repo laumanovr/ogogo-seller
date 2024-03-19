@@ -39,7 +39,7 @@ export class Alert {
   constructor(alert: Partial<IAlertParams>) {
     this.alertStore = useAlertStore();
     this.alert = this.getNewAlert(alert);
-    this.alerts = this.getAlerts(this.alert.position);
+    // this.alerts = this.getAlerts(this.alert.position);
     this.alertIndex = this.getIndex(this.alert);
   }
   getNewAlert(alert: Partial<IAlertParams>): IAlert {
@@ -126,27 +126,29 @@ export class Alert {
     return group;
   }
   getAlerts(alertPosition: AlertPositionEnum) {
-    switch (alertPosition) {
-      case AlertPositionEnum.TopLeft:
-        return this.alertStore.getTopLeft;
-      case AlertPositionEnum.TopRight:
-        return this.alertStore.getTopRight;
-      case AlertPositionEnum.BottomLeft:
-        return this.alertStore.getBottomLeft;
-      case AlertPositionEnum.BottomRight:
-        return this.alertStore.getBottomRight;
-      case AlertPositionEnum.Top:
-        return this.alertStore.getTop;
-      case AlertPositionEnum.Bottom:
-        return this.alertStore.getBottom;
-      case AlertPositionEnum.Left:
-        return this.alertStore.getLeft;
-      case AlertPositionEnum.Right:
-        return this.alertStore.getRight;
-      case AlertPositionEnum.Center:
-        return this.alertStore.getCenter;
-      default:
-        return this.alertStore.getBottomRight;
+    switch (
+      alertPosition
+      // case AlertPositionEnum.TopLeft:
+      //   return this.alertStore.getTopLeft;
+      // case AlertPositionEnum.TopRight:
+      //   return this.alertStore.getTopRight;
+      // case AlertPositionEnum.BottomLeft:
+      //   return this.alertStore.getBottomLeft;
+      // case AlertPositionEnum.BottomRight:
+      //   return this.alertStore.getBottomRight;
+      // case AlertPositionEnum.Top:
+      //   return this.alertStore.getTop;
+      // case AlertPositionEnum.Bottom:
+      //   return this.alertStore.getBottom;
+      // case AlertPositionEnum.Left:
+      //   return this.alertStore.getLeft;
+      // case AlertPositionEnum.Right:
+      //   return this.alertStore.getRight;
+      // case AlertPositionEnum.Center:
+      //   return this.alertStore.getCenter;
+      // default:
+      //   return this.alertStore.getBottomRight;
+    ) {
     }
   }
   getIndex(alert: IAlert) {

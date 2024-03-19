@@ -57,11 +57,15 @@ export const useAuthStore = defineStore("auth", {
     },
   },
   actions: {
-    login(payload: ILogin): Promise<ILoginResultSuccess | ILoginResultFail> {
+    login(
+      payload: ILogin
+    ): Promise<
+      ILoginResultSuccess | ILoginResultFail | AuthGetProfileResultInterface
+    > {
       return new Promise((resolve, reject) => {
         login(payload)
           .then((result) => {
-            const isAuthenticated = Boolean(getItem("sessionId"));
+            // const isAuthenticated = Boolean(getItem("sessionId"));
 
             const needChangePassword = result?.needChangePassword ?? false;
             setItem("needChangePassword", needChangePassword);
