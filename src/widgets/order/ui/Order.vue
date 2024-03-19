@@ -31,7 +31,7 @@
       <template v-slot:status="{ item }">
         <SBadge :content="item.status.name" :color="item.status.color" />
       </template>
-      <template v-slot:action="{ item }">
+      <template v-slot>
         <router-link to="/orders">
           {{ $t("lang-23981bea-cba2-425d-a435-41ae4a591794") }}
         </router-link>
