@@ -5,7 +5,7 @@ stages:
   - deploy
   - notify
 
-build_test-admin:
+build_test-seller:
   image: node:lts-alpine
   stage: build
   script:
@@ -22,7 +22,7 @@ build_test-admin:
   only: 
     - test
 
-deploy_test-admin:
+deploy_test-seller:
   image: ringcentral/sshpass:latest
   stage: deploy
   before_script:
@@ -35,8 +35,8 @@ deploy_test-admin:
     - chmod 600 ~/.ssh/id_rsa
   script:
     - cd dist/
-    - ssh gitlab-runner@192.168.111.100 " rm /var/www/test-admin.ogogo.kg/* -R || true"
-    - scp -r * gitlab-runner@192.168.111.100:/var/www/test-admin.ogogo.kg/
+    - ssh gitlab-runner@192.168.111.100 " rm /var/www/test-seller.ogogo.kg/* -R || true"
+    - scp -r * gitlab-runner@192.168.111.100:/var/www/test-seller.ogogo.kg/
     - apk add --update curl
     - echo "$cinotify" >cinotify.sh
     - sh cinotify.sh
@@ -44,7 +44,7 @@ deploy_test-admin:
    - test
 
 
-build_pretest-admin:
+build_pretest-seller:
   image: node:lts-alpine
   stage: build
   script:
@@ -61,7 +61,7 @@ build_pretest-admin:
   only: 
     - pretest
 
-deploy_pretest-admin:
+deploy_pretest-seller:
   image: ringcentral/sshpass:latest
   stage: deploy
   before_script:
@@ -74,15 +74,15 @@ deploy_pretest-admin:
     - chmod 600 ~/.ssh/id_rsa
   script:
     - cd dist/
-    - ssh gitlab-runner@192.168.111.100 " rm /var/www/pretest-admin.ogogo.kg/* -R || true"
-    - scp -r * gitlab-runner@192.168.111.100:/var/www/pretest-admin.ogogo.kg/
+    - ssh gitlab-runner@192.168.111.100 " rm /var/www/pretest-seller.ogogo.kg/* -R || true"
+    - scp -r * gitlab-runner@192.168.111.100:/var/www/pretest-seller.ogogo.kg/
     - apk add --update curl
     - echo "$cinotify" >cinotify.sh
     - sh cinotify.sh
   only:
    - pretest
 
-build_prod-admin:
+build_prod-seller:
   image: node:lts-alpine
   stage: build
   script:
@@ -99,7 +99,7 @@ build_prod-admin:
   only: 
     - prod
 
-deploy_prod-admin:
+deploy_prod-seller:
   image: ringcentral/sshpass:latest
   stage: deploy
   before_script:
@@ -112,8 +112,8 @@ deploy_prod-admin:
     - chmod 600 ~/.ssh/id_rsa
   script:
     - cd dist/
-    - ssh gitlab-runner@192.168.111.100 " rm /var/www/admin.ogogo.kg/* -R || true"
-    - scp -r * gitlab-runner@192.168.111.100:/var/www/admin.ogogo.kg/
+    - ssh gitlab-runner@192.168.111.100 " rm /var/www/seller.ogogo.kg/* -R || true"
+    - scp -r * gitlab-runner@192.168.111.100:/var/www/seller.ogogo.kg/
     - apk add --update curl
     - echo "$cinotify" >cinotify.sh
     - sh cinotify.sh
