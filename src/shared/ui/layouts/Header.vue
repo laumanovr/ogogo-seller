@@ -61,7 +61,7 @@
       >
         <img src="../../../app/assets/img/empty-ava.svg" alt="" />
         <p :class="`${isCabinetActive} font-size-12 mt-4`">
-          {{ $t("lang-2a4d7ca8-dd13-4463-89cd-38ecb17f6fec") }}
+          {{ currentUser?.firstName }}
         </p>
       </div>
     </div>
@@ -78,6 +78,7 @@ const route = useRoute();
 const router = useRouter();
 
 const activeButton = ref("");
+const currentUser = ref(JSON.parse(window.localStorage.getItem("currentUser")));
 
 Object.values(MenuItems).forEach((item: any) => {
   if (route.path.includes(item)) {
