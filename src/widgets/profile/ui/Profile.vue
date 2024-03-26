@@ -63,13 +63,15 @@
             <div class="data-label">
               {{ $t("lang-c53d0190-9e48-42e2-b346-ee9ea934955c") }}
             </div>
-            <div class="data-info">+996 775 899 080</div>
+            <div class="data-info">+{{ currentUser?.phone }}</div>
           </div>
           <div class="data-block">
             <div class="data-label">
               {{ $t("lang-6b722e0f-5196-40cc-856b-39635c043750") }}
             </div>
-            <div class="data-info">Иван Иванов Иванович</div>
+            <div class="data-info">
+              {{ currentUser?.firstName + " " + currentUser?.lastName }}
+            </div>
           </div>
           <div class="data-block">
             <div class="data-label">
@@ -104,15 +106,22 @@
             <SInput
               :label="$t('lang-4572af8e-fb1f-4f76-a997-de5bc6aa89fb')"
               width="100%"
+              v-model="profileObj.name"
             />
           </div>
           <div>
             <STextArea
               :label="$t('lang-b1c420fe-8beb-4452-bf7c-165f69e8eabf')"
               width="100%"
+              v-model="profileObj.description"
             />
           </div>
-          <SButton color="violet" size="large" class="mt-20">
+          <SButton
+            color="violet"
+            size="large"
+            class="mt-20"
+            @click="updateProfile"
+          >
             {{ $t("lang-a7a081b0-bf2e-421d-9393-443f97ae0ef0") }}
           </SButton>
         </div>
@@ -164,13 +173,24 @@
 import { ref, computed, onMounted } from "vue";
 import { SButton, SInput, STextArea, SIconRender } from "@tumarsoft/ogogo-ui";
 import { useRouter } from "vue-router";
+import { useProfileStore } from "../store/profile.store";
+import { IProfile } from "../store/profile-store.types";
+import { IProfileApi } from "../api/profile-api.types";
 
 const router = useRouter();
+const profileStore = useProfileStore();
 const tab = ref("");
-const profileObj = ref({ image: null });
+const currentUser = ref<IProfile>(profileStore.currentUser);
+const profileObj = ref({
+  id: currentUser.value.tradeMarkId,
+  logoBase64: null,
+  name: null,
+  description: null,
+});
 
 onMounted(() => {
   changeTab("general");
+  fetchProfileInfo();
 });
 
 const changeTab = (val: string) => {
@@ -178,8 +198,8 @@ const changeTab = (val: string) => {
 };
 
 const profileImageUrl = computed(() =>
-  profileObj.value?.image
-    ? profileObj.value?.image
+  profileObj.value?.logoBase64
+    ? profileObj.value?.logoBase64
     : "/src/app/assets/img/empty-photo.svg"
 );
 
@@ -199,13 +219,25 @@ const convertToBase64 = (file: File) => {
 const onSelectFile = async (e: any) => {
   const file = e.target.files[0];
   if (file) {
-    profileObj.value.image = await convertToBase64(file);
+    profileObj.value.logoBase64 = await convertToBase64(file);
   }
+};
+
+const fetchProfileInfo = () => {
+  profileStore.getProfileInfo().then((response: IProfileApi) => {
+    profileObj.value.name = response.name;
+    profileObj.value.description = response.description;
+    profileObj.value.logoBase64 = response.logoBase64;
+  });
+};
+
+const updateProfile = () => {
+  profileStore.updateProfileInfo(profileObj.value);
 };
 
 const logout = () => {
   router.push("/");
-  window.localStorage.removeItem("sessionId");
+  window.localStorage.clear();
 };
 </script>
 
