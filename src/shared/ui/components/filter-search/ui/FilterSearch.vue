@@ -1,11 +1,11 @@
 <template>
   <div class="filter-search">
-    <SInput isSearchable width="80%" />
+    <SInput isSearchable width="90%" />
     <SButton color="white" @click="onClick">
       <SIconRender name="SettingsIcon" />
       {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
     </SButton>
-    <SButton color="white">Скачать Excel</SButton>
+    <SButton color="white" v-if="props.showExcel">Скачать Excel</SButton>
   </div>
 </template>
 
@@ -13,6 +13,12 @@
 import { SInput, SButton, SIconRender } from "@tumarsoft/ogogo-ui";
 
 const emit = defineEmits(["onClick"]);
+const props = defineProps({
+  showExcel: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 const onClick = () => {
   emit("onClick");
@@ -27,6 +33,9 @@ const onClick = () => {
   .button {
     margin-left: 12px;
     white-space: nowrap;
+    svg {
+      min-width: 16px;
+    }
   }
 }
 </style>
