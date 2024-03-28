@@ -3,7 +3,6 @@
     <div class="head-title">
       {{ $t("lang-6a3f0b82-3b93-4348-8788-a2ea2dcb2c88") }}
     </div>
-
     <template v-if="hasProducts">
       <div class="flex justify-between">
         <FilterSearch class="w-p-65" />
@@ -30,6 +29,7 @@
         itemsPerPage="5"
         paginateRange="2"
         @onSelectPage="onChangePage"
+        v-if="hasStatusProducts"
       >
         <template v-slot:productName="{ item }">
           <div class="flex items-center product">
@@ -123,7 +123,8 @@ const statuses = ref([
 
 const tableData = ref([]);
 const isShowModal = ref(false);
-const hasProducts = ref(true);
+const hasProducts = ref(false);
+const hasStatusProducts = ref(false);
 const tab = ref("one");
 
 onMounted(() => {
@@ -134,17 +135,18 @@ const fetchProducts = (filterObj = {}) => {
   productStore
     .getAllProducts({ productType: 14701, ...filterObj })
     .then((response) => {
-      hasProducts.value = Boolean(response.items.length);
+      hasProducts.value = Boolean(response.totalPages);
+      hasStatusProducts.value = Boolean(response.items.length);
       tableData.value = response.items;
     });
 };
 
-const selectTab = (value: any) => {
+const selectTab = (value: string) => {
   tab.value = value;
   fetchProducts(Number(value) ? { statuses: [Number(value)] } : {});
 };
 
-const onChangePage = (page: any) => {
+const onChangePage = (page: number) => {
   console.log(page);
 };
 
