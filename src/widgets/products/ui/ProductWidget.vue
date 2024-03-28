@@ -10,16 +10,16 @@
         <SButton color="violet">+ Добавить товар</SButton>
       </div>
       <STabs :tab-mode="'filter-tabs'" class="mb-20">
-        <STabItem value="one" :active-tab="tab" @changeTab="selectTab">
+        <STabItem value="14801" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-dd1a9bc2-31f2-4197-9a7d-01a23229ea82") }}
         </STabItem>
-        <STabItem value="two" :active-tab="tab" @changeTab="selectTab">
+        <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-7db32df9-54d2-4561-ba8b-c43073ee42e9") }}
         </STabItem>
-        <STabItem value="three" :active-tab="tab" @changeTab="selectTab">
+        <STabItem value="14800" :active-tab="tab" @changeTab="selectTab">
           {{ "Черновик" }}
         </STabItem>
-        <STabItem value="four" :active-tab="tab" @changeTab="selectTab">
+        <STabItem value="14805" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-9801cd40-7281-47f7-8478-6731dc9d8388") }}
         </STabItem>
       </STabs>
@@ -127,15 +127,21 @@ const hasProducts = ref(true);
 const tab = ref("one");
 
 onMounted(() => {
-  productStore.getAllProducts({ productType: 14701 }).then((response) => {
-    // debugger;
-    hasProducts.value = Boolean(response.items.length);
-    tableData.value = response.items;
-  });
+  selectTab("0");
 });
+
+const fetchProducts = (filterObj = {}) => {
+  productStore
+    .getAllProducts({ productType: 14701, ...filterObj })
+    .then((response) => {
+      hasProducts.value = Boolean(response.items.length);
+      tableData.value = response.items;
+    });
+};
 
 const selectTab = (value: any) => {
   tab.value = value;
+  fetchProducts(Number(value) ? { statuses: [Number(value)] } : {});
 };
 
 const onChangePage = (page: any) => {
