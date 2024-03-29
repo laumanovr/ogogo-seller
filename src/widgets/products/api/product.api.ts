@@ -1,7 +1,8 @@
 import axios from "axios";
+import { IProductApi, IProductResponseApi } from "./product-api.types";
 
 export class ProductApi {
-  getProducts = (data: any): Promise<any> => {
+  getProducts = (data: IProductApi): Promise<IProductResponseApi> => {
     return axios({
       method: "POST",
       url: `/Marketplace/GetMarketplaceProductPagedList`,
