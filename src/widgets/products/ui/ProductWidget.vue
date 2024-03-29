@@ -25,8 +25,8 @@
       <STable
         :headers="headers"
         :data="tableData"
-        totalItems="50"
-        itemsPerPage="5"
+        :totalItems="totalItems"
+        itemsPerPage="10"
         paginateRange="2"
         @onSelectPage="onChangePage"
         v-if="hasStatusProducts"
@@ -85,7 +85,7 @@
 <script lang="ts" setup>
 import { EmptyData } from "@/shared/ui/components/empty-data";
 import { FilterSearch } from "@/shared/ui/components/filter-search";
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import {
   SModal,
   SSelect,
@@ -126,6 +126,11 @@ const isShowModal = ref(false);
 const hasProducts = ref(false);
 const hasStatusProducts = ref(false);
 const tab = ref("one");
+const totalItems = ref(0);
+
+const currentStatus = computed(() =>
+  Number(tab.value) ? { statuses: [Number(tab.value)] } : {}
+);
 
 onMounted(() => {
   selectTab("0");
@@ -137,17 +142,18 @@ const fetchProducts = (filterObj = {}) => {
     .then((response) => {
       hasProducts.value = Boolean(response.totalPages);
       hasStatusProducts.value = Boolean(response.items.length);
+      totalItems.value = response.totalCount;
       tableData.value = response.items;
     });
 };
 
 const selectTab = (value: string) => {
   tab.value = value;
-  fetchProducts(Number(value) ? { statuses: [Number(value)] } : {});
+  fetchProducts(currentStatus.value);
 };
 
 const onChangePage = (page: number) => {
-  console.log(page);
+  fetchProducts({ ...currentStatus.value, pageIndex: page });
 };
 
 const getStatusData = (item: any, field: any) => {
