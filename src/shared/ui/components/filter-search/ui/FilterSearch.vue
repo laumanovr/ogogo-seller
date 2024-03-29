@@ -1,6 +1,6 @@
 <template>
   <div class="filter-search">
-    <SInput isSearchable width="90%" />
+    <SInput isSearchable width="90%" @input="onInput" />
     <SButton color="white" @click="onClick">
       <SIconRender name="SettingsIcon" />
       {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import { SInput, SButton, SIconRender } from "@tumarsoft/ogogo-ui";
 
-const emit = defineEmits(["onClick"]);
+const emit = defineEmits(["onClick", "input"]);
 const props = defineProps({
   showExcel: {
     type: Boolean,
@@ -22,6 +22,11 @@ const props = defineProps({
 
 const onClick = () => {
   emit("onClick");
+};
+
+const onInput = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  emit("input", target.value);
 };
 </script>
 
