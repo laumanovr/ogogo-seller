@@ -218,8 +218,9 @@ const convertToBase64 = (file: File) => {
   });
 };
 
-const onSelectFile = async (e: any) => {
-  const file = e.target.files[0];
+const onSelectFile = async (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  const file = target.files[0];
   if (file) {
     profileObj.value.logoFileName = file.name;
     profileObj.value.logoBase64 = await convertToBase64(file);
