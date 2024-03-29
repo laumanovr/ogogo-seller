@@ -8,4 +8,6 @@ export interface IProfile {
   firstName?: string;
   lastName?: string;
   phone?: string;
+  logoFileName?: string;
+  version?: number;
 }
