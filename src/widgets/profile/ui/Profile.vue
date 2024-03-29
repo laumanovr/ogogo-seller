@@ -186,6 +186,8 @@ const profileObj = ref({
   logoBase64: null,
   name: null,
   description: null,
+  logoFileName: null,
+  version: null,
 });
 
 onMounted(() => {
@@ -219,6 +221,7 @@ const convertToBase64 = (file: File) => {
 const onSelectFile = async (e: any) => {
   const file = e.target.files[0];
   if (file) {
+    profileObj.value.logoFileName = file.name;
     profileObj.value.logoBase64 = await convertToBase64(file);
   }
 };
@@ -228,6 +231,7 @@ const fetchProfileInfo = () => {
     profileObj.value.name = response.name;
     profileObj.value.description = response.description;
     profileObj.value.logoBase64 = response.logoBase64;
+    profileObj.value.version = response.version;
   });
 };
 
