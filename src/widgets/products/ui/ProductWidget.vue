@@ -5,7 +5,7 @@
     </div>
     <template v-if="hasProducts">
       <div class="flex justify-between">
-        <FilterSearch class="w-p-65" />
+        <FilterSearch class="w-p-65" @input="onSearch" />
         <SButton color="violet">+ Добавить товар</SButton>
       </div>
       <STabs :tab-mode="'filter-tabs'" class="mb-20">
@@ -127,6 +127,7 @@ const hasProducts = ref(false);
 const hasStatusProducts = ref(false);
 const tab = ref("one");
 const totalItems = ref(0);
+const searchTimer = ref(null);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? { statuses: [Number(tab.value)] } : {}
@@ -156,7 +157,14 @@ const onChangePage = (page: number) => {
   fetchProducts({ ...currentStatus.value, pageIndex: page });
 };
 
-const getStatusData = (item: any, field: any) => {
+const onSearch = (value: string) => {
+  window.clearTimeout(searchTimer.value);
+  searchTimer.value = window.setTimeout(() => {
+    fetchProducts({ search: value });
+  }, 1500);
+};
+
+const getStatusData = (item: any, field: string) => {
   const foundStatus = statuses.value.find(
     (statusObj) => statusObj.id === item.status
   );
