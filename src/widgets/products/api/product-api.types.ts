@@ -1,3 +1,15 @@
 export interface IProductApi {
-  products: IProductApi[];
+  products?: IProductApi[];
+  pageIndex?: number;
+  search?: string;
+  statuses?: object;
+  productType?: number;
+}
+
+export interface IProductResponseApi {
+  items: IProductResponseApi[];
+  pageIndex: number;
+  pageSize: number;
+  totalCount: number;
+  totalPages: number;
 }
