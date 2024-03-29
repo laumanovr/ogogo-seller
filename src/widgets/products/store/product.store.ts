@@ -13,7 +13,7 @@ export const useProductStore = defineStore("productStore", {
   }),
   getters: {},
   actions: {
-    getAllProducts(payload: any): Promise<IProductResponse> {
+    getAllProducts(payload: IProduct): Promise<IProductResponse> {
       return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
         productApi
