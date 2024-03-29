@@ -5,8 +5,10 @@
     </div>
     <template v-if="hasProducts">
       <div class="flex justify-between">
-        <FilterSearch class="w-p-65" @input="onSearch" />
-        <SButton color="violet" @click="toggleModal">+ Добавить товар</SButton>
+        <FilterSearch class="w-p-60" @input="onSearch" />
+        <SButton color="violet" @click="toggleModal">
+          + {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
+        </SButton>
       </div>
       <STabs :tab-mode="'filter-tabs'" class="mb-20">
         <STabItem value="14801" :active-tab="tab" @changeTab="selectTab">
@@ -16,7 +18,7 @@
           {{ $t("lang-7db32df9-54d2-4561-ba8b-c43073ee42e9") }}
         </STabItem>
         <STabItem value="14800" :active-tab="tab" @changeTab="selectTab">
-          {{ "Черновик" }}
+          {{ $t("lang-7b5895ca-c485-48ea-abfc-b8c9198f3826") }}
         </STabItem>
         <STabItem value="14805" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-9801cd40-7281-47f7-8478-6731dc9d8388") }}
@@ -53,7 +55,6 @@
         </template>
       </STable>
     </template>
-
     <template v-else>
       <EmptyData
         text="Пока нет товаров"
@@ -86,6 +87,7 @@
 import { EmptyData } from "@/shared/ui/components/empty-data";
 import { FilterSearch } from "@/shared/ui/components/filter-search";
 import { ref, reactive, onMounted, computed } from "vue";
+import i18n from "@/shared/lib/plugins/i18n";
 import {
   SModal,
   SSelect,
@@ -100,13 +102,34 @@ import { useProductStore } from "../store/product.store";
 const productStore = useProductStore();
 
 const headers = reactive([
-  { title: "Товар", key: "productName" },
-  { title: "Статус", key: "status" },
-  { title: "Артикул", key: "articleNumber" },
-  { title: "Цена", key: "price" },
-  { title: "Скидка %", key: "discount" },
-  { title: "Цена со скидкой", key: "priceWithDiscount" },
-  { title: "Остаток", key: "countOfProduct" },
+  {
+    title: i18n.global.t("lang-463282b8-512e-4eae-8cde-815a2678e07d"),
+    key: "productName",
+  },
+  {
+    title: i18n.global.t("lang-0d638a69-fc78-48bc-8b4f-58582c384a1d"),
+    key: "status",
+  },
+  {
+    title: i18n.global.t("lang-059d243d-445e-4100-ac56-a5e7910df626"),
+    key: "articleNumber",
+  },
+  {
+    title: i18n.global.t("lang-333319c2-2df4-4057-a56a-28ddd7a790a1"),
+    key: "price",
+  },
+  {
+    title: i18n.global.t("lang-1f6f2dca-070c-48bc-941f-e1300024ffbb"),
+    key: "discount",
+  },
+  {
+    title: i18n.global.t("lang-5eb99c46-ed5f-4a24-85ad-d551ad812256"),
+    key: "priceWithDiscount",
+  },
+  {
+    title: i18n.global.t("lang-a6dc23d1-d5cc-4c0a-8412-32f6ff24a2dd"),
+    key: "countOfProduct",
+  },
 ]);
 
 const statuses = ref([
