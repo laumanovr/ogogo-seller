@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import { SInput, SButton, SIconRender } from "@tumarsoft/ogogo-ui";
 
-const emit = defineEmits(["onClick", "input"]);
+const emit = defineEmits(["click", "input"]);
 const props = defineProps({
   showExcel: {
     type: Boolean,
@@ -21,7 +21,7 @@ const props = defineProps({
 });
 
 const onClick = () => {
-  emit("onClick");
+  emit("click");
 };
 
 const onInput = (event: Event) => {

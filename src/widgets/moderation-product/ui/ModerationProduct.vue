@@ -3,7 +3,7 @@
     <h2 class="head-title">
       {{ $t("lang-d7069093-a1a5-4544-8a29-e516288d719b") }}
     </h2>
-    <FilterSearch @onClick="showFilterModal" />
+    <FilterSearch @click="showFilterModal" />
     <STable
       :headers="headers"
       :data="tableData"
