@@ -281,7 +281,10 @@ const filterBy = () => {
 };
 
 const onSearchCategory = (event) => {
-  fetchCategories(event.target.value);
+  window.clearTimeout(searchTimer.value);
+  searchTimer.value = window.setTimeout(() => {
+    fetchCategories(event.target.value);
+  }, 1500);
 };
 </script>
 
