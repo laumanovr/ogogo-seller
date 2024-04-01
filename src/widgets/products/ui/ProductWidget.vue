@@ -103,20 +103,24 @@
         <div class="section">
           <div class="section-title">Цена</div>
           <div class="flex">
-            <SInput placeHolder="От" />
-            <SInput placeHolder="До" class="ml-8" />
+            <SInput placeHolder="От" v-model.number="priceRange.min" />
+            <SInput
+              placeHolder="До"
+              class="ml-8"
+              v-model.number="priceRange.max"
+            />
           </div>
         </div>
 
         <div class="section">
           <div class="section-title">Категории</div>
-          <SInput isSearchable width="100%" />
+          <SInput isSearchable width="100%" @input="onSearchCategory" />
           <div
             class="property-items"
             :style="{ 'max-height': maxHeight + 'px' }"
           >
-            <div v-for="item in 30" :key="item">
-              <SCheckbox>Смартфоны и телефоны</SCheckbox>
+            <div v-for="category in categories" :key="category.id">
+              <SCheckbox>{{ category.categoryName }}</SCheckbox>
             </div>
           </div>
         </div>
@@ -125,7 +129,7 @@
         <SButton size="large" color="gray">
           {{ $t("lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea") }}
         </SButton>
-        <SButton size="large" color="violet">
+        <SButton size="large" color="violet" @click="filterBy">
           {{ $t("lang-bdc9ab1e-91af-43ea-8bb9-e23c8ea98755") }}
         </SButton>
       </div>
@@ -206,6 +210,8 @@ const searchTimer = ref(null);
 const isOpenFilterModal = ref(false);
 const modalContent = ref(null);
 const maxHeight = ref(0);
+const priceRange = ref({ min: 0, max: 0 });
+const categories = ref([]);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? { statuses: [Number(tab.value)] } : {}
@@ -213,6 +219,7 @@ const currentStatus = computed(() =>
 
 onMounted(() => {
   selectTab("0");
+  fetchCategories("");
 });
 
 const fetchProducts = (filterObj = {}) => {
@@ -223,6 +230,14 @@ const fetchProducts = (filterObj = {}) => {
       hasStatusProducts.value = Boolean(response.items.length);
       totalItems.value = response.totalCount;
       tableData.value = response.items;
+    });
+};
+
+const fetchCategories = (searchValue: string) => {
+  productStore
+    .getAllCategories({ search: searchValue, pageSize: 30 })
+    .then((response) => {
+      categories.value = response.items;
     });
 };
 
@@ -257,8 +272,16 @@ const toggleFilterModal = () => {
   isOpenFilterModal.value = !isOpenFilterModal.value;
   nextTick(() => {
     const rect = modalContent?.value?.getBoundingClientRect();
-    maxHeight.value = rect?.height / 2;
+    maxHeight.value = rect?.height / 1.5;
   });
+};
+
+const filterBy = () => {
+  fetchProducts({ priceRange: priceRange.value });
+};
+
+const onSearchCategory = (event) => {
+  fetchCategories(event.target.value);
 };
 </script>
 
