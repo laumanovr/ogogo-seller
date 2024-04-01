@@ -5,7 +5,10 @@
     </div>
     <template v-if="hasProducts">
       <div class="flex justify-between">
-        <FilterSearch class="w-p-60" @input="onSearch" />
+        <div class="flex w-p-65">
+          <FilterSearch class="w-p-80" @input="onSearch" />
+          <SButton color="white" class="ml-12">Настроить цены</SButton>
+        </div>
         <SButton color="violet" @click="toggleModal">
           + {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
         </SButton>
