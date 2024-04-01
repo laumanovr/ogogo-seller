@@ -30,5 +30,21 @@ export const useProductStore = defineStore("productStore", {
           });
       });
     },
+    getAllCategories(payload) {
+      return new Promise((resolve, reject) => {
+        loaderStore.setLoaderState(true);
+        productApi
+          .getCategories(payload)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            loaderStore.setLoaderState(false);
+            reject(err);
+          });
+      });
+    },
   },
 });
