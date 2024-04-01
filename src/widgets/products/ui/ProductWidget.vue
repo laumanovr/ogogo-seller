@@ -120,7 +120,9 @@
             :style="{ 'max-height': maxHeight + 'px' }"
           >
             <div v-for="category in categories" :key="category.id">
-              <SCheckbox>{{ category.categoryName }}</SCheckbox>
+              <SCheckbox @onChange="onSelectCategory($event, category.id)">
+                {{ category.categoryName }}
+              </SCheckbox>
             </div>
           </div>
         </div>
@@ -212,6 +214,7 @@ const modalContent = ref(null);
 const maxHeight = ref(0);
 const priceRange = ref({ min: 0, max: 0 });
 const categories = ref([]);
+const selectedCategories = ref([]);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? { statuses: [Number(tab.value)] } : {}
@@ -285,6 +288,18 @@ const onSearchCategory = (event) => {
   searchTimer.value = window.setTimeout(() => {
     fetchCategories(event.target.value);
   }, 1500);
+};
+
+const onSelectCategory = (isChecked: boolean, categoryId: string) => {
+  if (isChecked) {
+    selectedCategories.value.push(categoryId);
+  } else {
+    const index = selectedCategories.value.findIndex(
+      (item) => item.id === categoryId
+    );
+    selectedCategories.value.splice(index, 1);
+  }
+  console.log(selectedCategories.value);
 };
 </script>
 
