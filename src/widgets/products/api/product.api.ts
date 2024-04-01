@@ -11,4 +11,14 @@ export class ProductApi {
       .then((response) => response.data.result)
       .catch((err) => Promise.reject(err));
   };
+
+  getCategories = (data) => {
+    return axios({
+      method: "POST",
+      url: `/Marketplace/GetMarketplaceCategoryPagedList`,
+      data: data,
+    })
+      .then((response) => response.data.result)
+      .catch((err) => Promise.reject(err));
+  };
 }
