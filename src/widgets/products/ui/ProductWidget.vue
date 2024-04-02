@@ -286,10 +286,11 @@ const filterBy = () => {
   fetchProducts({ priceRange: priceRange.value, ...categories });
 };
 
-const onSearchCategory = (event) => {
+const onSearchCategory = (event: Event) => {
+  const target = event.target as HTMLInputElement;
   window.clearTimeout(searchTimer.value);
   searchTimer.value = window.setTimeout(() => {
-    fetchCategories(event.target.value);
+    fetchCategories(target.value);
   }, 1500);
 };
 
