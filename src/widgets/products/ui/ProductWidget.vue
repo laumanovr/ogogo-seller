@@ -280,7 +280,10 @@ const toggleFilterModal = () => {
 };
 
 const filterBy = () => {
-  fetchProducts({ priceRange: priceRange.value });
+  const categories = selectedCategories.value.length
+    ? { categories: selectedCategories.value }
+    : {};
+  fetchProducts({ priceRange: priceRange.value, ...categories });
 };
 
 const onSearchCategory = (event) => {
@@ -299,7 +302,6 @@ const onSelectCategory = (isChecked: boolean, categoryId: string) => {
     );
     selectedCategories.value.splice(index, 1);
   }
-  console.log(selectedCategories.value);
 };
 </script>
 
