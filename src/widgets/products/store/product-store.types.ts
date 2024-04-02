@@ -4,6 +4,8 @@ export interface IProduct {
   search?: string;
   statuses?: object;
   productType?: number;
+  priceRange?: object;
+  categories?: string[];
 }
 
 export interface IProductResponse {
@@ -12,4 +14,13 @@ export interface IProductResponse {
   pageSize: number;
   totalCount: number;
   totalPages: number;
+}
+
+export interface ICategory {
+  search: string;
+  pageSize: number;
+}
+
+export interface ICategoryResponse {
+  items: ICategoryResponse[];
 }
