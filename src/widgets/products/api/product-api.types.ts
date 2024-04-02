@@ -13,3 +13,8 @@ export interface IProductResponseApi {
   totalCount: number;
   totalPages: number;
 }
+
+export interface ICategory {
+  search: string;
+  pageSize: number;
+}
