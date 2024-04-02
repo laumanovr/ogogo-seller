@@ -103,10 +103,15 @@
         <div class="section">
           <div class="section-title">Цена</div>
           <div class="flex">
-            <SInput placeHolder="От" v-model.number="priceRange.min" />
+            <SInput
+              placeHolder="От"
+              type="number"
+              v-model.number="priceRange.min"
+            />
             <SInput
               placeHolder="До"
               class="ml-8"
+              type="number"
               v-model.number="priceRange.max"
             />
           </div>
@@ -119,7 +124,11 @@
             class="property-items"
             :style="{ 'max-height': maxHeight + 'px' }"
           >
-            <div v-for="category in categories" :key="category.id">
+            <div
+              v-for="category in categories"
+              :key="category.id"
+              ref="checkboxRefs"
+            >
               <SCheckbox @onChange="onSelectCategory($event, category.id)">
                 {{ category.categoryName }}
               </SCheckbox>
@@ -128,7 +137,7 @@
         </div>
       </div>
       <div class="filter-actions">
-        <SButton size="large" color="gray">
+        <SButton size="large" color="gray" @click="clearFilter">
           {{ $t("lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea") }}
         </SButton>
         <SButton size="large" color="violet" @click="filterBy">
@@ -142,7 +151,7 @@
 <script lang="ts" setup>
 import { EmptyData } from "@/shared/ui/components/empty-data";
 import { FilterSearch } from "@/shared/ui/components/filter-search";
-import { ref, reactive, onMounted, computed, nextTick } from "vue";
+import { ref, reactive, onMounted, computed, nextTick, Ref } from "vue";
 import i18n from "@/shared/lib/plugins/i18n";
 import {
   SModal,
@@ -215,6 +224,7 @@ const maxHeight = ref(0);
 const priceRange = ref({ min: 0, max: 0 });
 const categories = ref([]);
 const selectedCategories = ref([]);
+const checkboxRefs: Ref<HTMLDivElement[]> = ref([]);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? { statuses: [Number(tab.value)] } : {}
@@ -284,6 +294,16 @@ const filterBy = () => {
     ? { categories: selectedCategories.value }
     : {};
   fetchProducts({ priceRange: priceRange.value, ...categories });
+};
+
+const clearFilter = () => {
+  priceRange.value.max = 0;
+  priceRange.value.min = 0;
+  selectedCategories.value = [];
+  checkboxRefs.value.forEach((elem) => {
+    const input = elem.querySelector("input");
+    input.checked = false;
+  });
 };
 
 const onSearchCategory = (event: Event) => {
