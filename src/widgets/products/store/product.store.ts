@@ -1,7 +1,12 @@
 import { defineStore } from "pinia";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
-import { IProduct, IProductResponse } from "./product-store.types";
+import {
+  IProduct,
+  IProductResponse,
+  ICategory,
+  ICategoryResponse,
+} from "./product-store.types";
 import { ProductApi } from "../api/product.api";
 const productApi = new ProductApi();
 const loaderStore = useLoaderStore();
@@ -30,7 +35,7 @@ export const useProductStore = defineStore("productStore", {
           });
       });
     },
-    getAllCategories(payload) {
+    getAllCategories(payload: ICategory): Promise<ICategoryResponse> {
       return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
         productApi
