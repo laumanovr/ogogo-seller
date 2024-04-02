@@ -1,5 +1,9 @@
 import axios from "axios";
-import { IProductApi, IProductResponseApi } from "./product-api.types";
+import {
+  IProductApi,
+  IProductResponseApi,
+  ICategory,
+} from "./product-api.types";
 
 export class ProductApi {
   getProducts = (data: IProductApi): Promise<IProductResponseApi> => {
@@ -12,7 +16,7 @@ export class ProductApi {
       .catch((err) => Promise.reject(err));
   };
 
-  getCategories = (data) => {
+  getCategories = (data: ICategory) => {
     return axios({
       method: "POST",
       url: `/Marketplace/GetMarketplaceCategoryPagedList`,
