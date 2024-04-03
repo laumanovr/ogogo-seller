@@ -78,11 +78,11 @@ const orderStore = useOrderStore();
 const tab = ref("one");
 
 const currentStatus = computed(() =>
-  Number(tab.value) ? { queryParams: { status: [Number(tab.value)] } } : {}
+  Number(tab.value) ? { queryParams: { statuses: [Number(tab.value)] } } : {}
 );
 
 onMounted(() => {
-  selectTab("0");
+  selectTab("14400");
 });
 
 const fetchOrders = (filterObj = {}) => {
