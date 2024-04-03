@@ -28,6 +28,10 @@
       paginateRange="2"
       @onSelectPage="onChangePage"
     >
+      <template v-slot:price="{ item }">
+        <div>{{ item.price }} сом</div>
+        <div class="price-usd">{{ item.priceUsd }} $</div>
+      </template>
       <template v-slot:status="{ item }">
         <SBadge
           :content="showStatusData(item, 'name')"
@@ -36,6 +40,9 @@
       </template>
       <template v-slot:registrationDate="{ item }">
         {{ showPurchaseDate(item) }}
+      </template>
+      <template v-slot:paymentType="{ item }">
+        {{ showPaymentType(item) }}
       </template>
       <template v-slot:action="{ item }">
         <router-link to="/orders">
@@ -98,13 +105,23 @@ const showPurchaseDate = (item: any) => {
   return new Date(item.registrationDate).toLocaleDateString("ru-RU");
 };
 
+const showPaymentType = (item: any) => {
+  return item.paymentType === 14500 ? "Кредит" : "Оплачено";
+};
+
 const onChangePage = (page: any) => {
   console.log(page);
 };
 </script>
 
 <style lang="scss">
+@import "../../../app/style/colors.scss";
 .order-content {
-  //
+  .price-usd {
+    color: $gray-500;
+    font-weight: 500;
+    font-size: 12px;
+    margin-top: 4px;
+  }
 }
 </style>
