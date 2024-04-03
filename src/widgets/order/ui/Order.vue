@@ -28,10 +28,16 @@
       paginateRange="2"
       @onSelectPage="onChangePage"
     >
-      <!-- <template v-slot:status="{ item }">
-        <SBadge :content="item.status.name" :color="item.status.color" />
-      </template> -->
-      <template v-slot>
+      <template v-slot:status="{ item }">
+        <SBadge
+          :content="showStatusData(item, 'name')"
+          :color="showStatusData(item, 'color')"
+        />
+      </template>
+      <template v-slot:registrationDate="{ item }">
+        {{ showPurchaseDate(item) }}
+      </template>
+      <template v-slot:action="{ item }">
         <router-link to="/orders">
           {{ $t("lang-23981bea-cba2-425d-a435-41ae4a591794") }}
         </router-link>
@@ -42,7 +48,7 @@
 
 <script lang="ts" setup>
 import { STable, STabs, STabItem, SBadge } from "@tumarsoft/ogogo-ui";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { FilterSearch } from "@/shared/ui/components/filter-search";
 import { useOrderStore } from "../store/order.store";
 
@@ -57,24 +63,39 @@ const headers = ref([
 ]);
 const statuses = ref([
   { id: 0, name: "Все", color: "green" },
-  { id: 14400, name: "Активные", color: "green" },
-  { id: 14401, name: "Отмененные", color: "green" },
+  { id: 14400, name: "Активный", color: "green" },
+  { id: 14401, name: "Отмененный", color: "green" },
   { id: 14402, name: "Архив", color: "green" },
 ]);
 const orderStore = useOrderStore();
 const tab = ref("one");
-// const tableData = ref([]);
+
+const currentStatus = computed(() =>
+  Number(tab.value) ? { queryParams: { status: [Number(tab.value)] } } : {}
+);
 
 onMounted(() => {
-  fetchOrders();
+  selectTab("0");
 });
 
-const fetchOrders = () => {
-  orderStore.getAllOrders({});
+const fetchOrders = (filterObj = {}) => {
+  orderStore.getAllOrders({ ...filterObj });
 };
 
 const selectTab = (value: any) => {
   tab.value = value;
+  fetchOrders(currentStatus.value);
+};
+
+const showStatusData = (item: any, field: string) => {
+  const foundStatus = statuses.value.find(
+    (statusObj) => statusObj.id === item.status
+  );
+  return field === "name" ? foundStatus?.name : foundStatus?.color;
+};
+
+const showPurchaseDate = (item: any) => {
+  return new Date(item.registrationDate).toLocaleDateString("ru-RU");
 };
 
 const onChangePage = (page: any) => {
@@ -84,5 +105,6 @@ const onChangePage = (page: any) => {
 
 <style lang="scss">
 .order-content {
+  //
 }
 </style>
