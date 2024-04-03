@@ -3,7 +3,7 @@
     <img src="../../ui/assets/Ogogo-logo.png" class="ogogo-img" />
 
     <div class="header-navigation">
-      <div
+      <!-- <div
         @click="onMenuItemChange(MenuItems.ModerateProducts)"
         class="cursor-pointer d-flex flex-col items-center"
       >
@@ -26,7 +26,7 @@
         <p :class="`${isModerateTemplatesActive} font-size-12 mt-4`">
           {{ $t("lang-fa1bcc3d-fe84-4e09-836e-eef57745df44") }}
         </p>
-      </div>
+      </div> -->
 
       <div
         @click="onMenuItemChange(MenuItems.Products)"
