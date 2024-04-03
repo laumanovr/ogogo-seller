@@ -4,7 +4,7 @@
       {{ $t("lang-6f853bc8-3f4e-44d2-9770-49d98347fc6b") }}
     </div>
     <template v-if="isOrderExist">
-      <FilterSearch />
+      <FilterSearch @input="onSearch" />
 
       <STabs :tab-mode="'filter-tabs'" class="mb-20">
         <STabItem value="14400" :active-tab="tab" @changeTab="selectTab">
@@ -82,6 +82,7 @@ const tab = ref("one");
 const isOrderExist = ref(false);
 const hasOrders = ref(false);
 const totalItems = ref(0);
+const searchTimer = ref(null);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? { queryParams: { statuses: [Number(tab.value)] } } : {}
@@ -121,6 +122,13 @@ const showPaymentType = (item: any) => {
 
 const onChangePage = (page: number) => {
   fetchOrders({ ...currentStatus.value, pageIndex: page });
+};
+
+const onSearch = (value: string) => {
+  window.clearTimeout(searchTimer.value);
+  searchTimer.value = window.setTimeout(() => {
+    fetchOrders({ search: value });
+  }, 1500);
 };
 </script>
 
