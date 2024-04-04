@@ -9,7 +9,7 @@ export class ProductApi {
   getProducts = (data: IProductApi): Promise<IProductResponseApi> => {
     return axios({
       method: "POST",
-      url: `/Marketplace/GetMarketplaceProductPagedList`,
+      url: `/MarketplaceProduct/GetMarketplaceProductPagedList`,
       data: data,
     })
       .then((response) => response.data.result)
