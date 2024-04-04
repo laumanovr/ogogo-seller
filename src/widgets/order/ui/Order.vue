@@ -60,7 +60,7 @@
 import { STable, STabs, STabItem, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted, computed } from "vue";
 import { FilterSearch } from "@/shared/ui/components/filter-search";
-import { useOrderStore } from "../store/order.store";
+import { useOrderStore } from "@/entities/order/store/order.store";
 import { OrderEntity } from "@/entities/order/model/types";
 
 const headers = ref([
@@ -95,9 +95,9 @@ onMounted(() => {
 
 const fetchOrders = (filterObj = {}) => {
   orderStore.getAllOrders({ ...filterObj }).then((response) => {
-    isOrderExist.value = Boolean(response.totalPages);
-    hasOrders.value = Boolean(response.items.length);
-    totalItems.value = response.totalCount;
+    isOrderExist.value = Boolean(response.result.totalPages);
+    hasOrders.value = Boolean(response.result.items.length);
+    totalItems.value = response.result.totalCount;
   });
 };
 
