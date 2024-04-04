@@ -46,7 +46,7 @@
         <template v-slot:paymentType="{ item }">
           {{ showPaymentType(item) }}
         </template>
-        <template v-slot:action="{ item }">
+        <template v-slot:action>
           <router-link to="/orders">
             {{ $t("lang-23981bea-cba2-425d-a435-41ae4a591794") }}
           </router-link>
@@ -61,6 +61,7 @@ import { STable, STabs, STabItem, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted, computed } from "vue";
 import { FilterSearch } from "@/shared/ui/components/filter-search";
 import { useOrderStore } from "../store/order.store";
+import { OrderEntity } from "@/entities/order/model/types";
 
 const headers = ref([
   { title: "Номер заказа", key: "orderNumber" },
@@ -100,23 +101,23 @@ const fetchOrders = (filterObj = {}) => {
   });
 };
 
-const selectTab = (value: any) => {
+const selectTab = (value: string) => {
   tab.value = value;
   fetchOrders(currentStatus.value);
 };
 
-const showStatusData = (item: any, field: string) => {
+const showStatusData = (item: OrderEntity, field: string) => {
   const foundStatus = statuses.value.find(
     (statusObj) => statusObj.id === item.status
   );
   return field === "name" ? foundStatus?.name : foundStatus?.color;
 };
 
-const showPurchaseDate = (item: any) => {
+const showPurchaseDate = (item: OrderEntity) => {
   return new Date(item.registrationDate).toLocaleDateString("ru-RU");
 };
 
-const showPaymentType = (item: any) => {
+const showPaymentType = (item: OrderEntity) => {
   return item.paymentType === 14500 ? "Кредит" : "Оплачено";
 };
 
