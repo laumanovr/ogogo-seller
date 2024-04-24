@@ -164,7 +164,7 @@ import {
   SInput,
   SCheckbox,
 } from "@tumarsoft/ogogo-ui";
-import { useProductStore } from "../store/product.store";
+import { useProductStore } from "@/entities/products/store/product.store";
 
 const productStore = useProductStore();
 
@@ -239,10 +239,10 @@ const fetchProducts = (filterObj = {}) => {
   productStore
     .getAllProducts({ productType: 14701, ...filterObj })
     .then((response) => {
-      hasProducts.value = Boolean(response.totalPages);
-      hasStatusProducts.value = Boolean(response.items.length);
-      totalItems.value = response.totalCount;
-      tableData.value = response.items;
+      hasProducts.value = Boolean(response.result.totalPages);
+      hasStatusProducts.value = Boolean(response.result.items.length);
+      totalItems.value = response.result.totalCount;
+      tableData.value = response.result.items;
     });
 };
 
