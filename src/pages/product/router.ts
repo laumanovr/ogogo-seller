@@ -6,6 +6,11 @@ const routes = [
     name: "products",
     component: findComponent("product", "ProductList"),
   },
+  {
+    path: "/product-create",
+    name: "productCreate",
+    component: findComponent("product", "ProductCreate"),
+  },
 ];
 
 export default routes;
