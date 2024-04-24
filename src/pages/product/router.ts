@@ -4,7 +4,7 @@ const routes = [
   {
     path: "/products",
     name: "products",
-    component: findComponent("product", "Product"),
+    component: findComponent("product", "ProductList"),
   },
 ];
 

@@ -1,9 +1,9 @@
 <template>
   <div class="product-container">
-    <ProductWidget />
+    <ProductListWidget />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ProductWidget } from "@/widgets/products";
+import { ProductListWidget } from "@/widgets/product-list";
 </script>
