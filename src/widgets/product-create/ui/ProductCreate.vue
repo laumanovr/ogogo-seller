@@ -22,7 +22,7 @@
             class="d-flex sample"
             :class="{ active: i === sampleIndex }"
             @click="selectSample(i)"
-            v-for="i in 3"
+            v-for="(item, i) in selectedTemplates"
             :key="i"
           >
             <img
@@ -33,7 +33,7 @@
             <div>
               <div class="sample__badge">Шаблон</div>
               <div class="sample__name">
-                Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN
+                {{ item.name }}
               </div>
               <SIconRender name="TrashIcon" />
             </div>
@@ -47,8 +47,8 @@
             class="mt-12 mb-12"
           />
           <div class="template-container">
-            <div class="template" v-for="i in 10" :key="i">
-              <SCheckbox>
+            <div class="template" v-for="(item, i) in templateTests" :key="i">
+              <SCheckbox v-model="item.selected">
                 <img
                   src="../../../app/assets/img/iphone.jpg"
                   alt="img"
@@ -56,17 +56,21 @@
                 />
                 <div class="template__info">
                   <div class="template__name">
-                    Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM
-                    HK/CN
+                    {{ item.name }}
                   </div>
                   <div class="template__desc">
-                    15 Pro • Natural Titanium • 128 ГБ
+                    {{ item.desc }}
                   </div>
                 </div>
               </SCheckbox>
             </div>
           </div>
-          <SButton color="violet" size="large" class="w-p-100 mt-24">
+          <SButton
+            color="violet"
+            size="large"
+            class="w-p-100 mt-24"
+            @click="addTemplates"
+          >
             Добавить шаблоны
           </SButton>
         </STabWindow>
@@ -88,8 +92,30 @@ import {
 } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 
+const templateTests = ref([
+  {
+    id: 1,
+    name: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIMHK/CN",
+    desc: "15 Pro • Natural Titanium • 128 ГБ",
+    selected: false,
+  },
+  {
+    id: 2,
+    name: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIMHK/CN",
+    desc: "15 Pro • Natural Titanium • 128 ГБ",
+    selected: false,
+  },
+  {
+    id: 3,
+    name: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIMHK/CN",
+    desc: "15 Pro • Natural Titanium • 128 ГБ",
+    selected: false,
+  },
+]);
+
 const tab = ref("one");
 const sampleIndex = ref(0);
+const selectedTemplates = ref([]);
 
 const selectTab = (selectedTab: string) => {
   tab.value = selectedTab;
@@ -97,6 +123,10 @@ const selectTab = (selectedTab: string) => {
 
 const selectSample = (index: number) => {
   sampleIndex.value = index;
+};
+
+const addTemplates = () => {
+  selectedTemplates.value = templateTests.value.filter((item) => item.selected);
 };
 </script>
 
