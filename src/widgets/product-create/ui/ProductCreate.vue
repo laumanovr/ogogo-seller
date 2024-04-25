@@ -8,11 +8,32 @@
     </div>
 
     <div class="d-flex mt-25">
-      <div class="tabs-container mr-40">
+      <div class="tabs-container mr-40 pt-15">
         <STabs :tab-mode="'content-tabs'">
-          <STabItem value="one" :active-tab="tab">Товары</STabItem>
-          <STabItem value="two" :active-tab="tab">Шаблоны</STabItem>
+          <STabItem value="one" :active-tab="tab" @changeTab="selectTab">
+            Товары
+          </STabItem>
+          <STabItem value="two" :active-tab="tab" @changeTab="selectTab">
+            Шаблоны
+          </STabItem>
         </STabs>
+        <STabWindow value="one" :active-tab="tab">
+          <div class="d-flex template" v-for="i in 3" :key="i">
+            <img
+              src="../../../app/assets/img/iphone.jpg"
+              alt="img"
+              class="template__img"
+            />
+            <div>
+              <div class="template__badge">Шаблон</div>
+              <div class="template__name">
+                Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN
+              </div>
+              <SIconRender name="TrashIcon" />
+            </div>
+          </div>
+        </STabWindow>
+        <STabWindow value="two" :active-tab="tab"> Wablony </STabWindow>
       </div>
       <div class="form-container"></div>
     </div>
@@ -20,19 +41,68 @@
 </template>
 
 <script lang="ts" setup>
-import { SButton, SIconRender, STabs, STabItem } from "@tumarsoft/ogogo-ui";
+import {
+  SButton,
+  SIconRender,
+  STabs,
+  STabItem,
+  STabWindow,
+} from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 
 const tab = ref("one");
+
+const selectTab = (selectedTab: string) => {
+  tab.value = selectedTab;
+};
 </script>
 
 <style lang="scss" scoped>
+@import "../../../app/style/colors.scss";
 .product-create-content {
   .tabs-container {
     width: 32%;
     height: 200px;
-    border: 1px solid;
+    .tabs {
+      width: 100%;
+      .tab-item {
+        margin: 0;
+        width: 50%;
+        text-align: center;
+        &.active {
+          color: $violet-600;
+          border-color: $violet-600;
+        }
+      }
+    }
+    .template {
+      padding: 8px;
+      margin-top: 16px;
+      &__img {
+        width: 56px;
+        height: 56px;
+        object-fit: cover;
+        margin-right: 12px;
+      }
+      &__badge {
+        font-size: 10px;
+        font-weight: 500;
+        color: $sky-600;
+        padding: 4px;
+        background: $sky-100;
+        border-radius: 4px;
+        display: inline-block;
+      }
+      &__name {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 8px 0 12px;
+        max-height: 50px;
+        overflow-y: hidden;
+      }
+    }
   }
+
   .form-container {
     width: 68%;
     height: 200px;
