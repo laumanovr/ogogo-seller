@@ -39,7 +39,32 @@
             </div>
           </div>
         </STabWindow>
-        <STabWindow value="two" :active-tab="tab"> Wablony </STabWindow>
+        <STabWindow value="two" :active-tab="tab">
+          <SInput
+            placeHolder="Поиск..."
+            isSearchable
+            width="100%"
+            class="mt-12 mb-12"
+          />
+          <div class="template" v-for="i in 3" :key="i">
+            <SCheckbox>
+              <img
+                src="../../../app/assets/img/iphone.jpg"
+                alt="img"
+                class="sample__img"
+              />
+              <div class="template__info">
+                <div class="template__name">
+                  Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM
+                  HK/CN
+                </div>
+                <div class="template__desc">
+                  15 Pro • Natural Titanium • 128 ГБ
+                </div>
+              </div>
+            </SCheckbox>
+          </div>
+        </STabWindow>
       </div>
       <div class="form-container"></div>
     </div>
@@ -53,6 +78,8 @@ import {
   STabs,
   STabItem,
   STabWindow,
+  SInput,
+  SCheckbox,
 } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 
@@ -68,7 +95,7 @@ const selectSample = (index: number) => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../../../app/style/colors.scss";
 .product-create-content {
   .tabs-container {
@@ -122,6 +149,27 @@ const selectSample = (index: number) => {
         .sample__name {
           color: $white;
         }
+      }
+    }
+    .template {
+      margin-bottom: 15px;
+      &__name {
+        font-size: 14px;
+        font-weight: 600;
+        max-height: 50px;
+        overflow-y: hidden;
+      }
+      &__desc {
+        font-size: 12px;
+        font-weight: 500;
+        color: $gray-500;
+        margin-top: 8px;
+      }
+      .checkbox-container {
+        align-items: center;
+      }
+      .checkbox-title {
+        display: flex;
       }
     }
   }
