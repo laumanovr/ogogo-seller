@@ -18,15 +18,21 @@
           </STabItem>
         </STabs>
         <STabWindow value="one" :active-tab="tab">
-          <div class="d-flex template" v-for="i in 3" :key="i">
+          <div
+            class="d-flex sample"
+            :class="{ active: i === sampleIndex }"
+            @click="selectSample(i)"
+            v-for="i in 3"
+            :key="i"
+          >
             <img
               src="../../../app/assets/img/iphone.jpg"
               alt="img"
-              class="template__img"
+              class="sample__img"
             />
             <div>
-              <div class="template__badge">Шаблон</div>
-              <div class="template__name">
+              <div class="sample__badge">Шаблон</div>
+              <div class="sample__name">
                 Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN
               </div>
               <SIconRender name="TrashIcon" />
@@ -51,9 +57,14 @@ import {
 import { ref } from "vue";
 
 const tab = ref("one");
+const sampleIndex = ref(0);
 
 const selectTab = (selectedTab: string) => {
   tab.value = selectedTab;
+};
+
+const selectSample = (index: number) => {
+  sampleIndex.value = index;
 };
 </script>
 
@@ -75,9 +86,10 @@ const selectTab = (selectedTab: string) => {
         }
       }
     }
-    .template {
+    .sample {
       padding: 8px;
       margin-top: 16px;
+      cursor: pointer;
       &__img {
         width: 56px;
         height: 56px;
@@ -99,6 +111,17 @@ const selectTab = (selectedTab: string) => {
         margin: 8px 0 12px;
         max-height: 50px;
         overflow-y: hidden;
+      }
+      &.active {
+        background: $violet-500;
+        border-radius: 10px;
+        .sample__badge {
+          color: $white;
+          background: rgba($black, 0.12);
+        }
+        .sample__name {
+          color: $white;
+        }
       }
     }
   }
