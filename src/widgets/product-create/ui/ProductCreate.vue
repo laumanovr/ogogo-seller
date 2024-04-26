@@ -6,11 +6,9 @@
         <span>Назад</span>
       </SButton>
     </div>
-
     <div class="d-flex mt-25">
       <ProductTemplate />
-
-      <div class="form-container"></div>
+      <ProductForm />
     </div>
   </div>
 </template>
@@ -18,16 +16,5 @@
 <script lang="ts" setup>
 import { SButton, SIconRender } from "@tumarsoft/ogogo-ui";
 import ProductTemplate from "../../../shared/ui/components/product/ProductTemplate.vue";
-// import { ref } from "vue";
+import ProductForm from "../../../shared/ui/components/product/ProductForm.vue";
 </script>
-
-<style lang="scss">
-@import "../../../app/style/colors.scss";
-.product-create-content {
-  .form-container {
-    width: 68%;
-    height: 200px;
-    border: 1px solid;
-  }
-}
-</style>
