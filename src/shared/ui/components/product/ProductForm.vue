@@ -17,8 +17,8 @@
     <div class="d-flex items-center justify-between mt-40 mb-30">
       <div class="head-title md">Цена</div>
       <div class="d-flex">
-        <SRadioButton class="mr-24">В сомах</SRadioButton>
-        <SRadioButton>В долларах</SRadioButton>
+        <SRadioButton class="mr-24 radio-btn">В сомах</SRadioButton>
+        <SRadioButton class="radio-btn">В долларах</SRadioButton>
       </div>
     </div>
     <div class="d-flex justify-between">
@@ -49,6 +49,11 @@ import {
   width: 68%;
   .head-title {
     margin: 0 0 25px;
+  }
+  .radio-btn {
+    .radio-label {
+      height: 20px;
+    }
   }
 }
 </style>
