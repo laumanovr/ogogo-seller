@@ -35,7 +35,7 @@
               <div class="sample__name">
                 {{ item.name }}
               </div>
-              <SIconRender name="TrashIcon" />
+              <SIconRender name="TrashIcon" @click="deleteSample(item.id)" />
             </div>
           </div>
         </STabWindow>
@@ -127,6 +127,13 @@ const selectSample = (index: number) => {
 
 const addTemplates = () => {
   selectedTemplates.value = templateTests.value.filter((item) => item.selected);
+};
+
+const deleteSample = (id: number) => {
+  const index = selectedTemplates.value.findIndex(
+    (template) => template.id === id
+  );
+  selectedTemplates.value.splice(index, 1);
 };
 </script>
 
