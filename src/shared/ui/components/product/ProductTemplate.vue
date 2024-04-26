@@ -129,7 +129,6 @@ const deleteSample = (id: number) => {
 @import "../../../../app/style/colors.scss";
 .product-tabs-container {
   width: 32%;
-  height: 200px;
   .tabs {
     width: 100%;
     .tab-item {
