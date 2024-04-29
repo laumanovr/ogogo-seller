@@ -46,11 +46,24 @@
             @click="deleteImage(image)"
           />
         </div>
-        <label for="file" class="add-photo">
-          <input type="file" id="file" @change="onSelectFile" />
+        <label for="photo" class="add-content">
+          <input type="file" id="photo" @change="onSelectPhoto" />
           <span>+</span>
         </label>
       </div>
+    </div>
+    <div class="content-block mt-40">
+      <div class="head-title md">Видео</div>
+      <p class="content-hint">
+        На карточке может быть только одно видео – покажем его первым. Принимаем
+        качественные ролики <br />
+        не больше 30 МБ и не длинее 5 минут.
+      </p>
+      <div class="video"></div>
+      <label for="video" class="add-content">
+        <input type="file" id="video" @change="onSelectVideo" />
+        <span>+</span>
+      </label>
     </div>
   </div>
 </template>
@@ -83,7 +96,7 @@ const convertToBase64 = (file: File) => {
   });
 };
 
-const onSelectFile = async (e: Event) => {
+const onSelectPhoto = async (e: Event) => {
   const target = e.target as HTMLInputElement;
   const file = target.files[0];
   if (file) {
@@ -98,6 +111,8 @@ const deleteImage = (imgUrl: string) => {
   );
   productObj.value.photos.splice(index, 1);
 };
+
+const onSelectVideo = (e: Event) => {};
 </script>
 
 <style lang="scss">
@@ -143,7 +158,7 @@ const deleteImage = (imgUrl: string) => {
         }
       }
     }
-    .add-photo {
+    .add-content {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -153,7 +168,8 @@ const deleteImage = (imgUrl: string) => {
       background: $gray-150;
       border-radius: 8px;
       cursor: pointer;
-      #file {
+      #photo,
+      #video {
         display: none;
       }
     }
