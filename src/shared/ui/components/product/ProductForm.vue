@@ -39,6 +39,12 @@
       <div class="d-flex flex-wrap">
         <div class="photo" v-for="image in productObj.photos" :key="image">
           <img :src="image" alt="img" />
+          <SIconRender
+            name="CloseRoundIcon"
+            color="grey"
+            class="close-icon"
+            @click="deleteImage(image)"
+          />
         </div>
         <label for="file" class="add-photo">
           <input type="file" id="file" @change="onSelectFile" />
@@ -56,6 +62,7 @@ import {
   STextArea,
   SSelect,
   SRadioButton,
+  SIconRender,
 } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 
@@ -84,6 +91,13 @@ const onSelectFile = async (e: Event) => {
     productObj.value.photos.push(convertedImage);
   }
 };
+
+const deleteImage = (imgUrl: string) => {
+  const index = productObj.value.photos.findIndex(
+    (imageUrl) => imageUrl === imgUrl
+  );
+  productObj.value.photos.splice(index, 1);
+};
 </script>
 
 <style lang="scss">
@@ -108,6 +122,7 @@ const onSelectFile = async (e: Event) => {
       margin: 8px 0 24px;
     }
     .photo {
+      position: relative;
       width: 180px;
       height: 180px;
       margin: 0 8px 8px 0;
@@ -118,6 +133,14 @@ const onSelectFile = async (e: Event) => {
         height: 100%;
         object-fit: cover;
         border-radius: 8px;
+      }
+      .close-icon {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        & > rect {
+          fill-opacity: 0.12;
+        }
       }
     }
     .add-photo {
