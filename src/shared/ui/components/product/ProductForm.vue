@@ -65,6 +65,23 @@
         <span>+</span>
       </label>
     </div>
+    <div class="content-block mt-40">
+      <div class="head-title md">Характеристики</div>
+      <p class="content-hint">
+        Это характеристики товара, которые могут быть выбраны покупателем при
+        покупке. Например, цвет, <br />
+        материал, объем и другие характеристики, которые могут варьироваться для
+        одного и того же товара
+      </p>
+      <div class="d-flex justify-between flex-wrap">
+        <div class="select-item mb-16" v-for="i in 4" :key="i">
+          <SSelect label="Конфигурация памяти" class="w-p-100" />
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-end mt-60">
+      <SButton color="violet" size="large">Опубликовать</SButton>
+    </div>
   </div>
 </template>
 
@@ -172,6 +189,9 @@ const onSelectVideo = (e: Event) => {};
       #video {
         display: none;
       }
+    }
+    .select-item {
+      width: calc(50% - 6px);
     }
   }
 }
