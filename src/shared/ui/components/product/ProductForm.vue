@@ -136,8 +136,8 @@ const deleteImage = (imgUrl: string) => {
       }
       .close-icon {
         position: absolute;
-        top: -8px;
-        right: -8px;
+        top: -7px;
+        right: -7px;
         & > rect {
           fill-opacity: 0.12;
         }
