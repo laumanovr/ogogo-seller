@@ -129,7 +129,9 @@ const deleteImage = (imgUrl: string) => {
   productObj.value.photos.splice(index, 1);
 };
 
-const onSelectVideo = (e: Event) => {};
+const onSelectVideo = (e: Event) => {
+  console.log(e);
+};
 </script>
 
 <style lang="scss">
