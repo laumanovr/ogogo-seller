@@ -29,9 +29,9 @@
     <div class="mt-16 mb-40">
       <SInput label="Наличие (кол-во) *" width="100%" />
     </div>
-    <div class="photo-block">
+    <div class="content-block">
       <div class="head-title md">Фото</div>
-      <p class="photo-hint">
+      <p class="content-hint">
         Добавьте изображение товара. Изображение максимум 2000 х 2000 px, в
         формате PNG или JPEG. <br />
         Размер файла – не более 15 МБ.
@@ -112,11 +112,11 @@ const deleteImage = (imgUrl: string) => {
       height: 20px;
     }
   }
-  .photo-block {
+  .content-block {
     .head-title {
       margin: 0;
     }
-    .photo-hint {
+    .content-hint {
       font-size: 14px;
       font-weight: 500;
       margin: 8px 0 24px;
