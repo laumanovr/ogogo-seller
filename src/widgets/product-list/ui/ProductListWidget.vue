@@ -73,16 +73,24 @@
       <p class="font-bold mb-24">
         {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
       </p>
-      <SSelect label="Категория" class="w-p-100" />
-      <SSelect label="Категория" class="w-p-100 mt-16" />
-      <SSelect label="Категория" class="w-p-100 mt-16" />
+      <SSelect
+        :label="$t('lang-89bfcd93-3986-425f-b7f8-732462da1a5f')"
+        class="w-p-100"
+      />
+      <SSelect
+        :label="$t('lang-97c9b3e4-5040-4730-b73e-3ebf3309f13a')"
+        class="w-p-100 mt-16"
+      />
+      <SSelect
+        :label="$t('lang-97c9b3e4-5040-4730-b73e-3ebf3309f13a')"
+        class="w-p-100 mt-16"
+      />
       <div class="flex flex-row w-p-100 gap-2 mt-36 justify-between">
         <SButton color="gray" class="button w-p-49" @click="toggleModal">
           {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
         </SButton>
         <SButton color="violet" class="button w-p-49">
-          Создать
-          <!-- {{ $t("lang-d0108c3e-9945-4245-a730-b011e5a47c35") }} -->
+          {{ $t("lang-aea72790-6410-4376-9965-2a4ccbce8e9a") }}
         </SButton>
       </div>
     </SModal>
