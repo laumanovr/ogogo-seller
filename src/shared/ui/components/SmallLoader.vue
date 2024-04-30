@@ -5,7 +5,7 @@
 <style lang="scss">
 @import "../../../app/style/colors.scss";
 .small-loader {
-  border: 3px solid $gray-50;
+  border: 3px solid $gray-200;
   border-radius: 50%;
   border-top-color: $violet-500;
   width: 20px;
