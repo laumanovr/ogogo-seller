@@ -5,7 +5,13 @@
       <SInput label="Наименование товара *" width="100%" />
     </div>
     <div class="d-flex items-end mt-16">
-      <SInput label="Ваш артикул" width="85%" />
+      <SInput
+        label="Ваш артикул"
+        width="85%"
+        class="article"
+        disabled
+        v-model="productObj.article"
+      />
       <SButton color="gray" class="ml-12">Сгенерировать</SButton>
     </div>
     <div class="mt-16">
@@ -97,6 +103,7 @@ import {
 import { ref } from "vue";
 
 const productObj = ref({
+  article: "article77",
   photos: [],
 });
 
@@ -195,6 +202,9 @@ const onSelectVideo = (e: Event) => {
     .select-item {
       width: calc(50% - 6px);
     }
+  }
+  .article.disabled {
+    opacity: 0.9;
   }
 }
 </style>
