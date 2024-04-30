@@ -1,7 +1,7 @@
 <template>
   <div class="product-create-content">
     <div class="d-flex items-center">
-      <SButton color="white">
+      <SButton color="white" @click="goBack">
         <SIconRender name="ArrowIcon" direction="left" color="black" />
         <span>Назад</span>
       </SButton>
@@ -19,4 +19,11 @@ import { SButton, SIconRender } from "@tumarsoft/ogogo-ui";
 import ProductTemplate from "../../../shared/ui/components/product/ProductTemplate.vue";
 import ProductForm from "../../../shared/ui/components/product/ProductForm.vue";
 import Breadcrumbs from "@/shared/ui/components/Breadcrumbs/Breadcrumbs.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const goBack = () => {
+  router.push("/products");
+};
 </script>
