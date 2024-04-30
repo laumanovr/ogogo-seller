@@ -89,7 +89,11 @@
         <SButton color="gray" class="button w-p-49" @click="toggleModal">
           {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
         </SButton>
-        <SButton color="violet" class="button w-p-49">
+        <SButton
+          color="violet"
+          class="button w-p-49"
+          @click="goToCreateProduct"
+        >
           {{ $t("lang-aea72790-6410-4376-9965-2a4ccbce8e9a") }}
         </SButton>
       </div>
@@ -160,6 +164,7 @@ import { EmptyData } from "@/shared/ui/components/empty-data";
 import { FilterSearch } from "@/shared/ui/components/filter-search";
 import { ref, reactive, onMounted, computed, nextTick, Ref } from "vue";
 import i18n from "@/shared/lib/plugins/i18n";
+import { useRouter } from "vue-router";
 import {
   SModal,
   SSelect,
@@ -174,6 +179,7 @@ import {
 import { useProductStore } from "@/entities/products/store/product.store";
 
 const productStore = useProductStore();
+const router = useRouter();
 
 const headers = reactive([
   {
@@ -330,6 +336,10 @@ const onSelectCategory = (isChecked: boolean, categoryId: string) => {
     );
     selectedCategories.value.splice(index, 1);
   }
+};
+
+const goToCreateProduct = () => {
+  router.push("/product-create");
 };
 </script>
 
