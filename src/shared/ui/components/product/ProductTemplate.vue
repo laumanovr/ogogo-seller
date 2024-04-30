@@ -56,14 +56,18 @@
           </SCheckbox>
         </div>
       </div>
-      <SButton
-        color="violet"
-        size="large"
-        class="w-p-100 mt-24"
-        @click="addTemplates"
-      >
-        Добавить шаблоны
-      </SButton>
+      <div class="btn-container">
+        <SButton
+          color="violet"
+          size="large"
+          class="w-p-100 mt-24"
+          @click="addTemplates"
+          :disabled="isDisabled"
+        >
+          Добавить шаблоны
+        </SButton>
+        <SmallLoader v-if="isDisabled" />
+      </div>
     </STabWindow>
   </div>
 </template>
@@ -78,6 +82,7 @@ import {
   SInput,
   SCheckbox,
 } from "@tumarsoft/ogogo-ui";
+import SmallLoader from "@/shared/ui/components/SmallLoader.vue";
 import { ref } from "vue";
 
 const templateTests = ref([
@@ -104,6 +109,7 @@ const templateTests = ref([
 const tab = ref("one");
 const sampleIndex = ref(0);
 const selectedTemplates = ref([]);
+const isDisabled = ref(false);
 
 const selectTab = (selectedTab: string) => {
   tab.value = selectedTab;
@@ -114,7 +120,11 @@ const selectSample = (index: number) => {
 };
 
 const addTemplates = () => {
+  isDisabled.value = true;
   selectedTemplates.value = templateTests.value.filter((item) => item.selected);
+  setTimeout(() => {
+    isDisabled.value = false;
+  }, 1000);
 };
 
 const deleteSample = (id: number) => {
@@ -209,6 +219,14 @@ const deleteSample = (id: number) => {
       .checkbox-title {
         display: flex;
       }
+    }
+  }
+  .btn-container {
+    position: relative;
+    .small-loader {
+      position: absolute;
+      top: 16px;
+      right: 12px;
     }
   }
 }
