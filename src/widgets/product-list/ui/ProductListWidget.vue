@@ -70,20 +70,19 @@
       />
     </template>
     <SModal :isModalOpen="isShowModal" @onClose="toggleModal" height="auto">
-      <p class="font-bold">
+      <p class="font-bold mb-24">
         {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
       </p>
-      <SSelect
-        :label="$t('lang-75805fdb-eac2-4c87-b481-563e318789b5')"
-        class="w-p-100"
-      >
-      </SSelect>
+      <SSelect label="Категория" class="w-p-100" />
+      <SSelect label="Категория" class="w-p-100 mt-16" />
+      <SSelect label="Категория" class="w-p-100 mt-16" />
       <div class="flex flex-row w-p-100 gap-2 mt-36 justify-between">
         <SButton color="gray" class="button w-p-49" @click="toggleModal">
           {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
         </SButton>
         <SButton color="violet" class="button w-p-49">
-          {{ $t("lang-d0108c3e-9945-4245-a730-b011e5a47c35") }}
+          Создать
+          <!-- {{ $t("lang-d0108c3e-9945-4245-a730-b011e5a47c35") }} -->
         </SButton>
       </div>
     </SModal>
