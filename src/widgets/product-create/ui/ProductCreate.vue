@@ -8,7 +8,7 @@
       <Breadcrumbs class="ml-24" />
     </div>
     <div class="d-flex mt-25">
-      <ProductTemplate />
+      <ProductTemplate @onSelectItem="onSelectTemplate" />
       <ProductForm />
     </div>
   </div>
@@ -19,11 +19,17 @@ import { SButton, SIconRender } from "@tumarsoft/ogogo-ui";
 import ProductTemplate from "../../../shared/ui/components/product/ProductTemplate.vue";
 import ProductForm from "../../../shared/ui/components/product/ProductForm.vue";
 import Breadcrumbs from "@/shared/ui/components/Breadcrumbs/Breadcrumbs.vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const selectedTemplate = ref({});
 
 const goBack = () => {
   router.push("/products");
+};
+
+const onSelectTemplate = (template: any) => {
+  selectedTemplate.value = template;
 };
 </script>
