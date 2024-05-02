@@ -11,20 +11,20 @@
     <STabWindow value="one" :active-tab="tab">
       <div
         class="d-flex sample"
-        :class="{ active: i === sampleIndex }"
+        :class="{ active: i + 1 === sampleIndex }"
         @click="selectSample(i)"
         v-for="(item, i) in selectedTemplates"
         :key="i"
       >
         <img
-          src="../../../../app/assets/img/iphone.jpg"
+          :src="'data:image/png;base64,' + item.iconBase64"
           alt="img"
           class="sample__img"
         />
         <div>
           <div class="sample__badge">Шаблон</div>
           <div class="sample__name">
-            {{ item.name }}
+            {{ item.productName }}
           </div>
           <SIconRender name="TrashIcon" @click="deleteSample(item.id)" />
         </div>
@@ -38,19 +38,19 @@
         class="mt-12 mb-12"
       />
       <div class="template-container">
-        <div class="template" v-for="(item, i) in templateTests" :key="i">
+        <div class="template" v-for="(item, i) in templates" :key="i">
           <SCheckbox v-model="item.selected">
             <img
-              src="../../../../app/assets/img/iphone.jpg"
+              :src="'data:image/png;base64,' + item.iconBase64"
               alt="img"
               class="sample__img"
             />
             <div class="template__info">
               <div class="template__name">
-                {{ item.name }}
+                {{ item.productName }}
               </div>
               <div class="template__desc">
-                {{ item.desc }}
+                <!-- {{ item.desc }} -->
               </div>
             </div>
           </SCheckbox>
@@ -82,49 +82,41 @@ import {
   SInput,
   SCheckbox,
 } from "@tumarsoft/ogogo-ui";
+import { ref, onMounted } from "vue";
+import { useProductStore } from "@/entities/products/store/product.store";
 import SmallLoader from "@/shared/ui/components/SmallLoader.vue";
-import { ref } from "vue";
 
-const templateTests = ref([
-  {
-    id: 1,
-    name: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIMHK/CN",
-    desc: "15 Pro • Natural Titanium • 128 ГБ",
-    selected: false,
-  },
-  {
-    id: 2,
-    name: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIMHK/CN",
-    desc: "15 Pro • Natural Titanium • 128 ГБ",
-    selected: false,
-  },
-  {
-    id: 3,
-    name: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIMHK/CN",
-    desc: "15 Pro • Natural Titanium • 128 ГБ",
-    selected: false,
-  },
-]);
-
+const productStore = useProductStore();
 const tab = ref("one");
 const sampleIndex = ref(0);
 const selectedTemplates = ref([]);
+const templates = ref([]);
 const isDisabled = ref(false);
+
+onMounted(() => {
+  fetchTemplates();
+});
+
+const fetchTemplates = () => {
+  productStore.getAllProducts({ productType: 14700 }).then((response) => {
+    templates.value = response.result.items;
+  });
+};
 
 const selectTab = (selectedTab: string) => {
   tab.value = selectedTab;
 };
 
 const selectSample = (index: number) => {
-  sampleIndex.value = index;
+  // sampleIndex.value = index + 1;
 };
 
 const addTemplates = () => {
   isDisabled.value = true;
-  selectedTemplates.value = templateTests.value.filter((item) => item.selected);
+  selectedTemplates.value = templates.value.filter((item) => item.selected);
   setTimeout(() => {
     isDisabled.value = false;
-  }, 1000);
+  }, 800);
 };
 
 const deleteSample = (id: number) => {
