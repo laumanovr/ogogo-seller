@@ -86,8 +86,6 @@ import { ref, onMounted } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import SmallLoader from "@/shared/ui/components/SmallLoader.vue";
 
-const emit = defineEmits(["onSelectItem"]);
-
 const productStore = useProductStore();
 const tab = ref("one");
 const sampleIndex = ref(0);
@@ -111,7 +109,7 @@ const selectTab = (selectedTab: string) => {
 
 const selectSample = (index: number, item: any) => {
   sampleIndex.value = index + 1;
-  emit("onSelectItem", item);
+  productStore.saveSelectedTemplate(item);
 };
 
 const addTemplates = () => {
