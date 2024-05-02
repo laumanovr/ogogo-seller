@@ -43,14 +43,30 @@
       </div>
     </div>
     <div class="d-flex justify-between">
-      <SInput label="Цена" width="32%" v-model="productObj.price" />
-      <SInput label="Скидка в %" width="32%" v-model="productObj.discount" />
-      <SInput label="Цена со скидкой" width="32%" v-model="priceWithDiscount" />
+      <SInput
+        type="number"
+        label="Цена"
+        width="32%"
+        v-model="productObj.price"
+      />
+      <SInput
+        type="number"
+        label="Скидка в %"
+        width="32%"
+        v-model="productObj.discount"
+      />
+      <SInput
+        type="number"
+        label="Цена со скидкой"
+        width="32%"
+        v-model="priceWithDiscount"
+      />
     </div>
     <div class="mt-16 mb-40">
       <SInput
         label="Наличие (кол-во) *"
         width="100%"
+        type="number"
         v-model="productObj.countOfProduct"
       />
     </div>
