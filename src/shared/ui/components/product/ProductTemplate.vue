@@ -108,7 +108,7 @@ const selectTab = (selectedTab: string) => {
 };
 
 const selectSample = (index: number) => {
-  // sampleIndex.value = index + 1;
+  sampleIndex.value = index + 1;
 };
 
 const addTemplates = () => {
