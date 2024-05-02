@@ -12,9 +12,9 @@
       <div
         class="d-flex sample"
         :class="{ active: i + 1 === sampleIndex }"
-        @click="selectSample(i)"
         v-for="(item, i) in selectedTemplates"
         :key="i"
+        @click="selectSample(i, item)"
       >
         <img
           :src="'data:image/png;base64,' + item.iconBase64"
@@ -86,6 +86,8 @@ import { ref, onMounted } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import SmallLoader from "@/shared/ui/components/SmallLoader.vue";
 
+const emit = defineEmits(["onSelectItem"]);
+
 const productStore = useProductStore();
 const tab = ref("one");
 const sampleIndex = ref(0);
@@ -107,8 +109,9 @@ const selectTab = (selectedTab: string) => {
   tab.value = selectedTab;
 };
 
-const selectSample = (index: number) => {
+const selectSample = (index: number, item: any) => {
   sampleIndex.value = index + 1;
+  emit("onSelectItem", item);
 };
 
 const addTemplates = () => {
