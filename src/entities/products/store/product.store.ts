@@ -16,6 +16,23 @@ const alertStore = useAlertStore();
 export const useProductStore = defineStore("productStore", {
   state: (): Partial<IProductState> => ({
     products: [],
+    productTemplate: {
+      toArticle: "",
+      productName: "",
+      description: "",
+      categoryId: "",
+      price: 0,
+      discount: 0,
+      organizationId: "",
+      productType: 0,
+      productPriceType: 0,
+      photos: [],
+      videos: [],
+      templateId: "",
+      countOfProduct: 0,
+      isSaveAsDraft: false,
+      properties: {},
+    },
   }),
   getters: {},
   actions: {
@@ -51,6 +68,9 @@ export const useProductStore = defineStore("productStore", {
             reject(err);
           });
       });
+    },
+    saveSelectedTemplate(template: any) {
+      // this.productTemplate.productName = template.productName;
     },
   },
 });
