@@ -32,3 +32,21 @@ export interface CategoryEntity {
   childMarketplaceCategoryIdList: string[];
   sequenceNumber: number;
 }
+
+export interface ProductTemplateEntity {
+  toArticle: string;
+  productName: string;
+  description: string;
+  categoryId: string;
+  price: number;
+  discount: number;
+  organizationId: string;
+  productType: number;
+  productPriceType: number;
+  photos: string[];
+  videos: string[];
+  templateId: string;
+  countOfProduct: number;
+  isSaveAsDraft: Boolean;
+  properties: Object;
+}
