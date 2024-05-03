@@ -105,11 +105,15 @@
         качественные ролики <br />
         не больше 30 МБ и не длинее 5 минут.
       </p>
-      <div class="video"></div>
-      <label for="video" class="add-content">
-        <input type="file" id="video" @change="onSelectVideo" />
-        <span>+</span>
-      </label>
+      <div class="d-flex">
+        <video class="video" controls width="180" height="180" :key="videoKey">
+          <source :src="videoUrl" type="video/mp4" />
+        </video>
+        <label for="video" class="add-content ml-10">
+          <input type="file" id="video" @change="onSelectVideo" />
+          <span>+</span>
+        </label>
+      </div>
     </div>
     <div class="content-block mt-40">
       <div class="head-title md">Характеристики</div>
@@ -147,6 +151,8 @@ import { useProductStore } from "@/entities/products/store/product.store";
 
 const productStore = useProductStore();
 const priceWithDiscount = ref(0);
+const videoKey = ref(0);
+const videoUrl = ref("");
 
 const convertToBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
@@ -185,7 +191,17 @@ const countPriceDiscount = () => {
 };
 
 const onSelectVideo = (e: Event) => {
-  console.log(e);
+  const target = e.target as HTMLInputElement;
+  const file = target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      videoUrl.value = reader.result as string;
+      videoKey.value++;
+      productStore.productTemplate.videos = [videoUrl.value];
+    };
+  }
 };
 
 const onSelectPriceType = (priceType: number) => {
