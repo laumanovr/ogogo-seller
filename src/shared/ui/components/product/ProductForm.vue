@@ -5,7 +5,7 @@
       <SInput
         label="Наименование товара *"
         width="100%"
-        v-model="productObj.productName"
+        v-model="productStore.productTemplate.productName"
       />
     </div>
     <div class="d-flex items-end mt-16">
@@ -14,7 +14,7 @@
         width="85%"
         class="article"
         disabled
-        v-model="productObj.toArticle"
+        v-model="productStore.productTemplate.toArticle"
       />
       <SButton color="gray" class="ml-12">Сгенерировать</SButton>
     </div>
@@ -25,7 +25,7 @@
       <STextArea
         label="Описание товара"
         width="100%"
-        v-model="productObj.description"
+        v-model="productStore.productTemplate.description"
       />
     </div>
     <div class="d-flex items-center justify-between mt-40 mb-30">
@@ -47,13 +47,13 @@
         type="number"
         label="Цена"
         width="32%"
-        v-model="productObj.price"
+        v-model="productStore.productTemplate.price"
       />
       <SInput
         type="number"
         label="Скидка в %"
         width="32%"
-        v-model="productObj.discount"
+        v-model="productStore.productTemplate.discount"
       />
       <SInput
         type="number"
@@ -67,7 +67,7 @@
         label="Наличие (кол-во) *"
         width="100%"
         type="number"
-        v-model="productObj.countOfProduct"
+        v-model="productStore.productTemplate.countOfProduct"
       />
     </div>
     <div class="content-block">
@@ -78,7 +78,11 @@
         Размер файла – не более 15 МБ.
       </p>
       <div class="d-flex flex-wrap">
-        <div class="photo" v-for="image in productObj.photos" :key="image">
+        <div
+          class="photo"
+          v-for="image in productStore.productTemplate.photos"
+          :key="image"
+        >
           <img :src="image" alt="img" />
           <SIconRender
             name="CloseRoundIcon"
@@ -138,25 +142,9 @@ import {
   SIconRender,
 } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
+import { useProductStore } from "@/entities/products/store/product.store";
 
-const productObj = ref({
-  toArticle: "",
-  productName: "",
-  description: "",
-  categoryId: "",
-  price: 0,
-  discount: 0,
-  organizationId: "",
-  productType: 0,
-  productPriceType: 0,
-  photos: [],
-  videos: [],
-  templateId: "",
-  countOfProduct: 0,
-  isSaveAsDraft: false,
-  properties: {},
-});
-
+const productStore = useProductStore();
 const priceWithDiscount = ref("");
 
 const convertToBase64 = (file: File) => {
@@ -177,15 +165,15 @@ const onSelectPhoto = async (e: Event) => {
   const file = target.files[0];
   if (file) {
     const convertedImage = await convertToBase64(file);
-    productObj.value.photos.push(convertedImage);
+    productStore.productTemplate.photos.push(convertedImage as string);
   }
 };
 
 const deleteImage = (imgUrl: string) => {
-  const index = productObj.value.photos.findIndex(
-    (imageUrl) => imageUrl === imgUrl
+  const index = productStore.productTemplate.photos.findIndex(
+    (imageUrl: any) => imageUrl === imgUrl
   );
-  productObj.value.photos.splice(index, 1);
+  productStore.productTemplate.photos.splice(index, 1);
 };
 
 const onSelectVideo = (e: Event) => {
@@ -193,11 +181,11 @@ const onSelectVideo = (e: Event) => {
 };
 
 const onSelectPriceType = (priceType: number) => {
-  productObj.value.productPriceType = priceType;
+  productStore.productTemplate.productPriceType = priceType;
 };
 
 const submitProduct = () => {
-  console.log(productObj.value);
+  console.log(productStore.productTemplate);
 };
 </script>
 
