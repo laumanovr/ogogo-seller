@@ -54,6 +54,7 @@
         label="Скидка в %"
         width="32%"
         v-model="productStore.productTemplate.discount"
+        @input="countPriceDiscount"
       />
       <SInput
         type="number"
@@ -145,7 +146,7 @@ import { ref } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 
 const productStore = useProductStore();
-const priceWithDiscount = ref("");
+const priceWithDiscount = ref(0);
 
 const convertToBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
@@ -174,6 +175,13 @@ const deleteImage = (imgUrl: string) => {
     (imageUrl: any) => imageUrl === imgUrl
   );
   productStore.productTemplate.photos.splice(index, 1);
+};
+
+const countPriceDiscount = () => {
+  const discountSum =
+    productStore.productTemplate.price *
+    (productStore.productTemplate.discount / 100);
+  priceWithDiscount.value = productStore.productTemplate.price - discountSum;
 };
 
 const onSelectVideo = (e: Event) => {
