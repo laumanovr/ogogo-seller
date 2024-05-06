@@ -247,7 +247,7 @@ const currentStatus = computed(() =>
 
 onMounted(() => {
   selectTab("0");
-  fetchCategories("");
+  fetchCategoriesByPage("");
 });
 
 const fetchProducts = (filterObj = {}) => {
@@ -261,7 +261,7 @@ const fetchProducts = (filterObj = {}) => {
     });
 };
 
-const fetchCategories = (searchValue: string) => {
+const fetchCategoriesByPage = (searchValue: string) => {
   productStore
     .getCategoriesPagedList({ search: searchValue, pageSize: 30 })
     .then((response) => {
