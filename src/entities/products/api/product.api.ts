@@ -17,7 +17,9 @@ export class ProductApi {
       .catch((err) => Promise.reject(err));
   };
 
-  getCategories = (data: CategoryPayload): Promise<CategoryResponse> => {
+  getCategoriesPagedList = (
+    data: CategoryPayload
+  ): Promise<CategoryResponse> => {
     return axios({
       method: "POST",
       url: `/Marketplace/GetMarketplaceCategoryPagedList`,
