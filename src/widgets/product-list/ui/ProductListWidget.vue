@@ -177,8 +177,10 @@ import {
   SCheckbox,
 } from "@tumarsoft/ogogo-ui";
 import { useProductStore } from "@/entities/products/store/product.store";
+import { useCategoryStore } from "@/entities/category/store/category.store";
 
 const productStore = useProductStore();
+const categoryStore = useCategoryStore();
 const router = useRouter();
 
 const headers = reactive([
@@ -261,7 +263,7 @@ const fetchProducts = (filterObj = {}) => {
 
 const fetchCategories = (searchValue: string) => {
   productStore
-    .getAllCategories({ search: searchValue, pageSize: 30 })
+    .getCategoriesPagedList({ search: searchValue, pageSize: 30 })
     .then((response) => {
       categories.value = response.items;
     });
