@@ -53,11 +53,13 @@ export const useProductStore = defineStore("productStore", {
           });
       });
     },
-    getAllCategories(payload: CategoryPayload): Promise<CategoryResponse> {
+    getCategoriesPagedList(
+      payload: CategoryPayload
+    ): Promise<CategoryResponse> {
       return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
         productApi
-          .getCategories(payload)
+          .getCategoriesPagedList(payload)
           .then((response) => {
             loaderStore.setLoaderState(false);
             resolve(response);
