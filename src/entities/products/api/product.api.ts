@@ -1,10 +1,5 @@
 import axios from "axios";
-import {
-  ProductPayload,
-  ProductApiResponse,
-  CategoryPayload,
-  CategoryResponse,
-} from "./product-api.types";
+import { ProductPayload, ProductApiResponse } from "./product-api.types";
 
 export class ProductApi {
   getProducts = (data: ProductPayload): Promise<ProductApiResponse> => {
@@ -14,18 +9,6 @@ export class ProductApi {
       data: data,
     })
       .then((response) => response.data)
-      .catch((err) => Promise.reject(err));
-  };
-
-  getCategoriesPagedList = (
-    data: CategoryPayload
-  ): Promise<CategoryResponse> => {
-    return axios({
-      method: "POST",
-      url: `/Marketplace/GetMarketplaceCategoryPagedList`,
-      data: data,
-    })
-      .then((response) => response.data.result)
       .catch((err) => Promise.reject(err));
   };
 }
