@@ -4,6 +4,10 @@ import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { ICategoryState } from "./category-store.types";
 import { CategoryApi } from "../api/category.api";
+import {
+  CategoryPagedPayload,
+  CategoryPagedResponse,
+} from "../api/category-api.types";
 
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
@@ -22,6 +26,24 @@ export const useCategoryStore = defineStore("categoryStore", {
           .getCategories()
           .then((response) => {
             this.categories = response.result;
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            loaderStore.setLoaderState(false);
+            reject(err);
+          });
+      });
+    },
+    getCategoriesPagedList(
+      payload: CategoryPagedPayload
+    ): Promise<CategoryPagedResponse> {
+      return new Promise((resolve, reject) => {
+        loaderStore.setLoaderState(true);
+        categoryApi
+          .getCategoriesPagedList(payload)
+          .then((response) => {
             loaderStore.setLoaderState(false);
             resolve(response);
           })
