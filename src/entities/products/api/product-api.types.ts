@@ -3,7 +3,7 @@ import {
   ResponseWithStatus,
   WithResultPagination,
 } from "./../../../shared/api/index.types";
-import { ProductEntity, CategoryEntity } from "../model/types";
+import { ProductEntity } from "../model/types";
 
 export type ProductApiResponse = ResponseWithStatus<
   WithResultPagination<ProductEntity>
@@ -26,12 +26,3 @@ export interface PriceRange {
 }
 
 export interface PropertiesFilter {}
-
-export interface CategoryPayload {
-  search?: string;
-  pageSize?: number;
-}
-
-export type CategoryResponse = {
-  items: Array<CategoryEntity>;
-};

@@ -3,12 +3,7 @@ import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
-import {
-  ProductPayload,
-  ProductApiResponse,
-  CategoryPayload,
-  CategoryResponse,
-} from "../api/product-api.types";
+import { ProductPayload, ProductApiResponse } from "../api/product-api.types";
 const productApi = new ProductApi();
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
@@ -43,24 +38,6 @@ export const useProductStore = defineStore("productStore", {
           .getProducts(payload)
           .then((response) => {
             this.products = response.result.items;
-            loaderStore.setLoaderState(false);
-            resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err.message);
-            loaderStore.setLoaderState(false);
-            reject(err);
-          });
-      });
-    },
-    getCategoriesPagedList(
-      payload: CategoryPayload
-    ): Promise<CategoryResponse> {
-      return new Promise((resolve, reject) => {
-        loaderStore.setLoaderState(true);
-        productApi
-          .getCategoriesPagedList(payload)
-          .then((response) => {
             loaderStore.setLoaderState(false);
             resolve(response);
           })
