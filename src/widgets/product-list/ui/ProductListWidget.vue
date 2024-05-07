@@ -262,7 +262,7 @@ const fetchProducts = (filterObj = {}) => {
 };
 
 const fetchCategoriesByPage = (searchValue: string) => {
-  productStore
+  categoryStore
     .getCategoriesPagedList({ search: searchValue, pageSize: 30 })
     .then((response) => {
       categories.value = response.items;
@@ -325,7 +325,7 @@ const onSearchCategory = (event: Event) => {
   const target = event.target as HTMLInputElement;
   window.clearTimeout(searchTimer.value);
   searchTimer.value = window.setTimeout(() => {
-    fetchCategories(target.value);
+    fetchCategoriesByPage(target.value);
   }, 1500);
 };
 
