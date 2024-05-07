@@ -3,18 +3,27 @@
     <p class="font-bold mb-24">
       {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
     </p>
+
     <SSelect
       :label="$t('lang-89bfcd93-3986-425f-b7f8-732462da1a5f')"
       class="w-p-100"
       :items="allCategories"
       showValue="categoryName"
       getValue="id"
-      @onChange="selectCategory"
+      @onChange="selectParentCategory"
     />
+
     <SSelect
+      v-for="(select, i) in subCategorySelects"
+      :key="i"
       :label="$t('lang-97c9b3e4-5040-4730-b73e-3ebf3309f13a')"
       class="w-p-100 mt-16"
+      :items="select.items"
+      showValue="categoryName"
+      getValue="id"
+      @onChange="selectChildCategory"
     />
+
     <div class="flex flex-row w-p-100 gap-2 mt-36 justify-between">
       <SButton color="gray" class="button w-p-49" @click="toggleModal">
         {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
@@ -35,6 +44,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const categoryStore = useCategoryStore();
 const isShowModal = ref(false);
+const subCategorySelects = ref([]);
 
 const allCategories = computed(() => categoryStore.categories);
 
@@ -50,7 +60,23 @@ const toggleModal = () => {
   isShowModal.value = !isShowModal.value;
 };
 
-const selectCategory = () => {};
+const selectParentCategory = (selectedCategory: any) => {
+  if (selectedCategory.childMarketplaceCategories.length) {
+    subCategorySelects.value = [
+      { items: selectedCategory.childMarketplaceCategories },
+    ];
+  } else {
+    subCategorySelects.value = [];
+  }
+};
+
+const selectChildCategory = (childCategory: any) => {
+  if (childCategory.childMarketplaceCategories.length) {
+    subCategorySelects.value.push({
+      items: childCategory.childMarketplaceCategories,
+    });
+  }
+};
 
 const goToCreateProduct = () => {
   router.push("/product-create");
