@@ -13,7 +13,7 @@
           />
           <SButton color="white" class="ml-12">Настроить цены</SButton>
         </div>
-        <SButton color="violet" @click="toggleModal">
+        <SButton color="violet" @click="openCreateProductModal">
           + {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
         </SButton>
       </div>
@@ -66,38 +66,12 @@
       <EmptyData
         text="Пока нет товаров"
         :button-title="$t('lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505')"
-        @click="toggleModal"
+        @click="openCreateProductModal"
       />
     </template>
-    <SModal :isModalOpen="isShowModal" @onClose="toggleModal" height="auto">
-      <p class="font-bold mb-24">
-        {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
-      </p>
-      <SSelect
-        :label="$t('lang-89bfcd93-3986-425f-b7f8-732462da1a5f')"
-        class="w-p-100"
-      />
-      <SSelect
-        :label="$t('lang-97c9b3e4-5040-4730-b73e-3ebf3309f13a')"
-        class="w-p-100 mt-16"
-      />
-      <SSelect
-        :label="$t('lang-97c9b3e4-5040-4730-b73e-3ebf3309f13a')"
-        class="w-p-100 mt-16"
-      />
-      <div class="flex flex-row w-p-100 gap-2 mt-36 justify-between">
-        <SButton color="gray" class="button w-p-49" @click="toggleModal">
-          {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
-        </SButton>
-        <SButton
-          color="violet"
-          class="button w-p-49"
-          @click="goToCreateProduct"
-        >
-          {{ $t("lang-aea72790-6410-4376-9965-2a4ccbce8e9a") }}
-        </SButton>
-      </div>
-    </SModal>
+
+    <CategoryModal ref="categoryModal" />
+
     <SModal
       :isModalOpen="isOpenFilterModal"
       class="filter-modal"
@@ -162,12 +136,12 @@
 <script lang="ts" setup>
 import { EmptyData } from "@/shared/ui/components/empty-data";
 import { FilterSearch } from "@/shared/ui/components/filter-search";
+import CategoryModal from "@/shared/ui/components/product/CategoryModal.vue";
 import { ref, reactive, onMounted, computed, nextTick, Ref } from "vue";
 import i18n from "@/shared/lib/plugins/i18n";
-import { useRouter } from "vue-router";
+
 import {
   SModal,
-  SSelect,
   SButton,
   STabs,
   STabItem,
@@ -181,7 +155,6 @@ import { useCategoryStore } from "@/entities/category/store/category.store";
 
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
-const router = useRouter();
 
 const headers = reactive([
   {
@@ -227,7 +200,6 @@ const statuses = ref([
 ]);
 
 const tableData = ref([]);
-const isShowModal = ref(false);
 const hasProducts = ref(false);
 const hasStatusProducts = ref(false);
 const tab = ref("one");
@@ -240,6 +212,7 @@ const priceRange = ref({ min: 0, max: 0 });
 const categories = ref([]);
 const selectedCategories = ref([]);
 const checkboxRefs: Ref<HTMLDivElement[]> = ref([]);
+const categoryModal = ref(null);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? { statuses: [Number(tab.value)] } : {}
@@ -292,10 +265,6 @@ const getStatusData = (item: any, field: string) => {
   return field === "name" ? foundStatus?.name : foundStatus?.color;
 };
 
-const toggleModal = () => {
-  isShowModal.value = !isShowModal.value;
-};
-
 const toggleFilterModal = () => {
   isOpenFilterModal.value = !isOpenFilterModal.value;
   nextTick(() => {
@@ -340,8 +309,8 @@ const onSelectCategory = (isChecked: boolean, categoryId: string) => {
   }
 };
 
-const goToCreateProduct = () => {
-  router.push("/product-create");
+const openCreateProductModal = () => {
+  categoryModal.value.toggleModal();
 };
 </script>
 
