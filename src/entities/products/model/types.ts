@@ -21,18 +21,6 @@ export interface ProductEntity {
   videos: Array<string>;
 }
 
-export interface CategoryEntity {
-  id: string;
-  categoryName: string;
-  categoryNameKy: string;
-  categoryNameEn: string;
-  icoBase64: string;
-  imageId: string;
-  parentId: string;
-  childMarketplaceCategoryIdList: string[];
-  sequenceNumber: number;
-}
-
 export interface ProductTemplateEntity {
   toArticle: string;
   productName: string;
