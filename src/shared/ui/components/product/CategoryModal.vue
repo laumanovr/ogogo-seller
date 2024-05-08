@@ -85,7 +85,13 @@ const selectChildCategory = (childCategory: any, index: number) => {
 };
 
 const goToCreateProduct = () => {
-  router.push("/product-create");
+  let selectedCategoryId;
+  if (subCategorySelects.value.length) {
+    selectedCategoryId = subCategorySelects.value.at(-1).selectedCategoryId;
+  } else {
+    selectedCategoryId = parentCategoryId.value;
+  }
+  router.push(`/product-create?catId=${selectedCategoryId}`);
 };
 
 defineExpose({
