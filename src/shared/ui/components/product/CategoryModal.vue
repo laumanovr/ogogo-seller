@@ -10,6 +10,7 @@
       :items="allCategories"
       showValue="categoryName"
       getValue="id"
+      v-model="parentCategoryId"
       @onChange="selectParentCategory"
     />
 
@@ -21,7 +22,8 @@
       :items="select.items"
       showValue="categoryName"
       getValue="id"
-      @onChange="selectChildCategory"
+      v-model="select.selectedCategoryId"
+      @onChange="selectChildCategory($event, i)"
     />
 
     <div class="flex flex-row w-p-100 gap-2 mt-36 justify-between">
@@ -45,6 +47,7 @@ const router = useRouter();
 const categoryStore = useCategoryStore();
 const isShowModal = ref(false);
 const subCategorySelects = ref([]);
+const parentCategoryId = ref("");
 
 const allCategories = computed(() => categoryStore.categories);
 
@@ -70,7 +73,10 @@ const selectParentCategory = (selectedCategory: any) => {
   }
 };
 
-const selectChildCategory = (childCategory: any) => {
+const selectChildCategory = (childCategory: any, index: number) => {
+  subCategorySelects.value = subCategorySelects.value.filter(
+    (_, subIndex) => subIndex <= index
+  );
   if (childCategory.childMarketplaceCategories.length) {
     subCategorySelects.value.push({
       items: childCategory.childMarketplaceCategories,
