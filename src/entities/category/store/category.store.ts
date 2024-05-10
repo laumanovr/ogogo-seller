@@ -16,6 +16,7 @@ const categoryApi = new CategoryApi();
 export const useCategoryStore = defineStore("categoryStore", {
   state: (): Partial<ICategoryState> => ({
     categories: [],
+    categoryUrls: [],
   }),
   getters: {},
   actions: {
@@ -53,6 +54,9 @@ export const useCategoryStore = defineStore("categoryStore", {
             reject(err);
           });
       });
+    },
+    saveSelectedCategoryPath(categoryPathes: any) {
+      this.categoryUrls = categoryPathes;
     },
   },
 });
