@@ -73,7 +73,10 @@ const toggleModal = () => {
 const selectParentCategory = (selectedCategory: any) => {
   if (selectedCategory.childMarketplaceCategories.length) {
     subCategorySelects.value = [
-      { items: selectedCategory.childMarketplaceCategories },
+      {
+        items: selectedCategory.childMarketplaceCategories,
+        name: selectedCategory.categoryName,
+      },
     ];
   } else {
     subCategorySelects.value = [];
@@ -88,6 +91,7 @@ const selectChildCategory = (childCategory: any, index: number) => {
     );
     if (childCategory.childMarketplaceCategories.length) {
       subCategorySelects.value.push({
+        name: childCategory.categoryName,
         items: childCategory.childMarketplaceCategories,
       });
     }
@@ -102,6 +106,26 @@ const checkValidation = () => {
   return subCategorySelects.value.every((selectItem) => !selectItem.isEmpty);
 };
 
+const prepareBreadcrumbs = () => {
+  let selectedCategoryUrls;
+  if (subCategorySelects.value.length) {
+    const lastSelectedSubCategory = subCategorySelects.value.at(-1);
+    const foundObject = lastSelectedSubCategory.items.find(
+      (item: any) => item.id === lastSelectedSubCategory.selectedCategoryId
+    );
+    selectedCategoryUrls = [
+      ...subCategorySelects.value,
+      { name: foundObject.categoryName },
+    ];
+  } else {
+    const parentCategory = allCategories.value.find(
+      (item) => item.id === parentCategoryId.value
+    );
+    selectedCategoryUrls = [{ name: parentCategory.categoryName }];
+  }
+  categoryStore.saveSelectedCategoryPath(selectedCategoryUrls);
+};
+
 const goToCreateProduct = () => {
   if (productForm.value.validateForm() && checkValidation()) {
     let selectedCategoryId;
@@ -110,6 +134,7 @@ const goToCreateProduct = () => {
     } else {
       selectedCategoryId = parentCategoryId.value;
     }
+    prepareBreadcrumbs();
     router.push(`/product-create?catId=${selectedCategoryId}`);
   }
 };
