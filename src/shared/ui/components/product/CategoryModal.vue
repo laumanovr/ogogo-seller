@@ -120,3 +120,12 @@ defineExpose({
   toggleModal,
 });
 </script>
+
+<style lang="scss">
+@import "../../../../app/style/colors.scss";
+.error-select {
+  input {
+    border-color: $red-500;
+  }
+}
+</style>
