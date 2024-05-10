@@ -19,8 +19,8 @@
         :key="i"
         :label="$t('lang-97c9b3e4-5040-4730-b73e-3ebf3309f13a')"
         class="w-p-100 mt-16"
+        :class="{ 'error-select': select.isEmpty }"
         :items="select.items"
-        :rules="requiredField"
         showValue="categoryName"
         getValue="id"
         v-model="select.selectedCategoryId"
@@ -44,7 +44,7 @@
 
 <script lang="ts" setup>
 import { SSelect, SModal, SButton, SForm } from "@tumarsoft/ogogo-ui";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, nextTick } from "vue";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useRouter } from "vue-router";
@@ -81,26 +81,39 @@ const selectParentCategory = (selectedCategory: any) => {
 };
 
 const selectChildCategory = (childCategory: any, index: number) => {
-  subCategorySelects.value = subCategorySelects.value.filter(
-    (_, subIndex) => subIndex <= index
-  );
-  if (childCategory.childMarketplaceCategories.length) {
-    subCategorySelects.value.push({
-      items: childCategory.childMarketplaceCategories,
-    });
-  }
+  checkValidation();
+  nextTick(() => {
+    subCategorySelects.value = subCategorySelects.value.filter(
+      (_, subIndex) => subIndex <= index
+    );
+    if (childCategory.childMarketplaceCategories.length) {
+      subCategorySelects.value.push({
+        items: childCategory.childMarketplaceCategories,
+      });
+    }
+  });
+};
+
+const checkValidation = () => {
+  subCategorySelects.value = subCategorySelects.value.map((selectItem) => {
+    selectItem.isEmpty = !selectItem.selectedCategoryId;
+    return selectItem;
+  });
+  return subCategorySelects.value.every((selectItem) => !selectItem.isEmpty);
 };
 
 const goToCreateProduct = () => {
-  console.log("isValid ", productForm.value.validateForm());
-  let selectedCategoryId;
-  if (subCategorySelects.value.length) {
-    selectedCategoryId = subCategorySelects.value.at(-1).selectedCategoryId;
-  } else {
-    selectedCategoryId = parentCategoryId.value;
+  if (productForm.value.validateForm() && checkValidation()) {
+    console.log("--allValid--");
+    let selectedCategoryId;
+    if (subCategorySelects.value.length) {
+      selectedCategoryId = subCategorySelects.value.at(-1).selectedCategoryId;
+    } else {
+      selectedCategoryId = parentCategoryId.value;
+    }
+    console.log("selectedCategoryId", selectedCategoryId);
+    // router.push(`/product-create?catId=${selectedCategoryId}`);
   }
-
-  // router.push(`/product-create?catId=${selectedCategoryId}`);
 };
 
 defineExpose({
