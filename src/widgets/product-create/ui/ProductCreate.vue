@@ -5,7 +5,7 @@
         <SIconRender name="ArrowIcon" direction="left" color="black" />
         <span>Назад</span>
       </SButton>
-      <Breadcrumbs class="ml-24" />
+      <Breadcrumbs :items="categoryStore.categoryUrls" class="ml-24" />
     </div>
     <div class="d-flex mt-25">
       <ProductTemplate />
@@ -19,9 +19,11 @@ import { SButton, SIconRender } from "@tumarsoft/ogogo-ui";
 import ProductTemplate from "../../../shared/ui/components/product/ProductTemplate.vue";
 import ProductForm from "../../../shared/ui/components/product/ProductForm.vue";
 import Breadcrumbs from "@/shared/ui/components/Breadcrumbs/Breadcrumbs.vue";
+import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const categoryStore = useCategoryStore();
 
 const goBack = () => {
   router.push("/products");
