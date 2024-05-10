@@ -104,15 +104,13 @@ const checkValidation = () => {
 
 const goToCreateProduct = () => {
   if (productForm.value.validateForm() && checkValidation()) {
-    console.log("--allValid--");
     let selectedCategoryId;
     if (subCategorySelects.value.length) {
       selectedCategoryId = subCategorySelects.value.at(-1).selectedCategoryId;
     } else {
       selectedCategoryId = parentCategoryId.value;
     }
-    console.log("selectedCategoryId", selectedCategoryId);
-    // router.push(`/product-create?catId=${selectedCategoryId}`);
+    router.push(`/product-create?catId=${selectedCategoryId}`);
   }
 };
 
