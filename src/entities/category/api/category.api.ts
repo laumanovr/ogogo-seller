@@ -25,4 +25,12 @@ export class CategoryApi {
       .then((response) => response.data.result)
       .catch((err) => Promise.reject(err));
   };
+  getCategoryById = (id: string) => {
+    return axios({
+      method: "GET",
+      url: `/Marketplace/GetMarketplaceCategory?id=${id}`,
+    })
+      .then((response) => response.data.result)
+      .catch((err) => Promise.reject(err));
+  };
 }
