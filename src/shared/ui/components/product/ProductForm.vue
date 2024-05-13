@@ -146,13 +146,27 @@ import {
   SRadioButton,
   SIconRender,
 } from "@tumarsoft/ogogo-ui";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
+import { useCategoryStore } from "@/entities/category/store/category.store";
+import { useRoute } from "vue-router";
 
 const productStore = useProductStore();
+const categoryStore = useCategoryStore();
+const route = useRoute();
 const priceWithDiscount = ref(0);
 const videoKey = ref(0);
 const videoUrl = ref("");
+const properties = ref([]);
+
+onMounted(() => {
+  categoryStore
+    .getCategoryWithPropertiesById(route.query.id as string)
+    .then((response) => {
+      properties.value = response.properties;
+      console.log(properties.value);
+    });
+});
 
 const convertToBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
@@ -209,6 +223,7 @@ const onSelectPriceType = (priceType: number) => {
 };
 
 const submitProduct = () => {
+  productStore.productTemplate.productType = 14701;
   console.log(productStore.productTemplate);
 };
 </script>
