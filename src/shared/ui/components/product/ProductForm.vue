@@ -124,8 +124,20 @@
         одного и того же товара
       </p>
       <div class="d-flex justify-between flex-wrap">
-        <div class="select-item mb-16" v-for="i in 4" :key="i">
-          <SSelect label="Конфигурация памяти" class="w-p-100" />
+        <div
+          class="select-item mb-16"
+          v-for="property in properties"
+          :key="property.propertyId"
+        >
+          <SSelect
+            :label="showPropertyName(property)"
+            :items="property.allowedValues"
+            showValue="propertyValueText"
+            getValue="propertyValueId"
+            v-model="property.selectedValueId"
+            class="w-p-100"
+            @onChange="onSelectProperty(property)"
+          />
         </div>
       </div>
     </div>
@@ -149,22 +161,25 @@ import {
 import { ref, onMounted } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
+import { useProfileStore } from "@/widgets/profile/store/profile.store";
 import { useRoute } from "vue-router";
 
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
+const profileStore = useProfileStore();
 const route = useRoute();
 const priceWithDiscount = ref(0);
 const videoKey = ref(0);
 const videoUrl = ref("");
 const properties = ref([]);
+const selectedCategoryId = route.query.id;
+const propertyObject = ref<any>({});
 
 onMounted(() => {
   categoryStore
-    .getCategoryWithPropertiesById(route.query.id as string)
+    .getCategoryWithPropertiesById(selectedCategoryId as string)
     .then((response) => {
-      properties.value = response.properties;
-      console.log(properties.value);
+      properties.value = response.result.properties;
     });
 });
 
@@ -222,8 +237,20 @@ const onSelectPriceType = (priceType: number) => {
   productStore.productTemplate.productPriceType = priceType;
 };
 
+const showPropertyName = (property: any) => {
+  return property.name;
+};
+
+const onSelectProperty = (property: any) => {
+  propertyObject.value[property.key] = property.selectedValueId;
+};
+
 const submitProduct = () => {
+  productStore.productTemplate.organizationId =
+    profileStore.currentUser.organizationId;
   productStore.productTemplate.productType = 14701;
+  productStore.productTemplate.categoryId = selectedCategoryId as string;
+  productStore.productTemplate.properties = propertyObject.value;
   console.log(productStore.productTemplate);
 };
 </script>
