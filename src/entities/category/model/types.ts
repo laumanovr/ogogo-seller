@@ -16,3 +16,15 @@ export interface CategoryPagedEntity {
   childMarketplaceCategoryIdList: string[];
   sequenceNumber: number;
 }
+
+export interface CategoryWithPropertiesEntity {
+  categoryName: string;
+  categoryNameEn: string;
+  categoryNameKy: string;
+  childMarketplaceCategoryIdList: object[];
+  icoBase64: string;
+  id: string;
+  parentId: string;
+  properties: object[];
+  sequenceNumber: number;
+}
