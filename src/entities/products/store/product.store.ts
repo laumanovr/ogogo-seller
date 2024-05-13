@@ -48,7 +48,7 @@ export const useProductStore = defineStore("productStore", {
           });
       });
     },
-    saveSelectedTemplate(template: any) {
+    setSelectedTemplate(template: any) {
       this.productTemplate.productName = template.productName;
       this.productTemplate.toArticle = template.articleNumber;
       this.productTemplate.photos.push(template.iconBase64);

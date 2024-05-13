@@ -109,7 +109,7 @@ const selectTab = (selectedTab: string) => {
 
 const selectSample = (index: number, item: any) => {
   sampleIndex.value = index + 1;
-  productStore.saveSelectedTemplate(item);
+  productStore.setSelectedTemplate(item);
 };
 
 const addTemplates = () => {
