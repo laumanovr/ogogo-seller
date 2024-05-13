@@ -135,7 +135,7 @@ const goToCreateProduct = () => {
       selectedCategoryId = parentCategoryId.value;
     }
     prepareBreadcrumbs();
-    router.push(`/product-create?catId=${selectedCategoryId}`);
+    router.push(`/product-create?id=${selectedCategoryId}`);
   }
 };
 
