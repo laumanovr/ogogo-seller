@@ -55,6 +55,22 @@ export const useCategoryStore = defineStore("categoryStore", {
           });
       });
     },
+    getCategoryWithPropertiesById(id: string) {
+      return new Promise((resolve, reject) => {
+        loaderStore.setLoaderState(true);
+        categoryApi
+          .getCategoryById(id)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            loaderStore.setLoaderState(false);
+            reject(err);
+          });
+      });
+    },
     saveSelectedCategoryPath(categoryPathes: any) {
       this.categoryUrls = categoryPathes;
     },
