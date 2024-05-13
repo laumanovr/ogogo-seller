@@ -10,4 +10,5 @@ export interface IProfile {
   phone?: string;
   logoFileName?: string;
   version?: number;
+  organizationId?: string;
 }
