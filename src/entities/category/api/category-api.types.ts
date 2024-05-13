@@ -1,5 +1,9 @@
 import { ResponseWithStatus } from "@/shared/api/index.types";
-import { CategoryEntity, CategoryPagedEntity } from "../model/types";
+import {
+  CategoryEntity,
+  CategoryPagedEntity,
+  CategoryWithPropertiesEntity,
+} from "../model/types";
 
 export type CategoryApiResponse = ResponseWithStatus<CategoryEntity[]>;
 
@@ -11,3 +15,6 @@ export interface CategoryPagedPayload {
 export type CategoryPagedResponse = {
   items: Array<CategoryPagedEntity>;
 };
+
+export type CategoryWithPropertiesResponse =
+  ResponseWithStatus<CategoryWithPropertiesEntity>;
