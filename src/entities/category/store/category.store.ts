@@ -7,6 +7,7 @@ import { CategoryApi } from "../api/category.api";
 import {
   CategoryPagedPayload,
   CategoryPagedResponse,
+  CategoryWithPropertiesResponse,
 } from "../api/category-api.types";
 
 const loaderStore = useLoaderStore();
@@ -55,7 +56,9 @@ export const useCategoryStore = defineStore("categoryStore", {
           });
       });
     },
-    getCategoryWithPropertiesById(id: string) {
+    getCategoryWithPropertiesById(
+      id: string
+    ): Promise<CategoryWithPropertiesResponse> {
       return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
         categoryApi

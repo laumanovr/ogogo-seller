@@ -30,7 +30,7 @@ export class CategoryApi {
       method: "GET",
       url: `/Marketplace/GetMarketplaceCategory?id=${id}`,
     })
-      .then((response) => response.data.result)
+      .then((response) => response.data)
       .catch((err) => Promise.reject(err));
   };
 }
