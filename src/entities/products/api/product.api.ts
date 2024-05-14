@@ -11,6 +11,15 @@ export class ProductApi {
       .then((response) => response.data)
       .catch((err) => Promise.reject(err));
   };
+  uploadFile = (file) => {
+    return axios({
+      method: "POST",
+      url: "/File/UploadFile",
+      data: file,
+    })
+      .then((response) => response.data)
+      .catch((err) => Promise.reject(err));
+  };
   createProduct = (data) => {
     return axios({
       method: "POST",
