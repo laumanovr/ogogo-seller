@@ -51,8 +51,26 @@ export const useProductStore = defineStore("productStore", {
     setSelectedTemplate(template: any) {
       this.productTemplate.productName = template.productName;
       this.productTemplate.toArticle = template.articleNumber;
-      this.productTemplate.photos.push(template.iconBase64);
       this.productTemplate.templateId = template.id;
+    },
+    uploadFile(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("type", "0");
+      return new Promise((resolve, reject) => {
+        loaderStore.setLoaderState(true);
+        productApi
+          .uploadFile(formData)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            loaderStore.setLoaderState(false);
+            reject(err);
+          });
+      });
     },
     createProduct(payload) {
       return new Promise((resolve, reject) => {
@@ -61,6 +79,7 @@ export const useProductStore = defineStore("productStore", {
           .createProduct(payload)
           .then((response) => {
             loaderStore.setLoaderState(false);
+            alertStore.showSuccess("Успешно добавлено!");
             resolve(response);
           })
           .catch((err) => {
