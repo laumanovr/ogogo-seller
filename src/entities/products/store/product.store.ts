@@ -54,5 +54,21 @@ export const useProductStore = defineStore("productStore", {
       this.productTemplate.photos.push(template.iconBase64);
       this.productTemplate.templateId = template.id;
     },
+    createProduct(payload) {
+      return new Promise((resolve, reject) => {
+        loaderStore.setLoaderState(true);
+        productApi
+          .createProduct(payload)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            loaderStore.setLoaderState(false);
+            reject(err);
+          });
+      });
+    },
   },
 });
