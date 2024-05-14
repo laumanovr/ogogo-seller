@@ -79,11 +79,7 @@
         Размер файла – не более 15 МБ.
       </p>
       <div class="d-flex flex-wrap">
-        <div
-          class="photo"
-          v-for="image in productStore.productTemplate.photos"
-          :key="image"
-        >
+        <div class="photo" v-for="image in productImages" :key="image">
           <img :src="image" alt="img" />
           <SIconRender
             name="CloseRoundIcon"
@@ -163,17 +159,20 @@ import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useProfileStore } from "@/widgets/profile/store/profile.store";
 import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 const profileStore = useProfileStore();
 const route = useRoute();
+const router = useRouter();
 const priceWithDiscount = ref(0);
 const videoKey = ref(0);
 const videoUrl = ref("");
 const properties = ref([]);
 const selectedCategoryId = route.query.id;
 const propertyObject = ref<any>({});
+const productImages = ref([]);
 
 onMounted(() => {
   categoryStore
@@ -183,25 +182,14 @@ onMounted(() => {
     });
 });
 
-const convertToBase64 = (file: File) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-};
-
 const onSelectPhoto = async (e: Event) => {
   const target = e.target as HTMLInputElement;
   const file = target.files[0];
   if (file) {
-    const convertedImage = await convertToBase64(file);
-    productStore.productTemplate.photos.push(convertedImage as string);
+    productStore.uploadFile(file).then((response) => {
+      productImages.value.push(URL.createObjectURL(file));
+      productStore.productTemplate.photos.push(response.result.fileId);
+    });
   }
 };
 
@@ -209,6 +197,7 @@ const deleteImage = (imgUrl: string) => {
   const index = productStore.productTemplate.photos.findIndex(
     (imageUrl: any) => imageUrl === imgUrl
   );
+  productImages.value.splice(index, 1);
   productStore.productTemplate.photos.splice(index, 1);
 };
 
@@ -223,13 +212,15 @@ const onSelectVideo = (e: Event) => {
   const target = e.target as HTMLInputElement;
   const file = target.files[0];
   if (file) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      videoUrl.value = reader.result as string;
-      videoKey.value++;
-      productStore.productTemplate.videos = [videoUrl.value];
-    };
+    productStore.uploadFile(file).then((response) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        videoUrl.value = reader.result as string;
+        videoKey.value++;
+        productStore.productTemplate.videos = [response.result.fileId];
+      };
+    });
   }
 };
 
@@ -251,7 +242,9 @@ const submitProduct = () => {
   productStore.productTemplate.productType = 14701;
   productStore.productTemplate.categoryId = selectedCategoryId as string;
   productStore.productTemplate.properties = propertyObject.value;
-  console.log(productStore.productTemplate);
+  productStore.createProduct(productStore.productTemplate).then(() => {
+    router.push("/products");
+  });
 };
 </script>
 
