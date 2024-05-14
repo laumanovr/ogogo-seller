@@ -8,6 +8,7 @@ import {
   ProductApiResponse,
   ProductImageResponse,
 } from "../api/product-api.types";
+import { ProductTemplateEntity } from "../model/types";
 const productApi = new ProductApi();
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
@@ -76,7 +77,7 @@ export const useProductStore = defineStore("productStore", {
           });
       });
     },
-    createProduct(payload) {
+    createProduct(payload: ProductTemplateEntity) {
       return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
         productApi
