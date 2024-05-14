@@ -334,7 +334,6 @@ const openCreateProductModal = () => {
     img {
       width: 44px;
       height: 44px;
-      object-fit: scale-down;
     }
   }
   .filter-modal {
