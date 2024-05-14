@@ -38,3 +38,7 @@ export interface ProductTemplateEntity {
   isSaveAsDraft: Boolean;
   properties: Object;
 }
+
+export interface ProductImageEntity {
+  fileId: string;
+}
