@@ -1,5 +1,9 @@
 import axios from "axios";
-import { ProductPayload, ProductApiResponse } from "./product-api.types";
+import {
+  ProductPayload,
+  ProductApiResponse,
+  ProductImageResponse,
+} from "./product-api.types";
 
 export class ProductApi {
   getProducts = (data: ProductPayload): Promise<ProductApiResponse> => {
@@ -11,7 +15,7 @@ export class ProductApi {
       .then((response) => response.data)
       .catch((err) => Promise.reject(err));
   };
-  uploadFile = (file) => {
+  uploadFile = (file: FormData): Promise<ProductImageResponse> => {
     return axios({
       method: "POST",
       url: "/File/UploadFile",
