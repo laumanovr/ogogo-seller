@@ -3,11 +3,13 @@ import {
   ResponseWithStatus,
   WithResultPagination,
 } from "./../../../shared/api/index.types";
-import { ProductEntity } from "../model/types";
+import { ProductEntity, ProductImageEntity } from "../model/types";
 
 export type ProductApiResponse = ResponseWithStatus<
   WithResultPagination<ProductEntity>
 >;
+
+export type ProductImageResponse = ResponseWithStatus<ProductImageEntity>;
 
 export interface ProductPayload extends Partial<BasePageParams> {
   search?: string;
