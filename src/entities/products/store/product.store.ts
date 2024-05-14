@@ -3,7 +3,11 @@ import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
-import { ProductPayload, ProductApiResponse } from "../api/product-api.types";
+import {
+  ProductPayload,
+  ProductApiResponse,
+  ProductImageResponse,
+} from "../api/product-api.types";
 const productApi = new ProductApi();
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
@@ -53,7 +57,7 @@ export const useProductStore = defineStore("productStore", {
       this.productTemplate.toArticle = template.articleNumber;
       this.productTemplate.templateId = template.id;
     },
-    uploadFile(file) {
+    uploadFile(file: Blob): Promise<ProductImageResponse> {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("type", "0");
