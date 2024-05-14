@@ -4,6 +4,7 @@ import {
   ProductApiResponse,
   ProductImageResponse,
 } from "./product-api.types";
+import { ProductTemplateEntity } from "../model/types";
 
 export class ProductApi {
   getProducts = (data: ProductPayload): Promise<ProductApiResponse> => {
@@ -24,7 +25,7 @@ export class ProductApi {
       .then((response) => response.data)
       .catch((err) => Promise.reject(err));
   };
-  createProduct = (data) => {
+  createProduct = (data: ProductTemplateEntity) => {
     return axios({
       method: "POST",
       url: `/MarketplaceProduct/CreateMarketplaceProduct`,
