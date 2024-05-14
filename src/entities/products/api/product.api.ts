@@ -11,4 +11,13 @@ export class ProductApi {
       .then((response) => response.data)
       .catch((err) => Promise.reject(err));
   };
+  createProduct = (data) => {
+    return axios({
+      method: "POST",
+      url: `/MarketplaceProduct/CreateMarketplaceProduct`,
+      data: data,
+    })
+      .then((response) => response.data)
+      .catch((err) => Promise.reject(err));
+  };
 }
