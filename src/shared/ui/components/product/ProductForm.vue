@@ -47,6 +47,7 @@
           label="Цена"
           width="32%"
           :rules="requiredField"
+          @input="onInputTyping($event, 'price')"
           v-model="productStore.productTemplate.price"
         />
         <SInput
@@ -68,6 +69,7 @@
           label="Наличие (кол-во) *"
           width="100%"
           :rules="requiredField"
+          @input="onInputTyping($event, 'countOfProduct')"
           v-model="productStore.productTemplate.countOfProduct"
         />
       </div>
@@ -224,9 +226,10 @@ const deleteImage = (imgUrl: string) => {
 
 const countPriceDiscount = () => {
   const discountSum =
-    productStore.productTemplate.price *
+    Number(productStore.productTemplate.price) *
     (productStore.productTemplate.discount / 100);
-  priceWithDiscount.value = productStore.productTemplate.price - discountSum;
+  priceWithDiscount.value =
+    Number(productStore.productTemplate.price) - discountSum;
 };
 
 const onSelectVideo = (e: Event) => {
@@ -245,6 +248,16 @@ const onSelectVideo = (e: Event) => {
   }
 };
 
+const onInputTyping = (e: Event, field: string) => {
+  const target = e.target as HTMLInputElement;
+  const filteredValue = target.value.replace(/\D/g, "");
+  if (field === "price") {
+    productStore.productTemplate.price = filteredValue;
+  } else {
+    productStore.productTemplate.countOfProduct = filteredValue;
+  }
+};
+
 const onSelectPriceType = (priceType: number) => {
   productStore.productTemplate.productPriceType = priceType;
 };
@@ -260,7 +273,7 @@ const onSelectProperty = (property: any) => {
 const submitProduct = () => {
   isPhotoValid.value = Boolean(productStore.productTemplate.photos.length);
 
-  if (!isEmptyPhoto.value && productForm.value.validateForm()) {
+  if (productForm.value.validateForm() && !isEmptyPhoto.value) {
     productStore.productTemplate.organizationId =
       profileStore.currentUser.organizationId;
     productStore.productTemplate.productType = 14701;
