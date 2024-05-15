@@ -272,7 +272,6 @@ const onSelectProperty = (property: any) => {
 
 const submitProduct = () => {
   isPhotoValid.value = Boolean(productStore.productTemplate.photos.length);
-
   if (productForm.value.validateForm() && !isEmptyPhoto.value) {
     productStore.productTemplate.organizationId =
       profileStore.currentUser.organizationId;
