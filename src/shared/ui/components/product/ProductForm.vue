@@ -273,6 +273,12 @@ const onSelectProperty = (property: any) => {
 const submitProduct = () => {
   isPhotoValid.value = Boolean(productStore.productTemplate.photos.length);
   if (productForm.value.validateForm() && !isEmptyPhoto.value) {
+    productStore.productTemplate.price = Number(
+      productStore.productTemplate.price
+    );
+    productStore.productTemplate.countOfProduct = Number(
+      productStore.productTemplate.countOfProduct
+    );
     productStore.productTemplate.organizationId =
       profileStore.currentUser.organizationId;
     productStore.productTemplate.productType = 14701;
