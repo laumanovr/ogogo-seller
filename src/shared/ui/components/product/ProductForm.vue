@@ -88,7 +88,11 @@
               @click="deleteImage(image)"
             />
           </div>
-          <label for="photo" class="add-content">
+          <label
+            for="photo"
+            class="add-content"
+            :class="{ error: isEmptyPhoto }"
+          >
             <input type="file" id="photo" @change="onSelectPhoto" />
             <span>+</span>
           </label>
@@ -163,7 +167,7 @@ import {
   SIconRender,
   SForm,
 } from "@tumarsoft/ogogo-ui";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useProfileStore } from "@/widgets/profile/store/profile.store";
@@ -184,6 +188,7 @@ const selectedCategoryId = route.query.id;
 const propertyObject = ref<any>({});
 const productImages = ref([]);
 const productForm = ref(null);
+const isPhotoValid = ref(true);
 
 onMounted(() => {
   onSelectPriceType(14600);
@@ -193,6 +198,10 @@ onMounted(() => {
       properties.value = response.result.properties;
     });
 });
+
+const isEmptyPhoto = computed(
+  () => !isPhotoValid.value && !productStore.productTemplate.photos.length
+);
 
 const onSelectPhoto = async (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -249,16 +258,18 @@ const onSelectProperty = (property: any) => {
 };
 
 const submitProduct = () => {
-  console.log("isValid:", productForm.value.validateForm());
-  productStore.productTemplate.organizationId =
-    profileStore.currentUser.organizationId;
-  productStore.productTemplate.productType = 14701;
-  productStore.productTemplate.categoryId = selectedCategoryId as string;
-  productStore.productTemplate.properties = propertyObject.value;
-  console.log(productStore.productTemplate);
-  // productStore.createProduct(productStore.productTemplate).then(() => {
-  //   router.push("/products");
-  // });
+  isPhotoValid.value = Boolean(productStore.productTemplate.photos.length);
+
+  if (!isEmptyPhoto.value && productForm.value.validateForm()) {
+    productStore.productTemplate.organizationId =
+      profileStore.currentUser.organizationId;
+    productStore.productTemplate.productType = 14701;
+    productStore.productTemplate.categoryId = selectedCategoryId as string;
+    productStore.productTemplate.properties = propertyObject.value;
+    productStore.createProduct(productStore.productTemplate).then(() => {
+      router.push("/products");
+    });
+  }
 };
 </script>
 
@@ -318,6 +329,9 @@ const submitProduct = () => {
       #photo,
       #video {
         display: none;
+      }
+      &.error {
+        border: 1px solid $red-500;
       }
     }
     .select-item {
