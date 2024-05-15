@@ -67,20 +67,22 @@ const fetchAllCategories = async () => {
 };
 
 const toggleModal = () => {
+  subCategorySelects.value = [];
   isShowModal.value = !isShowModal.value;
 };
 
 const selectParentCategory = (selectedCategory: any) => {
-  if (selectedCategory.childMarketplaceCategories.length) {
-    subCategorySelects.value = [
-      {
-        items: selectedCategory.childMarketplaceCategories,
-        name: selectedCategory.categoryName,
-      },
-    ];
-  } else {
-    subCategorySelects.value = [];
-  }
+  subCategorySelects.value = [];
+  nextTick(() => {
+    if (selectedCategory.childMarketplaceCategories.length) {
+      subCategorySelects.value = [
+        {
+          items: selectedCategory.childMarketplaceCategories,
+          name: selectedCategory.categoryName,
+        },
+      ];
+    }
+  });
 };
 
 const selectChildCategory = (childCategory: any, index: number) => {
