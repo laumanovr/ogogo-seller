@@ -11,6 +11,11 @@ const routes = [
     name: "productCreate",
     component: findComponent("product", "ProductCreate"),
   },
+  {
+    path: "/product-update/:id",
+    name: "productUpdate",
+    component: findComponent("product", "ProductUpdate"),
+  },
 ];
 
 export default routes;
