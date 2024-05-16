@@ -60,6 +60,9 @@
           <div>{{ item.priceWithDiscount }} сом</div>
           <div class="price-usd">{{ item.priceUsdWithDiscount }} $</div>
         </template>
+        <template v-slot:action="{ item }">
+          <SIconRender name="SettingsIcon" @click="onEditProduct(item)" />
+        </template>
       </STable>
     </template>
     <template v-else>
@@ -134,12 +137,6 @@
 </template>
 
 <script lang="ts" setup>
-import { EmptyData } from "@/shared/ui/components/empty-data";
-import { FilterSearch } from "@/shared/ui/components/filter-search";
-import CategoryModal from "@/shared/ui/components/product/CategoryModal.vue";
-import { ref, reactive, onMounted, computed, nextTick, Ref } from "vue";
-import i18n from "@/shared/lib/plugins/i18n";
-
 import {
   SModal,
   SButton,
@@ -149,12 +146,20 @@ import {
   SBadge,
   SInput,
   SCheckbox,
+  SIconRender,
 } from "@tumarsoft/ogogo-ui";
+import { EmptyData } from "@/shared/ui/components/empty-data";
+import { FilterSearch } from "@/shared/ui/components/filter-search";
+import CategoryModal from "@/shared/ui/components/product/CategoryModal.vue";
+import { ref, reactive, onMounted, computed, nextTick, Ref } from "vue";
+import i18n from "@/shared/lib/plugins/i18n";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
+import { useRouter } from "vue-router";
 
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
+const router = useRouter();
 
 const headers = reactive([
   {
@@ -184,6 +189,10 @@ const headers = reactive([
   {
     title: i18n.global.t("lang-a6dc23d1-d5cc-4c0a-8412-32f6ff24a2dd"),
     key: "countOfProduct",
+  },
+  {
+    title: "Действия",
+    key: "action",
   },
 ]);
 
@@ -311,6 +320,10 @@ const onSelectCategory = (isChecked: boolean, categoryId: string) => {
 
 const openCreateProductModal = () => {
   categoryModal.value.toggleModal();
+};
+
+const onEditProduct = (item: any) => {
+  router.push(`/product-update/${item.id}`);
 };
 </script>
 
