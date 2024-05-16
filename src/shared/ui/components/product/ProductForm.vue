@@ -193,6 +193,7 @@ const productForm = ref(null);
 const isPhotoValid = ref(true);
 
 onMounted(() => {
+  clearForm();
   onSelectPriceType(14600);
   categoryStore
     .getCategoryWithPropertiesById(selectedCategoryId as string)
@@ -288,6 +289,18 @@ const submitProduct = () => {
       router.push("/products");
     });
   }
+};
+
+const clearForm = () => {
+  productStore.productTemplate.productName = "";
+  productStore.productTemplate.toArticle = "";
+  productStore.productTemplate.description = "";
+  productStore.productTemplate.price = "";
+  productStore.productTemplate.discount = 0;
+  priceWithDiscount.value = 0;
+  productStore.productTemplate.countOfProduct = "";
+  productStore.productTemplate.photos = [];
+  productStore.productTemplate.videos = [];
 };
 </script>
 
