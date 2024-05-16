@@ -53,6 +53,22 @@ export const useProductStore = defineStore("productStore", {
           });
       });
     },
+    getExactProductById(id: string) {
+      return new Promise((resolve, reject) => {
+        loaderStore.setLoaderState(true);
+        productApi
+          .getProductById(id)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            loaderStore.setLoaderState(false);
+            reject(err);
+          });
+      });
+    },
     setSelectedTemplate(template: any) {
       this.productTemplate.productName = template.productName;
       this.productTemplate.toArticle = template.articleNumber;
