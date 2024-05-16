@@ -177,6 +177,16 @@ import { requiredField } from "@/shared/lib/utils/rules";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 
+const props = defineProps({
+  mode: {
+    type: String,
+    default: "create",
+  },
+  productCategoryId: {
+    type: String,
+  },
+});
+
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 const profileStore = useProfileStore();
@@ -186,7 +196,7 @@ const priceWithDiscount = ref(0);
 const videoKey = ref(0);
 const videoUrl = ref("");
 const properties = ref([]);
-const selectedCategoryId = route.query.id;
+const selectedCategoryId = route.query.id || props.productCategoryId;
 const propertyObject = ref<any>({});
 const productImages = ref([]);
 const productForm = ref(null);
@@ -199,6 +209,11 @@ onMounted(() => {
     .getCategoryWithPropertiesById(selectedCategoryId as string)
     .then((response) => {
       properties.value = response.result.properties;
+      if (props.mode === "update") {
+        categoryStore.saveSelectedCategoryPath([
+          { name: response.result.categoryName },
+        ]);
+      }
     });
 });
 
