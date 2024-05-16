@@ -16,6 +16,14 @@ export class ProductApi {
       .then((response) => response.data)
       .catch((err) => Promise.reject(err));
   };
+  getProductById = (id: string) => {
+    return axios({
+      method: "GET",
+      url: `/MarketplaceProduct/GetMarketplaceProduct?id=${id}`,
+    })
+      .then((response) => response.data)
+      .catch((err) => Promise.reject(err));
+  };
   uploadFile = (file: FormData): Promise<ProductImageResponse> => {
     return axios({
       method: "POST",
