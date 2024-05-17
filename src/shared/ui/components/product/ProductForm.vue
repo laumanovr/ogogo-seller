@@ -176,6 +176,7 @@ import { useProfileStore } from "@/widgets/profile/store/profile.store";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
+import axios from "axios";
 
 const props = defineProps({
   mode: {
@@ -203,7 +204,13 @@ const productForm = ref(null);
 const isPhotoValid = ref(true);
 
 onMounted(() => {
-  if (props.mode === "create") {
+  if (props.mode === "update") {
+    productStore.productTemplate.photos.forEach((photoId) => {
+      const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
+      const photo = `${axios.defaults.baseURL}File/FileById?id=${photoId}&sessionId=${sessionId}`;
+      productImages.value.push(photo);
+    });
+  } else {
     clearForm();
   }
   onSelectPriceType(14600);
@@ -307,6 +314,9 @@ const submitProduct = () => {
         router.push("/products");
       });
     } else {
+      productStore.updateProduct(productStore.productTemplate).then(() => {
+        router.push("/products");
+      });
     }
   }
 };
