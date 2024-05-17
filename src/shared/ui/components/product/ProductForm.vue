@@ -205,11 +205,16 @@ const isPhotoValid = ref(true);
 
 onMounted(() => {
   if (props.mode === "update") {
+    const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
+    const defaultUrl = axios.defaults.baseURL;
     productStore.productTemplate.photos.forEach((photoId) => {
-      const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
-      const photo = `${axios.defaults.baseURL}File/FileById?id=${photoId}&sessionId=${sessionId}`;
+      const photo = `${defaultUrl}File/FileById?id=${photoId}&sessionId=${sessionId}`;
       productImages.value.push(photo);
     });
+    if (productStore.productTemplate.videos.length) {
+      const videoId = productStore.productTemplate.videos[0];
+      videoUrl.value = `${defaultUrl}File/FileById?id=${videoId}&sessionId=${sessionId}`;
+    }
   } else {
     clearForm();
   }
