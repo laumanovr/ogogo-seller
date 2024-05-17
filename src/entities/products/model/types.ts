@@ -22,6 +22,7 @@ export interface ProductEntity {
 }
 
 export interface ProductTemplateEntity {
+  id?: string;
   toArticle: string;
   productName: string;
   description: string;
@@ -33,7 +34,7 @@ export interface ProductTemplateEntity {
   productPriceType: number;
   photos: string[];
   videos: string[];
-  templateId: string;
+  templateId?: string;
   countOfProduct: number | string;
   isSaveAsDraft: Boolean;
   properties: Object;
