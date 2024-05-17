@@ -10,7 +10,7 @@ export class ProductApi {
   getProducts = (data: ProductPayload): Promise<ProductApiResponse> => {
     return axios({
       method: "POST",
-      url: `/MarketplaceProduct/GetMarketplaceProductPagedList`,
+      url: `MarketplaceProduct/GetMarketplaceProductPagedList`,
       data: data,
     })
       .then((response) => response.data)
@@ -19,7 +19,7 @@ export class ProductApi {
   getProductById = (id: string) => {
     return axios({
       method: "GET",
-      url: `/MarketplaceProduct/GetMarketplaceProduct?id=${id}`,
+      url: `MarketplaceProduct/GetMarketplaceProduct?id=${id}`,
     })
       .then((response) => response.data)
       .catch((err) => Promise.reject(err));
@@ -27,7 +27,7 @@ export class ProductApi {
   uploadFile = (file: FormData): Promise<ProductImageResponse> => {
     return axios({
       method: "POST",
-      url: "/File/UploadFile",
+      url: "File/UploadFile",
       data: file,
     })
       .then((response) => response.data)
@@ -36,7 +36,16 @@ export class ProductApi {
   createProduct = (data: ProductTemplateEntity) => {
     return axios({
       method: "POST",
-      url: `/MarketplaceProduct/CreateMarketplaceProduct`,
+      url: `MarketplaceProduct/CreateMarketplaceProduct`,
+      data: data,
+    })
+      .then((response) => response.data)
+      .catch((err) => Promise.reject(err));
+  };
+  updateProduct = (data: ProductTemplateEntity) => {
+    return axios({
+      method: "PUT",
+      url: "MarketplaceProduct/UpdateMarketplaceProduct",
       data: data,
     })
       .then((response) => response.data)
