@@ -109,7 +109,10 @@ const selectTab = (selectedTab: string) => {
 
 const selectSample = (index: number, item: any) => {
   sampleIndex.value = index + 1;
-  productStore.setSelectedTemplate(item);
+  productStore.setSelectedTemplateOrProduct({
+    product: item,
+    type: "template",
+  });
 };
 
 const addTemplates = () => {
