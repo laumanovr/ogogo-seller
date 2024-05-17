@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div class="product-update-content">
     <div class="d-flex items-center">
       <SButton color="white" @click="goBack">
@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 import { SButton, SIconRender } from "@tumarsoft/ogogo-ui";
 import ProductTemplate from "../../../shared/ui/components/product/ProductTemplate.vue";
 import ProductForm from "../../../shared/ui/components/product/ProductForm.vue";
@@ -41,17 +41,23 @@ const isShowForm = ref(false);
 const breadcrumbKey = ref(0);
 
 onMounted(() => {
-  productStore.getExactProductById(route.params.id).then((response) => {
-    console.log(response);
-    productCategoryId.value = response.result.categoryId;
-    isShowForm.value = true;
-    nextTick(() => {
-      breadcrumbKey.value++;
+  productStore
+    .getExactProductById(route.params.id as string)
+    .then((response) => {
+      const foundProduct = response.result;
+      productCategoryId.value = foundProduct.categoryId;
+      productStore.setSelectedTemplateOrProduct({
+        product: foundProduct,
+        type: "product",
+      });
+      isShowForm.value = true;
+      setTimeout(() => {
+        breadcrumbKey.value++;
+      }, 500);
     });
-  });
 });
 
 const goBack = () => {
   router.push("/products");
 };
-</script> -->
+</script>
