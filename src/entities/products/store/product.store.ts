@@ -78,11 +78,12 @@ export const useProductStore = defineStore("productStore", {
       this.productTemplate.toArticle =
         item.product.toArticle || item.product.articleNumber;
       this.productTemplate.categoryId = item.product.categoryId;
-      this.productTemplate.countOfProduct = item.product.countOfProduct;
+      this.productTemplate.countOfProduct =
+        item.product.countOfProduct.toString();
       this.productTemplate.description = item.product.description;
       this.productTemplate.organizationId = item.product.ownerOrganizationId;
       this.productTemplate.photos = item.product.photos;
-      this.productTemplate.price = item.product.price;
+      this.productTemplate.price = item.product.price.toString();
       this.productTemplate.productPriceType = item.product.priceType;
       this.productTemplate.productType = item.product.productType;
       this.productTemplate.videos = item.product.videos;
@@ -127,6 +128,23 @@ export const useProductStore = defineStore("productStore", {
           .then((response) => {
             loaderStore.setLoaderState(false);
             alertStore.showSuccess("Успешно добавлено!");
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            loaderStore.setLoaderState(false);
+            reject(err);
+          });
+      });
+    },
+    updateProduct(payload: ProductTemplateEntity) {
+      return new Promise((resolve, reject) => {
+        loaderStore.setLoaderState(true);
+        productApi
+          .updateProduct(payload)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            alertStore.showSuccess("Успешно обновлено!");
             resolve(response);
           })
           .catch((err) => {
