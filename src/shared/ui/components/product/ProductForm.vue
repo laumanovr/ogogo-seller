@@ -203,7 +203,9 @@ const productForm = ref(null);
 const isPhotoValid = ref(true);
 
 onMounted(() => {
-  clearForm();
+  if (props.mode === "create") {
+    clearForm();
+  }
   onSelectPriceType(14600);
   categoryStore
     .getCategoryWithPropertiesById(selectedCategoryId as string)
@@ -300,22 +302,18 @@ const submitProduct = () => {
     productStore.productTemplate.productType = 14701;
     productStore.productTemplate.categoryId = selectedCategoryId as string;
     productStore.productTemplate.properties = propertyObject.value;
-    productStore.createProduct(productStore.productTemplate).then(() => {
-      router.push("/products");
-    });
+    if (props.mode === "create") {
+      productStore.createProduct(productStore.productTemplate).then(() => {
+        router.push("/products");
+      });
+    } else {
+    }
   }
 };
 
 const clearForm = () => {
-  productStore.productTemplate.productName = "";
-  productStore.productTemplate.toArticle = "";
-  productStore.productTemplate.description = "";
-  productStore.productTemplate.price = "";
-  productStore.productTemplate.discount = 0;
   priceWithDiscount.value = 0;
-  productStore.productTemplate.countOfProduct = "";
-  productStore.productTemplate.photos = [];
-  productStore.productTemplate.videos = [];
+  productStore.clearForm();
 };
 </script>
 
