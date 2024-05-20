@@ -11,6 +11,8 @@ export type ProductApiResponse = ResponseWithStatus<
 
 export type ProductImageResponse = ResponseWithStatus<ProductImageEntity>;
 
+export type ProductDetailApiResponse = ResponseWithStatus<ProductEntity>;
+
 export interface ProductPayload extends Partial<BasePageParams> {
   search?: string;
   sortDirection?: number;
