@@ -3,6 +3,7 @@ import {
   ProductPayload,
   ProductApiResponse,
   ProductImageResponse,
+  ProductDetailApiResponse,
 } from "./product-api.types";
 import { ProductTemplateEntity } from "../model/types";
 
@@ -16,7 +17,7 @@ export class ProductApi {
       .then((response) => response.data)
       .catch((err) => Promise.reject(err));
   };
-  getProductById = (id: string) => {
+  getProductById = (id: string): Promise<ProductDetailApiResponse> => {
     return axios({
       method: "GET",
       url: `MarketplaceProduct/GetMarketplaceProduct?id=${id}`,
