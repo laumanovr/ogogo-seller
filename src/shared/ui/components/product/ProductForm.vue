@@ -46,8 +46,8 @@
         <SInput
           label="Цена"
           width="32%"
+          type="number"
           :rules="requiredField"
-          @input="onInputTyping($event, 'price')"
           v-model="productStore.productTemplate.price"
         />
         <SInput
@@ -68,8 +68,8 @@
         <SInput
           label="Наличие (кол-во) *"
           width="100%"
+          type="number"
           :rules="requiredField"
-          @input="onInputTyping($event, 'countOfProduct')"
           v-model="productStore.productTemplate.countOfProduct"
         />
       </div>
@@ -151,6 +151,14 @@
         </div>
       </div>
       <div class="d-flex justify-end mt-60">
+        <SButton
+          color="gray"
+          size="large"
+          class="mr-8"
+          v-if="props.mode === 'create'"
+        >
+          Сохранить как черновик
+        </SButton>
         <SButton color="violet" size="large" @click="submitProduct">
           {{ props.mode === "create" ? "Опубликовать" : "Редактировать" }}
         </SButton>
@@ -278,16 +286,6 @@ const onSelectVideo = (e: Event) => {
   }
 };
 
-const onInputTyping = (e: Event, field: string) => {
-  const target = e.target as HTMLInputElement;
-  const filteredValue = target.value.replace(/\D/g, "");
-  if (field === "price") {
-    productStore.productTemplate.price = filteredValue;
-  } else {
-    productStore.productTemplate.countOfProduct = filteredValue;
-  }
-};
-
 const onSelectPriceType = (priceType: number) => {
   productStore.productTemplate.productPriceType = priceType;
 };
@@ -303,12 +301,6 @@ const onSelectProperty = (property: any) => {
 const submitProduct = () => {
   isPhotoValid.value = Boolean(productStore.productTemplate.photos.length);
   if (productForm.value.validateForm() && !isEmptyPhoto.value) {
-    productStore.productTemplate.price = Number(
-      productStore.productTemplate.price
-    );
-    productStore.productTemplate.countOfProduct = Number(
-      productStore.productTemplate.countOfProduct
-    );
     productStore.productTemplate.organizationId =
       profileStore.currentUser.organizationId;
     productStore.productTemplate.productType = 14701;
