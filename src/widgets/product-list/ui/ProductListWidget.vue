@@ -229,7 +229,6 @@ const currentStatus = computed(() =>
 
 onMounted(() => {
   selectTab("0");
-  fetchCategoriesByPage("");
 });
 
 const fetchProducts = (filterObj = {}) => {
@@ -240,6 +239,7 @@ const fetchProducts = (filterObj = {}) => {
       hasStatusProducts.value = Boolean(response.result.items.length);
       totalItems.value = response.result.totalCount;
       tableData.value = response.result.items;
+      fetchCategoriesByPage("");
     });
 };
 
