@@ -27,7 +27,7 @@ export interface ProductTemplateEntity {
   productName: string;
   description: string;
   categoryId: string;
-  price: number | string;
+  price: number;
   discount: number;
   organizationId: string;
   productType: number;
@@ -35,7 +35,7 @@ export interface ProductTemplateEntity {
   photos: string[];
   videos: string[];
   templateId?: string;
-  countOfProduct: number | string;
+  countOfProduct: number;
   isSaveAsDraft: Boolean;
   properties: Object;
 }

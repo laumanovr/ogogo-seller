@@ -23,7 +23,7 @@ export const useProductStore = defineStore("productStore", {
       productName: "",
       description: "",
       categoryId: "",
-      price: "",
+      price: 0,
       discount: 0,
       organizationId: "",
       productType: 0,
@@ -31,7 +31,7 @@ export const useProductStore = defineStore("productStore", {
       photos: [],
       videos: [],
       templateId: "",
-      countOfProduct: "",
+      countOfProduct: 0,
       isSaveAsDraft: false,
       properties: {},
     },
@@ -79,24 +79,23 @@ export const useProductStore = defineStore("productStore", {
       this.productTemplate.toArticle =
         item.product.toArticle || item.product.articleNumber;
       this.productTemplate.categoryId = item.product.categoryId;
-      this.productTemplate.countOfProduct =
-        item.product.countOfProduct.toString();
+      this.productTemplate.countOfProduct = item.product.countOfProduct;
       this.productTemplate.description = item.product.description;
       this.productTemplate.organizationId = item.product.ownerOrganizationId;
       this.productTemplate.photos = item.product.photos;
-      this.productTemplate.price = item.product.price.toString();
+      this.productTemplate.price = item.product.price;
       this.productTemplate.productPriceType = item.product.priceType;
       this.productTemplate.productType = item.product.productType;
       this.productTemplate.videos = item.product.videos;
     },
     clearForm() {
       this.productTemplate.categoryId = "";
-      this.productTemplate.countOfProduct = "";
+      this.productTemplate.countOfProduct = 0;
       this.productTemplate.description = "";
       this.productTemplate.discount = 0;
       this.productTemplate.organizationId = "";
       this.productTemplate.photos = [];
-      this.productTemplate.price = "";
+      this.productTemplate.price = 0;
       this.productTemplate.productName = "";
       this.productTemplate.properties = {};
       this.productTemplate.toArticle = "";
