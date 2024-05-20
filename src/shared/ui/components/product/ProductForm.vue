@@ -152,7 +152,7 @@
       </div>
       <div class="d-flex justify-end mt-60">
         <SButton color="violet" size="large" @click="submitProduct">
-          Опубликовать
+          {{ props.mode === "create" ? "Опубликовать" : "Редактировать" }}
         </SButton>
       </div>
     </SForm>
