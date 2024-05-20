@@ -7,6 +7,7 @@ import {
   ProductPayload,
   ProductApiResponse,
   ProductImageResponse,
+  ProductDetailApiResponse,
 } from "../api/product-api.types";
 import { ProductTemplateEntity } from "../model/types";
 const productApi = new ProductApi();
@@ -54,7 +55,7 @@ export const useProductStore = defineStore("productStore", {
           });
       });
     },
-    getExactProductById(id: string) {
+    getExactProductById(id: string): Promise<ProductDetailApiResponse> {
       return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
         productApi
