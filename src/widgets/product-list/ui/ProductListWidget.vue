@@ -198,14 +198,14 @@ const headers = reactive([
 
 const statuses = ref([
   { id: 0, name: "Все", color: "green" },
-  { id: 14800, name: "Черновик", color: "green" },
+  { id: 14800, name: "Черновик", color: "grey" },
   { id: 14801, name: "Опубликовано", color: "green" },
-  { id: 14802, name: "Ожидает модерации", color: "green" },
-  { id: 14803, name: "Ожидает одобрения", color: "green" },
+  { id: 14802, name: "Ожидает модерации", color: "blue" },
+  { id: 14803, name: "Ожидает одобрения ТО", color: "orange" },
   { id: 14804, name: "Одобрено", color: "green" },
-  { id: 14805, name: "В архиве", color: "green" },
-  { id: 14806, name: "Требует доработки", color: "green" },
-  { id: 14807, name: "Заблокировано", color: "green" },
+  { id: 14805, name: "В архиве", color: "dark-grey" },
+  { id: 14806, name: "Требует доработки", color: "red" },
+  { id: 14807, name: "Заблокировано", color: "dark-grey" },
 ]);
 
 const tableData = ref([]);
