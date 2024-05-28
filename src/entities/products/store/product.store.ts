@@ -87,6 +87,7 @@ export const useProductStore = defineStore("productStore", {
       this.productTemplate.productPriceType = item.product.priceType;
       this.productTemplate.productType = item.product.productType;
       this.productTemplate.videos = item.product.videos;
+      this.productTemplate.validationDetails = item.product.validationDetails;
     },
     clearForm() {
       this.productTemplate.categoryId = "";
@@ -100,6 +101,7 @@ export const useProductStore = defineStore("productStore", {
       this.productTemplate.properties = {};
       this.productTemplate.toArticle = "";
       this.productTemplate.videos = [];
+      this.productTemplate.validationDetails = {};
     },
     uploadFile(file: Blob): Promise<ProductImageResponse> {
       const formData = new FormData();
