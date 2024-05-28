@@ -37,7 +37,37 @@ export interface ProductTemplateEntity {
   templateId?: string;
   countOfProduct: number;
   isSaveAsDraft: Boolean;
-  properties: Object;
+  properties: object;
+  validationDetails?: {
+    fields?: {
+      name?: {
+        validationComment: string;
+        moderationDate: string;
+      };
+      description?: {
+        validationComment: string;
+        moderationDate: string;
+      };
+      price?: {
+        validationComment: string;
+        moderationDate: string;
+      };
+      countofproduct?: {
+        validationComment: string;
+        moderationDate: string;
+      };
+    };
+    files?: {
+      photo?: {
+        validationComment: string;
+        moderationDate: string;
+      };
+      video?: {
+        validationComment: string;
+        moderationDate: string;
+      };
+    };
+  };
 }
 
 export interface ProductImageEntity {
