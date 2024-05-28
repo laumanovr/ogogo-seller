@@ -9,6 +9,20 @@
           :rules="requiredField"
           v-model="productStore.productTemplate.productName"
         />
+        <Comment
+          :comment="
+            productStore.productTemplate.validationDetails?.fields?.name
+              ?.validationComment
+          "
+          :date="
+            productStore.productTemplate.validationDetails?.fields?.name
+              .moderationDate
+          "
+          v-if="
+            productStore.productTemplate.validationDetails?.fields?.name
+              ?.validationComment
+          "
+        />
       </div>
       <div class="d-flex items-end mt-16">
         <SInput
@@ -26,6 +40,20 @@
           width="100%"
           v-model="productStore.productTemplate.description"
         />
+        <Comment
+          :comment="
+            productStore.productTemplate.validationDetails?.fields?.description
+              ?.validationComment
+          "
+          :date="
+            productStore.productTemplate.validationDetails?.fields?.description
+              .moderationDate
+          "
+          v-if="
+            productStore.productTemplate.validationDetails?.fields?.description
+              ?.validationComment
+          "
+        />
       </div>
       <div class="d-flex items-center justify-between mt-40 mb-30">
         <div class="head-title md">Цена</div>
@@ -42,26 +70,42 @@
           </SRadioButton>
         </div>
       </div>
-      <div class="d-flex justify-between">
-        <SInput
-          label="Цена"
-          width="32%"
-          type="number"
-          :rules="requiredField"
-          v-model="productStore.productTemplate.price"
-        />
-        <SInput
-          type="number"
-          label="Скидка в %"
-          width="32%"
-          v-model="productStore.productTemplate.discount"
-          @input="countPriceDiscount"
-        />
-        <SInput
-          type="number"
-          label="Цена со скидкой"
-          width="32%"
-          v-model="priceWithDiscount"
+      <div>
+        <div class="d-flex justify-between">
+          <SInput
+            label="Цена"
+            width="32%"
+            type="number"
+            :rules="requiredField"
+            v-model="productStore.productTemplate.price"
+          />
+          <SInput
+            type="number"
+            label="Скидка в %"
+            width="32%"
+            v-model="productStore.productTemplate.discount"
+            @input="countPriceDiscount"
+          />
+          <SInput
+            type="number"
+            label="Цена со скидкой"
+            width="32%"
+            v-model="priceWithDiscount"
+          />
+        </div>
+        <Comment
+          :comment="
+            productStore.productTemplate.validationDetails?.fields?.price
+              ?.validationComment
+          "
+          :date="
+            productStore.productTemplate.validationDetails?.fields?.price
+              .moderationDate
+          "
+          v-if="
+            productStore.productTemplate.validationDetails?.fields?.price
+              ?.validationComment
+          "
         />
       </div>
       <div class="mt-16 mb-40">
@@ -71,6 +115,20 @@
           type="number"
           :rules="requiredField"
           v-model="productStore.productTemplate.countOfProduct"
+        />
+        <Comment
+          :comment="
+            productStore.productTemplate.validationDetails?.fields
+              ?.countofproduct?.validationComment
+          "
+          :date="
+            productStore.productTemplate.validationDetails?.fields
+              ?.countofproduct.moderationDate
+          "
+          v-if="
+            productStore.productTemplate.validationDetails?.fields
+              ?.countofproduct?.validationComment
+          "
         />
       </div>
       <div class="content-block">
@@ -99,6 +157,20 @@
             <span>+</span>
           </label>
         </div>
+        <Comment
+          :comment="
+            productStore.productTemplate.validationDetails?.files?.photo
+              ?.validationComment
+          "
+          :date="
+            productStore.productTemplate.validationDetails?.files?.photo
+              .moderationDate
+          "
+          v-if="
+            productStore.productTemplate.validationDetails?.files?.photo
+              ?.validationComment
+          "
+        />
       </div>
       <div class="content-block mt-40">
         <div class="head-title md">Видео</div>
@@ -122,6 +194,20 @@
             <span>+</span>
           </label>
         </div>
+        <Comment
+          :comment="
+            productStore.productTemplate.validationDetails?.files?.video
+              ?.validationComment
+          "
+          :date="
+            productStore.productTemplate.validationDetails?.files?.video
+              .moderationDate
+          "
+          v-if="
+            productStore.productTemplate.validationDetails?.files?.video
+              ?.validationComment
+          "
+        />
       </div>
       <div class="content-block mt-40">
         <div class="head-title md">Характеристики</div>
@@ -182,6 +268,7 @@ import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useProfileStore } from "@/widgets/profile/store/profile.store";
 import { requiredField } from "@/shared/lib/utils/rules";
+import Comment from "./Comment.vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 import axios from "axios";
@@ -245,7 +332,7 @@ const isEmptyPhoto = computed(
 
 const onSelectPhoto = async (e: Event) => {
   const target = e.target as HTMLInputElement;
-  const file = target.files[0];
+  const file = target?.files[0];
   if (file) {
     productStore.uploadFile(file).then((response) => {
       productImages.value.push(URL.createObjectURL(file));
@@ -272,7 +359,7 @@ const countPriceDiscount = () => {
 
 const onSelectVideo = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  const file = target.files[0];
+  const file = target?.files[0];
   if (file) {
     productStore.uploadFile(file).then((response) => {
       const reader = new FileReader();
