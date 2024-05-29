@@ -205,7 +205,7 @@ const statuses = ref([
   { id: 14804, name: "Одобрено", color: "green" },
   { id: 14805, name: "В архиве", color: "dark-grey" },
   { id: 14806, name: "Требует доработки", color: "red" },
-  { id: 14807, name: "Заблокировано", color: "dark-grey" },
+  { id: 14807, name: "Заблокировано", color: "red" },
 ]);
 
 const tableData = ref([]);
@@ -233,7 +233,7 @@ onMounted(() => {
 
 const fetchProducts = (filterObj = {}) => {
   productStore
-    .getAllProducts({ productType: 14701, ...filterObj })
+    .getAllProducts({ productType: 14701, sortDirection: 1, ...filterObj })
     .then((response) => {
       hasProducts.value = Boolean(response.result.totalPages);
       hasStatusProducts.value = Boolean(response.result.items.length);
