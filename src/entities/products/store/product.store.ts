@@ -89,20 +89,6 @@ export const useProductStore = defineStore("productStore", {
       this.productTemplate.videos = item.product.videos;
       this.productTemplate.validationDetails = item.product.validationDetails;
     },
-    clearForm() {
-      this.productTemplate.categoryId = "";
-      this.productTemplate.countOfProduct = 0;
-      this.productTemplate.description = "";
-      this.productTemplate.discount = 0;
-      this.productTemplate.organizationId = "";
-      this.productTemplate.photos = [];
-      this.productTemplate.price = 0;
-      this.productTemplate.productName = "";
-      this.productTemplate.properties = {};
-      this.productTemplate.toArticle = "";
-      this.productTemplate.videos = [];
-      this.productTemplate.validationDetails = {};
-    },
     uploadFile(file: Blob): Promise<ProductImageResponse> {
       const formData = new FormData();
       formData.append("file", file);
