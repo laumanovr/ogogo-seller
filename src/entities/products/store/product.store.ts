@@ -116,7 +116,7 @@ export const useProductStore = defineStore("productStore", {
           .createProduct(payload)
           .then((response) => {
             loaderStore.setLoaderState(false);
-            alertStore.showSuccess("Успешно добавлено!");
+            alertStore.showSuccess("Успешно создан!");
             resolve(response);
           })
           .catch((err) => {

@@ -241,6 +241,7 @@
           color="gray"
           size="large"
           class="mr-8"
+          @click="saveAsDraft"
           v-if="props.mode === 'create'"
         >
           Сохранить как черновик
@@ -400,15 +401,19 @@ const onSelectProperty = (property: any) => {
   propertyObject.value[property.key] = property.selectedValueId;
 };
 
+const prepareFormFields = () => {
+  productStore.productTemplate.organizationId =
+    profileStore.currentUser.organizationId;
+  productStore.productTemplate.productType = 14701;
+  productStore.productTemplate.categoryId = selectedCategoryId as string;
+  productStore.productTemplate.properties = propertyObject.value;
+  delete productStore.productTemplate.validationDetails;
+};
+
 const submitProduct = () => {
   isPhotoValid.value = Boolean(productStore.productTemplate.photos.length);
   if (productForm.value.validateForm() && !isEmptyPhoto.value) {
-    productStore.productTemplate.organizationId =
-      profileStore.currentUser.organizationId;
-    productStore.productTemplate.productType = 14701;
-    productStore.productTemplate.categoryId = selectedCategoryId as string;
-    productStore.productTemplate.properties = propertyObject.value;
-    delete productStore.productTemplate.validationDetails;
+    prepareFormFields();
     if (props.mode === "create") {
       productStore.createProduct(productStore.productTemplate).then(() => {
         router.push("/products");
@@ -419,6 +424,14 @@ const submitProduct = () => {
       });
     }
   }
+};
+
+const saveAsDraft = () => {
+  prepareFormFields();
+  productStore.productTemplate.isSaveAsDraft = true;
+  productStore.createProduct(productStore.productTemplate).then(() => {
+    router.push("/products");
+  });
 };
 </script>
 
