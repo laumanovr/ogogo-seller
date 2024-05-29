@@ -20,10 +20,17 @@ import ProductTemplate from "../../../shared/ui/components/product/ProductTempla
 import ProductForm from "../../../shared/ui/components/product/ProductForm.vue";
 import Breadcrumbs from "@/shared/ui/components/Breadcrumbs/Breadcrumbs.vue";
 import { useCategoryStore } from "@/entities/category/store/category.store";
+import { useProductStore } from "@/entities/products/store/product.store";
 import { useRouter } from "vue-router";
+import { onBeforeMount } from "vue";
 
 const router = useRouter();
 const categoryStore = useCategoryStore();
+const productStore = useProductStore();
+
+onBeforeMount(() => {
+  productStore.productTemplate = {};
+});
 
 const goBack = () => {
   router.push("/products");
