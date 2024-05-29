@@ -88,6 +88,7 @@ export const useProductStore = defineStore("productStore", {
       this.productTemplate.productType = item.product.productType;
       this.productTemplate.videos = item.product.videos;
       this.productTemplate.validationDetails = item.product.validationDetails;
+      this.productTemplate.properties = item.product.properties;
     },
     uploadFile(file: Blob): Promise<ProductImageResponse> {
       const formData = new FormData();
