@@ -27,12 +27,12 @@
       <div class="d-flex items-end mt-16">
         <SInput
           label="Ваш артикул"
-          width="85%"
+          width="100%"
           class="article"
           :rules="requiredField"
           v-model="productStore.productTemplate.toArticle"
         />
-        <SButton color="gray" class="ml-12">Сгенерировать</SButton>
+        <!-- <SButton color="gray" class="ml-12">Сгенерировать</SButton> -->
       </div>
       <div class="mt-16 w-p-100">
         <STextArea
@@ -408,6 +408,7 @@ const submitProduct = () => {
     productStore.productTemplate.productType = 14701;
     productStore.productTemplate.categoryId = selectedCategoryId as string;
     productStore.productTemplate.properties = propertyObject.value;
+    delete productStore.productTemplate.validationDetails;
     if (props.mode === "create") {
       productStore.createProduct(productStore.productTemplate).then(() => {
         router.push("/products");
@@ -452,7 +453,7 @@ const submitProduct = () => {
       img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 8px;
       }
       .close-icon {
@@ -460,7 +461,7 @@ const submitProduct = () => {
         top: -7px;
         right: -7px;
         & > rect {
-          fill-opacity: 0.12;
+          fill-opacity: 0.15;
         }
       }
     }
