@@ -299,6 +299,7 @@ const productForm = ref(null);
 const isPhotoValid = ref(true);
 
 onMounted(() => {
+  onSelectPriceType(14600);
   if (props.mode === "update") {
     const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
     const defaultUrl = axios.defaults.baseURL;
@@ -313,15 +314,29 @@ onMounted(() => {
   } else {
     priceWithDiscount.value = 0;
   }
-  onSelectPriceType(14600);
   categoryStore
     .getCategoryWithPropertiesById(selectedCategoryId as string)
     .then((response) => {
       properties.value = response.result.properties;
       if (props.mode === "update") {
+        const selectedPropValues: any = [];
         categoryStore.saveSelectedCategoryPath([
           { name: response.result.categoryName },
         ]);
+        Object.entries(productStore.productTemplate.properties).forEach(
+          (item) => {
+            selectedPropValues.push({ key: item[0], valueId: item[1] });
+          }
+        );
+        properties.value = properties.value.map((property) => {
+          const selectedObj = selectedPropValues.find(
+            (item: any) => item.key === property.key
+          );
+          if (selectedObj) {
+            property.selectedValueId = selectedObj.valueId;
+          }
+          return property;
+        });
       }
     });
 });
