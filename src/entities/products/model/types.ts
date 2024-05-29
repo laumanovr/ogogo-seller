@@ -23,21 +23,21 @@ export interface ProductEntity {
 
 export interface ProductTemplateEntity {
   id?: string;
-  toArticle: string;
-  productName: string;
-  description: string;
-  categoryId: string;
-  price: number;
-  discount: number;
-  organizationId: string;
-  productType: number;
-  productPriceType: number;
-  photos: string[];
-  videos: string[];
+  toArticle?: string;
+  productName?: string;
+  description?: string;
+  categoryId?: string;
+  price?: number;
+  discount?: number;
+  organizationId?: string;
+  productType?: number;
+  productPriceType?: number;
+  photos?: string[];
+  videos?: string[];
   templateId?: string;
-  countOfProduct: number;
-  isSaveAsDraft: Boolean;
-  properties: object;
+  countOfProduct?: number;
+  isSaveAsDraft?: Boolean;
+  properties?: object;
   validationDetails?: {
     fields?: {
       name?: {
