@@ -257,7 +257,7 @@ const selectTab = (value: string) => {
 };
 
 const onChangePage = (page: number) => {
-  fetchProducts({ ...currentStatus.value, pageIndex: page });
+  fetchProducts({ ...currentStatus.value, pageIndex: page - 1 });
 };
 
 const onSearch = (value: string) => {
