@@ -311,7 +311,7 @@ onMounted(() => {
       videoUrl.value = `${defaultUrl}File/FileById?id=${videoId}&sessionId=${sessionId}`;
     }
   } else {
-    clearForm();
+    priceWithDiscount.value = 0;
   }
   onSelectPriceType(14600);
   categoryStore
@@ -403,11 +403,6 @@ const submitProduct = () => {
       });
     }
   }
-};
-
-const clearForm = () => {
-  priceWithDiscount.value = 0;
-  productStore.clearForm();
 };
 </script>
 
