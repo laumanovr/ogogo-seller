@@ -29,7 +29,7 @@ const categoryStore = useCategoryStore();
 const productStore = useProductStore();
 
 onBeforeMount(() => {
-  productStore.productTemplate = {};
+  productStore.productTemplate = { photos: [], videos: [] };
 });
 
 const goBack = () => {
