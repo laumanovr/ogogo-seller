@@ -11,7 +11,7 @@
             @input="onSearch"
             @click="toggleFilterModal"
           />
-          <SButton color="white" class="ml-12">Настроить цены</SButton>
+          <!-- <SButton color="white" class="ml-12">Настроить цены</SButton> -->
         </div>
         <SButton color="violet" @click="openCreateProductModal">
           + {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
@@ -42,7 +42,11 @@
       >
         <template v-slot:productName="{ item }">
           <div class="flex items-center product">
-            <img :src="'data:image/png;base64,' + item.iconBase64" alt="img" />
+            <img
+              :src="'data:image/png;base64,' + item.iconBase64"
+              alt="img"
+              v-if="item.iconBase64"
+            />
             <span class="name">{{ item.productName }}</span>
           </div>
         </template>
