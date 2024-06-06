@@ -6,7 +6,7 @@
     <template v-if="isOrderExist">
       <FilterSearch @input="onSearch" />
 
-      <STabs :tab-mode="'filter-tabs'" class="mb-20">
+      <STabs :tab-mode="'filter-tabs'" class="s-mb-5">
         <STabItem value="14400" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-dd1a9bc2-31f2-4197-9a7d-01a23229ea82") }}
         </STabItem>
