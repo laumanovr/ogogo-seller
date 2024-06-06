@@ -1,6 +1,3 @@
-export const requiredField = [
-  {
-    validate: (value: any) => value || value.length >= 1,
-    message: "Обязательное поле",
-  },
-];
+export const requiredField = (value: any) => {
+  return (value && value.length >= 1) || "Обязательное поле";
+};
