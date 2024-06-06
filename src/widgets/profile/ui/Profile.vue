@@ -82,10 +82,10 @@
         </div>
 
         <div class="content-block" v-if="tab === 'shop'">
-          <div class="photo d-flex items-center mb-40">
+          <div class="photo d-flex items-center s-mb-8">
             <img :src="profileImageUrl" alt="" />
-            <div class="photo-action ml-24">
-              <div class="hint gray mb-12 mw-400">
+            <div class="photo-action s-ml-5">
+              <div class="hint gray s-mb-3 mw-400">
                 {{ $t("lang-f1c8caf8-4ba1-45c7-94a5-42c4ec1bd59b") }}
               </div>
               <label for="file">
@@ -96,13 +96,13 @@
               </label>
             </div>
           </div>
-          <div class="data-title mb-8">
+          <div class="data-title s-mb-2">
             {{ $t("lang-b9b9a34d-ccef-4f0a-bf1d-a0c0ee522954") }}
           </div>
-          <div class="hint mb-20">
+          <div class="hint s-mb-4">
             {{ $t("lang-6711b6ad-a725-48d6-b231-1b8f90f23cf3") }}
           </div>
-          <div class="mb-16">
+          <div class="s-mb-4">
             <SInput
               :label="$t('lang-4572af8e-fb1f-4f76-a997-de5bc6aa89fb')"
               width="100%"
@@ -119,7 +119,7 @@
           <SButton
             color="violet"
             size="large"
-            class="mt-20"
+            class="s-mt-5"
             @click="updateProfile"
           >
             {{ $t("lang-a7a081b0-bf2e-421d-9393-443f97ae0ef0") }}
@@ -127,22 +127,22 @@
         </div>
 
         <div class="content-block" v-if="tab === 'password'">
-          <div class="data-title mb-20">
+          <div class="data-title s-mb-5">
             {{ $t("lang-df4b9d52-4813-4ed9-9111-278577ba5cf7") }}
           </div>
-          <div class="mb-16">
+          <div class="s-mb-3">
             <SInput
               :label="$t('lang-701623e1-52b5-40a1-b912-4e49b4ff56ce')"
               width="100%"
             />
           </div>
-          <div class="mb-16">
+          <div class="s-mb-3">
             <SInput
               :label="$t('lang-9dc6d3da-f6ff-4700-8b46-9b52d75deae0')"
               width="100%"
             />
           </div>
-          <div class="mb-40">
+          <div class="s-mb-6">
             <SInput
               :label="$t('lang-0184de30-27b6-48af-bafc-3995afbb020d')"
               width="100%"
@@ -154,7 +154,7 @@
         </div>
 
         <div class="content-block" v-if="tab === 'session'">
-          <div class="data-title mb-20">Последняя сессия</div>
+          <div class="data-title s-mb-4">Последняя сессия</div>
           <div class="session-block">
             <div class="hint">Mac OS X, Mac • Браузер Chrome</div>
             <div class="hint gray">
