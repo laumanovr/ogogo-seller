@@ -116,14 +116,11 @@
               v-model="profileObj.description"
             />
           </div>
-          <SButton
-            color="violet"
-            size="large"
-            class="s-mt-5"
-            @click="updateProfile"
-          >
-            {{ $t("lang-a7a081b0-bf2e-421d-9393-443f97ae0ef0") }}
-          </SButton>
+          <div class="light">
+            <SButton size="large" class="s-mt-5" @click="updateProfile">
+              {{ $t("lang-a7a081b0-bf2e-421d-9393-443f97ae0ef0") }}
+            </SButton>
+          </div>
         </div>
 
         <div class="content-block" v-if="tab === 'password'">
@@ -148,9 +145,11 @@
               width="100%"
             />
           </div>
-          <SButton color="violet" size="medium">
-            {{ $t("lang-fe4564b9-e2c0-4905-8dac-30f81dd94081") }}
-          </SButton>
+          <div class="light">
+            <SButton size="large">
+              {{ $t("lang-fe4564b9-e2c0-4905-8dac-30f81dd94081") }}
+            </SButton>
+          </div>
         </div>
 
         <div class="content-block" v-if="tab === 'session'">
