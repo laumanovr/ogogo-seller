@@ -11,22 +11,22 @@
         <div class="flex justify-between">
           <SInput
             class="w-p-100"
-            :rules="requiredField"
+            :rules="[requiredField]"
             v-model="loginObj.pin"
             v-maska:[options]
             :label="$t('lang-c53d0190-9e48-42e2-b346-ee9ea934955c')"
           />
         </div>
-        <div class="input-password mb-36 mt-16">
+        <div class="input-password s-mb-5 s-mt-2">
           <SInput
             type="password"
             :label="$t('lang-5e3537d8-1a60-49cc-879c-1a1ad38c9d9d')"
             width="100%"
-            :rules="requiredField"
+            :rules="[requiredField]"
             v-model="loginObj.password"
           />
           <p
-            class="color-violet-600 font-semibold mt-16 cursor-pointer"
+            class="color-violet-600 font-semibold s-mt-3 cursor-pointer"
             @click="onForgetPassword"
           >
             {{ $t("lang-11d828ce-a252-4271-a12c-9291c52de2bd") }}
@@ -36,7 +36,7 @@
           size="large"
           color="violet"
           @click="onSubmitLogin"
-          class="mb-8 w-p50"
+          class="s-mb-2"
         >
           {{ $t("lang-91041855-c915-481e-a265-42816765bf51") }}
         </SButton>
@@ -81,22 +81,23 @@ const onSellerRegistration = () => {
 
 const onSubmitLogin = () => {
   const removedDashesAndBrackets = loginObj.pin.replace(/\D/g, "");
-
   loginObj.pin = removedDashesAndBrackets;
 
-  if (loginForm.value.validateForm()) {
-    loaderStore.setLoaderState(true);
-    authStore
-      .login(loginObj)
-      .then(() => {
-        loaderStore.setLoaderState(false);
-        router.push("/profile");
-      })
-      .catch((err: any) => {
-        loaderStore.setLoaderState(false);
-        alertStore.showError(err?.error?.errorMessage);
-      });
-  }
+  loginForm.value.validate().then((isValid: boolean) => {
+    if (isValid) {
+      loaderStore.setLoaderState(true);
+      authStore
+        .login(loginObj)
+        .then(() => {
+          loaderStore.setLoaderState(false);
+          router.push("/profile");
+        })
+        .catch((err: any) => {
+          loaderStore.setLoaderState(false);
+          alertStore.showError(err?.error?.errorMessage);
+        });
+    }
+  });
 };
 </script>
 
