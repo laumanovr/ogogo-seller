@@ -14,14 +14,14 @@
         </p>
         <div class="flex flex-col">
           <SInput
-            class="w-p-100 mt-19"
+            class="w-p-100 s-mt-4"
             :rules="requiredField"
             v-model="loginObj.pin"
             v-maska:[options]
             :label="$t('lang-c53d0190-9e48-42e2-b346-ee9ea934955c')"
           />
           <SInput
-            class="w-p-100 mt-19"
+            class="w-p-100 s-mt-4"
             :rules="requiredField"
             v-model="loginObj.pin"
             v-maska:[options]
@@ -29,9 +29,9 @@
           />
           <SSelect
             :label="$t('lang-d0c19d1f-b018-45d1-93fa-2dc4a8b6878e')"
-            class="w-p-100 mt-19"
+            class="w-p-100 s-mt-4"
           />
-          <SCheckbox class="w-p-100 mt-19" placeholder="emir">
+          <SCheckbox class="w-p-100 s-mt-4" placeholder="emir">
             {{ $t("lang-33c946fe-b106-4901-b3a0-356c7b421566") }}
           </SCheckbox>
         </div>
@@ -40,7 +40,7 @@
           size="large"
           color="violet"
           @click="onSubmitSellerRegistration"
-          class="mb-8 w-p50 mt-19"
+          class="s-mb-2 w-p50 s-mt-4"
         >
           {{ $t("lang-c4fdfffa-0730-4213-869b-e689860fa95d") }}
         </SButton>
