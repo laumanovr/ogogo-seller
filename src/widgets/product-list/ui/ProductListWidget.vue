@@ -105,7 +105,7 @@
             />
             <SInput
               placeHolder="До"
-              class="ml-2"
+              class="s-ml-2"
               type="number"
               v-model.number="priceRange.max"
             />
