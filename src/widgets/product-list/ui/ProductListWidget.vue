@@ -5,24 +5,28 @@
     </div>
     <template v-if="hasProducts">
       <div class="flex justify-between">
-        <div class="flex w-p-65">
-          <FilterSearch
-            class="w-p-80"
-            @input="onSearch"
-            @click="toggleFilterModal"
-          />
+        <div class="flex filter-search-container">
+          <FilterSearch @input="onSearch" @click="toggleFilterModal" />
           <!-- <SButton color="white" class="ml-12">Настроить цены</SButton> -->
         </div>
-        <SButton color="violet" @click="openCreateProductModal">
-          + {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
-        </SButton>
+        <div class="light">
+          <SButton @click="openCreateProductModal">
+            + {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
+          </SButton>
+        </div>
       </div>
-      <STabs :tab-mode="'filter-tabs'" class="mb-20">
+      <STabs :tab-mode="'filter-tabs'" class="s-mb-5">
         <STabItem value="14801" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-dd1a9bc2-31f2-4197-9a7d-01a23229ea82") }}
         </STabItem>
         <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-7db32df9-54d2-4561-ba8b-c43073ee42e9") }}
+        </STabItem>
+        <STabItem value="14802" :active-tab="tab" @changeTab="selectTab">
+          Ожидает модерации
+        </STabItem>
+        <STabItem value="14806" :active-tab="tab" @changeTab="selectTab">
+          Требует доработки
         </STabItem>
         <STabItem value="14800" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-7b5895ca-c485-48ea-abfc-b8c9198f3826") }}
@@ -80,10 +84,9 @@
     <CategoryModal ref="categoryModal" />
 
     <SModal
-      :isModalOpen="isOpenFilterModal"
-      class="filter-modal"
+      v-model="isOpenFilterModal"
+      class="filter-modal full-height"
       width="420px"
-      height="100%"
       position="right"
       @onClose="toggleFilterModal"
     >
@@ -102,7 +105,7 @@
             />
             <SInput
               placeHolder="До"
-              class="ml-8"
+              class="ml-2"
               type="number"
               v-model.number="priceRange.max"
             />
@@ -128,11 +131,11 @@
           </div>
         </div>
       </div>
-      <div class="filter-actions">
-        <SButton size="large" color="gray" @click="clearFilter">
+      <div class="filter-actions light">
+        <SButton size="large" type="secondary" @click="clearFilter">
           {{ $t("lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea") }}
         </SButton>
-        <SButton size="large" color="violet" @click="filterBy">
+        <SButton size="large" @click="filterBy">
           {{ $t("lang-bdc9ab1e-91af-43ea-8bb9-e23c8ea98755") }}
         </SButton>
       </div>
@@ -334,6 +337,12 @@ const onEditProduct = (item: any) => {
 <style lang="scss" scoped>
 @import "../../../app/style/colors.scss";
 .product-content {
+  .filter-search-container {
+    width: 65%;
+  }
+  .filter-search {
+    width: 100%;
+  }
   .price-usd {
     color: $gray-500;
     font-weight: 500;
