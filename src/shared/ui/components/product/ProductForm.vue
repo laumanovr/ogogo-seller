@@ -32,7 +32,6 @@
           :rules="[requiredField]"
           v-model="productStore.productTemplate.toArticle"
         />
-        <!-- <SButton color="gray" class="ml-12">Сгенерировать</SButton> -->
       </div>
       <div class="s-mt-4 w-p-100">
         <STextArea

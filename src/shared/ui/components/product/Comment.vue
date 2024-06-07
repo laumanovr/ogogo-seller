@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-10">
+  <div class="container s-mt-2">
     <div class="info">
       <span class="name">Модератор:</span>
       <span class="date">{{ formatDate(props.date) }}</span>
