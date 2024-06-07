@@ -1,6 +1,6 @@
 <template>
-  <SModal :isModalOpen="isShowModal" @onClose="toggleModal" height="auto">
-    <p class="font-bold mb-24">
+  <SModal v-model="isShowModal" height="auto">
+    <p class="font-bold s-mb-5">
       {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
     </p>
     <SForm ref="productForm">
@@ -8,33 +8,29 @@
         :label="$t('lang-89bfcd93-3986-425f-b7f8-732462da1a5f')"
         class="w-p-100"
         :items="allCategories"
-        :rules="requiredField"
-        showValue="categoryName"
-        getValue="id"
+        :rules="[requiredField]"
+        itemTitle="categoryName"
+        itemValue="id"
         v-model="parentCategoryId"
-        @onChange="selectParentCategory"
+        @change="selectParentCategory"
       />
       <SSelect
         v-for="(select, i) in subCategorySelects"
         :key="i"
         :label="$t('lang-97c9b3e4-5040-4730-b73e-3ebf3309f13a')"
-        class="w-p-100 mt-16"
+        class="w-p-100"
         :class="{ 'error-select': select.isEmpty }"
         :items="select.items"
-        showValue="categoryName"
-        getValue="id"
+        itemTitle="categoryName"
+        itemValue="id"
         v-model="select.selectedCategoryId"
-        @onChange="selectChildCategory($event, i)"
+        @change="selectChildCategory($event, i)"
       />
-      <div class="flex flex-row w-p-100 gap-2 mt-36 justify-between">
-        <SButton color="gray" class="button w-p-49" @click="toggleModal">
+      <div class="flex flex-row w-p-100 gap-10 s-mt-2 justify-between light">
+        <SButton type="secondary" class="button w-p-50" @click="toggleModal">
           {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
         </SButton>
-        <SButton
-          color="violet"
-          class="button w-p-49"
-          @click="goToCreateProduct"
-        >
+        <SButton class="button w-p-50" @click="goToCreateProduct">
           {{ $t("lang-aea72790-6410-4376-9965-2a4ccbce8e9a") }}
         </SButton>
       </div>
@@ -71,10 +67,13 @@ const toggleModal = () => {
   isShowModal.value = !isShowModal.value;
 };
 
-const selectParentCategory = (selectedCategory: any) => {
+const selectParentCategory = (clickedCategoryId: string) => {
+  const selectedCategory = allCategories.value.find(
+    (category) => category.id === clickedCategoryId
+  );
   subCategorySelects.value = [];
   nextTick(() => {
-    if (selectedCategory.childMarketplaceCategories.length) {
+    if (selectedCategory.childMarketplaceCategories?.length) {
       subCategorySelects.value = [
         {
           items: selectedCategory.childMarketplaceCategories,
@@ -85,13 +84,17 @@ const selectParentCategory = (selectedCategory: any) => {
   });
 };
 
-const selectChildCategory = (childCategory: any, index: number) => {
+const selectChildCategory = (childCategoryId: string, index: number) => {
+  const childCategory = subCategorySelects.value
+    .at(-1)
+    .items.find((child: any) => child.id === childCategoryId);
+
   checkValidation();
   nextTick(() => {
     subCategorySelects.value = subCategorySelects.value.filter(
       (_, subIndex) => subIndex <= index
     );
-    if (childCategory.childMarketplaceCategories.length) {
+    if (childCategory && childCategory.childMarketplaceCategories?.length) {
       subCategorySelects.value.push({
         name: childCategory.categoryName,
         items: childCategory.childMarketplaceCategories,
@@ -129,16 +132,18 @@ const prepareBreadcrumbs = () => {
 };
 
 const goToCreateProduct = () => {
-  if (productForm.value.validateForm() && checkValidation()) {
-    let selectedCategoryId;
-    if (subCategorySelects.value.length) {
-      selectedCategoryId = subCategorySelects.value.at(-1).selectedCategoryId;
-    } else {
-      selectedCategoryId = parentCategoryId.value;
+  productForm.value.validate().then((isValid: boolean) => {
+    if (isValid && checkValidation()) {
+      let selectedCategoryId;
+      if (subCategorySelects.value.length) {
+        selectedCategoryId = subCategorySelects.value.at(-1).selectedCategoryId;
+      } else {
+        selectedCategoryId = parentCategoryId.value;
+      }
+      prepareBreadcrumbs();
+      router.push(`/product-create?id=${selectedCategoryId}`);
     }
-    prepareBreadcrumbs();
-    router.push(`/product-create?id=${selectedCategoryId}`);
-  }
+  });
 };
 
 defineExpose({
