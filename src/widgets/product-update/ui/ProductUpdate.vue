@@ -1,17 +1,17 @@
 <template>
   <div class="product-update-content">
-    <div class="d-flex items-center">
-      <SButton color="white" @click="goBack">
+    <div class="d-flex items-center light">
+      <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="ArrowIcon" direction="left" color="black" />
         <span>Назад</span>
       </SButton>
       <Breadcrumbs
         :items="categoryStore.categoryUrls"
-        class="ml-24"
+        class="s-ml-5"
         :key="breadcrumbKey"
       />
     </div>
-    <div class="d-flex mt-25">
+    <div class="d-flex s-mt-5">
       <ProductTemplate />
       <ProductForm
         mode="update"
