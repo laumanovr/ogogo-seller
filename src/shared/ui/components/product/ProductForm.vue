@@ -6,7 +6,7 @@
         <SInput
           label="Наименование товара"
           width="100%"
-          :rules="requiredField"
+          :rules="[requiredField]"
           v-model="productStore.productTemplate.productName"
         />
         <Comment
@@ -24,17 +24,17 @@
           "
         />
       </div>
-      <div class="d-flex items-end mt-16">
+      <div class="d-flex items-end s-mt-4">
         <SInput
           label="Ваш артикул"
           width="100%"
           class="article"
-          :rules="requiredField"
+          :rules="[requiredField]"
           v-model="productStore.productTemplate.toArticle"
         />
         <!-- <SButton color="gray" class="ml-12">Сгенерировать</SButton> -->
       </div>
-      <div class="mt-16 w-p-100">
+      <div class="s-mt-4 w-p-100">
         <STextArea
           label="Описание товара"
           width="100%"
@@ -55,19 +55,19 @@
           "
         />
       </div>
-      <div class="d-flex items-center justify-between mt-40 mb-30">
+      <div class="d-flex items-center justify-between s-mt-8 s-mb-6">
         <div class="head-title md">Цена</div>
         <div class="d-flex">
-          <SRadioButton
-            class="mr-24 radio-btn"
-            isSelected
-            @onChange="onSelectPriceType(14600)"
+          <SRadioButtonGroup
+            v-model="productStore.productTemplate.productPriceType"
           >
-            В сомах
-          </SRadioButton>
-          <SRadioButton class="radio-btn" @onChange="onSelectPriceType(14601)">
-            В долларах
-          </SRadioButton>
+            <SRadioButton class="s-mr-5 radio-btn" value="14600">
+              В сомах
+            </SRadioButton>
+            <SRadioButton class="radio-btn" value="14601">
+              В долларах
+            </SRadioButton>
+          </SRadioButtonGroup>
         </div>
       </div>
       <div>
@@ -76,7 +76,7 @@
             label="Цена"
             width="32%"
             type="number"
-            :rules="requiredField"
+            :rules="[requiredField]"
             v-model="productStore.productTemplate.price"
           />
           <SInput
@@ -108,12 +108,12 @@
           "
         />
       </div>
-      <div class="mt-16 mb-40">
+      <div class="s-mt-4 s-mb-8">
         <SInput
           label="Наличие (кол-во) *"
           width="100%"
           type="number"
-          :rules="requiredField"
+          :rules="[requiredField]"
           v-model="productStore.productTemplate.countOfProduct"
         />
         <Comment
@@ -172,7 +172,7 @@
           "
         />
       </div>
-      <div class="content-block mt-40">
+      <div class="content-block s-mt-8">
         <div class="head-title md">Видео</div>
         <p class="content-hint">
           На карточке может быть только одно видео – покажем его первым.
@@ -189,7 +189,7 @@
           >
             <source :src="videoUrl" type="video/mp4" />
           </video>
-          <label for="video" class="add-content ml-10">
+          <label for="video" class="add-content s-ml-6">
             <input type="file" id="video" @change="onSelectVideo" />
             <span>+</span>
           </label>
@@ -209,7 +209,7 @@
           "
         />
       </div>
-      <div class="content-block mt-40">
+      <div class="content-block s-mt-8">
         <div class="head-title md">Характеристики</div>
         <p class="content-hint">
           Это характеристики товара, которые могут быть выбраны покупателем при
@@ -219,7 +219,7 @@
         </p>
         <div class="d-flex justify-between flex-wrap">
           <div
-            class="select-item mb-16"
+            class="select-item s-mb-2"
             v-for="property in properties"
             :key="property.propertyId"
           >
@@ -227,26 +227,26 @@
               class="w-p-100"
               :label="showPropertyName(property)"
               :items="property.allowedValues"
-              :rules="requiredField"
-              showValue="propertyValueText"
-              getValue="propertyValueId"
+              :rules="[requiredField]"
+              itemTitle="propertyValueText"
+              itemValue="propertyValueId"
               v-model="property.selectedValueId"
-              @onChange="onSelectProperty(property)"
+              @change="onSelectProperty(property)"
             />
           </div>
         </div>
       </div>
-      <div class="d-flex justify-end mt-60">
+      <div class="light d-flex justify-end s-mt-10">
         <SButton
-          color="gray"
+          type="secondary"
           size="large"
-          class="mr-8"
+          class="s-mr-2"
           @click="saveAsDraft"
           v-if="props.mode === 'create'"
         >
           Сохранить как черновик
         </SButton>
-        <SButton color="violet" size="large" @click="submitProduct">
+        <SButton size="large" @click="submitProduct">
           {{ props.mode === "create" ? "Опубликовать" : "Редактировать" }}
         </SButton>
       </div>
@@ -261,6 +261,7 @@ import {
   STextArea,
   SSelect,
   SRadioButton,
+  SRadioButtonGroup,
   SIconRender,
   SForm,
 } from "@tumarsoft/ogogo-ui";
@@ -300,7 +301,6 @@ const productForm = ref(null);
 const isPhotoValid = ref(true);
 
 onMounted(() => {
-  onSelectPriceType(14600);
   if (props.mode === "update") {
     const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
     const defaultUrl = axios.defaults.baseURL;
@@ -389,10 +389,6 @@ const onSelectVideo = (e: Event) => {
   }
 };
 
-const onSelectPriceType = (priceType: number) => {
-  productStore.productTemplate.productPriceType = priceType;
-};
-
 const showPropertyName = (property: any) => {
   return property.name;
 };
@@ -412,18 +408,20 @@ const prepareFormFields = () => {
 
 const submitProduct = () => {
   isPhotoValid.value = Boolean(productStore.productTemplate.photos.length);
-  if (productForm.value.validateForm() && !isEmptyPhoto.value) {
-    prepareFormFields();
-    if (props.mode === "create") {
-      productStore.createProduct(productStore.productTemplate).then(() => {
-        router.push("/products");
-      });
-    } else {
-      productStore.updateProduct(productStore.productTemplate).then(() => {
-        router.push("/products");
-      });
+  productForm.value.validate().then((isValid: boolean) => {
+    if (isValid && !isEmptyPhoto.value) {
+      prepareFormFields();
+      if (props.mode === "create") {
+        productStore.createProduct(productStore.productTemplate).then(() => {
+          router.push("/products");
+        });
+      } else {
+        productStore.updateProduct(productStore.productTemplate).then(() => {
+          router.push("/products");
+        });
+      }
     }
-  }
+  });
 };
 
 const saveAsDraft = () => {
