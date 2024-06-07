@@ -1,5 +1,5 @@
 <template>
-  <div class="product-tabs-container mr-40 pt-15">
+  <div class="product-tabs-container s-mr-8 s-pt-4">
     <STabs :tab-mode="'content-tabs'">
       <STabItem value="one" :active-tab="tab" @changeTab="selectTab">
         Товары
@@ -35,7 +35,7 @@
         placeHolder="Поиск..."
         isSearchable
         width="100%"
-        class="mt-12 mb-12"
+        class="s-mt-3 s-mb-3"
       />
       <div class="template-container">
         <div class="template" v-for="(item, i) in templates" :key="i">
@@ -56,11 +56,10 @@
           </SCheckbox>
         </div>
       </div>
-      <div class="btn-container">
+      <div class="btn-container light">
         <SButton
-          color="violet"
           size="large"
-          class="w-p-100 mt-24"
+          class="w-p-100 s-mt-5"
           @click="addTemplates"
           :disabled="isDisabled"
         >
