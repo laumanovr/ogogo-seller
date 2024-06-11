@@ -401,8 +401,10 @@ const prepareFormFields = () => {
     profileStore.currentUser.organizationId;
   productStore.productTemplate.productType = 14701;
   productStore.productTemplate.categoryId = selectedCategoryId as string;
-  productStore.productTemplate.properties = propertyObject.value;
   delete productStore.productTemplate.validationDetails;
+  if (Object.entries(propertyObject.value).length) {
+    productStore.productTemplate.properties = propertyObject.value;
+  }
 };
 
 const submitProduct = () => {
