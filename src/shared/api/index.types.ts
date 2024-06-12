@@ -78,9 +78,9 @@ export interface BasePageParams {
 
 export interface BaseCreateAndUpdateData {
   createdAt: string;
-  createdBy: Nullable<number>;
-  updatedAt: Nullable<string>;
-  updatedBy: Nullable<number>;
+  createdBy: number;
+  updatedAt: string;
+  updatedBy: number;
 }
 
 export type WithResultPagination<T> = WithPagination<T> & {
