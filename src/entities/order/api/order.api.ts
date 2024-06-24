@@ -8,7 +8,7 @@ export class OrderApi {
       url: `/MarketplaceOrder/GetMarketplaceOrderPagedList`,
       data: data,
     })
-      .then((response) => response.data)
-      .catch((err) => Promise.reject(err));
+      .then((response: any) => response.data)
+      .catch((err: any) => Promise.reject(err));
   };
 }

@@ -114,12 +114,12 @@ export const useProductStore = defineStore("productStore", {
         loaderStore.setLoaderState(true);
         productApi
           .createProduct(payload)
-          .then((response) => {
+          .then((response: any) => {
             loaderStore.setLoaderState(false);
             alertStore.showSuccess("Успешно создан!");
             resolve(response);
           })
-          .catch((err) => {
+          .catch((err: any) => {
             alertStore.showError(err.message);
             loaderStore.setLoaderState(false);
             reject(err);
@@ -131,12 +131,12 @@ export const useProductStore = defineStore("productStore", {
         loaderStore.setLoaderState(true);
         productApi
           .updateProduct(payload)
-          .then((response) => {
+          .then((response: any) => {
             loaderStore.setLoaderState(false);
             alertStore.showSuccess("Успешно обновлено!");
             resolve(response);
           })
-          .catch((err) => {
+          .catch((err: any) => {
             alertStore.showError(err.message);
             loaderStore.setLoaderState(false);
             reject(err);

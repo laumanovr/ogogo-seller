@@ -14,16 +14,16 @@ export class ProductApi {
       url: `MarketplaceProduct/GetMarketplaceProductPagedList`,
       data: data,
     })
-      .then((response) => response.data)
-      .catch((err) => Promise.reject(err));
+      .then((response: any) => response.data)
+      .catch((err: any) => Promise.reject(err));
   };
   getProductById = (id: string): Promise<ProductDetailApiResponse> => {
     return axios({
       method: "GET",
       url: `MarketplaceProduct/GetMarketplaceProduct?id=${id}`,
     })
-      .then((response) => response.data)
-      .catch((err) => Promise.reject(err));
+      .then((response: any) => response.data)
+      .catch((err: any) => Promise.reject(err));
   };
   uploadFile = (file: FormData): Promise<ProductImageResponse> => {
     return axios({
@@ -31,8 +31,8 @@ export class ProductApi {
       url: "File/UploadFile",
       data: file,
     })
-      .then((response) => response.data)
-      .catch((err) => Promise.reject(err));
+      .then((response: any) => response.data)
+      .catch((err: any) => Promise.reject(err));
   };
   createProduct = (data: ProductTemplateEntity) => {
     return axios({
@@ -40,8 +40,8 @@ export class ProductApi {
       url: `MarketplaceProduct/CreateMarketplaceProduct`,
       data: data,
     })
-      .then((response) => response.data)
-      .catch((err) => Promise.reject(err));
+      .then((response: any) => response.data)
+      .catch((err: any) => Promise.reject(err));
   };
   updateProduct = (data: ProductTemplateEntity) => {
     return axios({
@@ -49,7 +49,7 @@ export class ProductApi {
       url: "MarketplaceProduct/UpdateMarketplaceProduct",
       data: data,
     })
-      .then((response) => response.data)
-      .catch((err) => Promise.reject(err));
+      .then((response: any) => response.data)
+      .catch((err: any) => Promise.reject(err));
   };
 }

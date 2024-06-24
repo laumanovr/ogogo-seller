@@ -22,15 +22,15 @@ export class CategoryApi {
       url: `/Marketplace/GetMarketplaceCategoryPagedList`,
       data: data,
     })
-      .then((response) => response.data.result)
-      .catch((err) => Promise.reject(err));
+      .then((response: any) => response.data.result)
+      .catch((err: any) => Promise.reject(err));
   };
   getCategoryById = (id: string) => {
     return axios({
       method: "GET",
       url: `/Marketplace/GetMarketplaceCategory?id=${id}`,
     })
-      .then((response) => response.data)
-      .catch((err) => Promise.reject(err));
+      .then((response: any) => response.data)
+      .catch((err: any) => Promise.reject(err));
   };
 }
