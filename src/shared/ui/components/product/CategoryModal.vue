@@ -52,7 +52,12 @@ const subCategorySelects = ref([]);
 const parentCategoryId = ref("");
 const productForm = ref(null);
 
-const allCategories = computed(() => categoryStore.categories);
+const allCategories = computed(() =>
+  categoryStore.categories.map((category) => ({
+    ...category,
+    categoryName: category?.categoryName || "",
+  }))
+);
 
 onMounted(() => {
   fetchAllCategories();
@@ -85,17 +90,17 @@ const selectParentCategory = (clickedCategoryId: string) => {
 };
 
 const selectChildCategory = (childCategoryId: string, index: number) => {
-  const childCategory = subCategorySelects.value
-    .at(-1)
-    .items.find((child: any) => child.id === childCategoryId);
-
   checkValidation();
+  subCategorySelects.value = subCategorySelects.value.filter(
+    (_, subIndex) => subIndex <= index
+  );
   nextTick(() => {
-    subCategorySelects.value = subCategorySelects.value.filter(
-      (_, subIndex) => subIndex <= index
-    );
+    const childCategory = subCategorySelects.value
+      .at(-1)
+      .items.find((child: any) => child.id === childCategoryId);
     if (childCategory && childCategory.childMarketplaceCategories?.length) {
       subCategorySelects.value.push({
+        id: childCategory?.id,
         name: childCategory.categoryName,
         items: childCategory.childMarketplaceCategories,
       });
