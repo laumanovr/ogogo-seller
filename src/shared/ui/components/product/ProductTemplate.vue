@@ -144,6 +144,9 @@ const deleteSample = (id: number) => {
         color: $violet-600;
         border-color: $violet-600;
       }
+      .tab-item-content {
+        justify-content: center;
+      }
     }
   }
   .sample {
