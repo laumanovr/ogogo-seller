@@ -69,7 +69,7 @@
           <div class="price-usd">{{ item.priceUsdWithDiscount }} $</div>
         </template>
         <template v-slot:action="{ item }">
-          <SIconRender name="SettingsIcon" @click="onEditProduct(item)" />
+          <SIconRender name="PenIcon" @click="onEditProduct(item)" />
         </template>
       </STable>
     </template>
