@@ -60,10 +60,18 @@
           <SRadioButtonGroup
             v-model="productStore.productTemplate.productPriceType"
           >
-            <SRadioButton class="s-mr-5 radio-btn" value="14600">
+            <SRadioButton
+              class="s-mr-5 radio-btn"
+              value="14600"
+              :checked="isPriceSelected(14600)"
+            >
               В сомах
             </SRadioButton>
-            <SRadioButton class="radio-btn" value="14601">
+            <SRadioButton
+              class="radio-btn"
+              value="14601"
+              :checked="isPriceSelected(14601)"
+            >
               В долларах
             </SRadioButton>
           </SRadioButtonGroup>
@@ -344,6 +352,10 @@ onMounted(() => {
 const isEmptyPhoto = computed(
   () => !isPhotoValid.value && !productStore.productTemplate.photos.length
 );
+
+const isPriceSelected = (priceType: number) => {
+  return productStore.productTemplate.productPriceType == priceType;
+};
 
 const onSelectPhoto = async (e: Event) => {
   const target = e.target as HTMLInputElement;
