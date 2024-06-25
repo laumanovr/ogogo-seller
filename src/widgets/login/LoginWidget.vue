@@ -36,9 +36,9 @@
           <SButton size="large" @click="onSubmitLogin" class="s-mb-2">
             {{ $t("lang-91041855-c915-481e-a265-42816765bf51") }}
           </SButton>
-          <SButton size="large" type="secondary" @click="onSellerRegistration">
+          <!-- <SButton size="large" type="secondary" @click="onSellerRegistration">
             {{ $t("lang-dff486df-0927-4f56-afc7-d543d3ba89e7") }}
-          </SButton>
+          </SButton> -->
         </div>
       </SForm>
     </div>
