@@ -72,9 +72,9 @@ const onForgetPassword = () => {
   router.push("/password-reset");
 };
 
-const onSellerRegistration = () => {
-  router.push("/seller-registration");
-};
+// const onSellerRegistration = () => {
+//   router.push("/seller-registration");
+// };
 
 const onSubmitLogin = () => {
   const removedDashesAndBrackets = loginObj.pin.replace(/\D/g, "");
