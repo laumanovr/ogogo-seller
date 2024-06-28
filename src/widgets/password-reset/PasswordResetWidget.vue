@@ -14,7 +14,7 @@
         </p>
         <div class="flex justify-between">
           <SInput
-            class="w-p-100 mt-18 mb-44"
+            class="w-p-100 s-mt-4 s-mb-8"
             :rules="requiredField"
             v-model="loginObj.pin"
             v-maska:[options]
@@ -26,7 +26,7 @@
           size="large"
           color="violet"
           @click="onSubmitPasswordReset"
-          class="mb-8 w-p50"
+          class="s-mb-2 w-p50"
         >
           {{ $t("lang-c4fdfffa-0730-4213-869b-e689860fa95d") }}
         </SButton>

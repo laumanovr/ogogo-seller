@@ -28,7 +28,7 @@ const route = useRoute();
 watch(
   () => route.path,
   () => {
-    if (Boolean(getItem("sessionId"))) {
+    if (Boolean(getItem("sessionId") && route.path !== "/")) {
       currentComponent.value = Layout;
     } else {
       currentComponent.value = Empty;

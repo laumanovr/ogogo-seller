@@ -112,14 +112,7 @@ export const useAuthStore = defineStore("auth", {
       return new Promise<AuthGetProfileResultInterface>((resolve, reject) => {
         getCurrentUser()
           .then((user) => {
-            // const lastUserId = getItem("last-user-id");
-            // setItem("last-user-id", this.currentUser.id);
-            // if (
-            //   lastUserId === undefined ||
-            //   lastUserId === "" ||
-            //   (lastUserId && lastUserId !== this.currentUser.id)
-            // ) {
-            // }
+            window.localStorage.setItem("currentUser", JSON.stringify(user));
             resolve(user);
           })
           .catch((error) => {

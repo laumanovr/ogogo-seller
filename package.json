@@ -8,7 +8,10 @@
     "preview": "vite preview",
     "build:test": "vue-tsc && vite build --mode=test",
     "build:prod": "vue-tsc && vite build --mode=prod",
-    "build:pretest": "vue-tsc && vite build --mode=pretest"
+    "build:pretest": "vue-tsc && vite build --mode=pretest",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier .  --write",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.9",

@@ -1,39 +1,14 @@
 <template>
-  <div class="d-flex flex-row justify-between padding-16-40 h-80 mb-20">
+  <div class="d-flex flex-row justify-between padding-16-40 s-h-13 s-mb-4">
     <img src="../../ui/assets/Ogogo-logo.png" class="ogogo-img" />
 
     <div class="header-navigation">
-      <div
-        @click="onMenuItemChange(MenuItems.ModerateProducts)"
-        class="cursor-pointer d-flex flex-col items-center"
-      >
-        <SIconRender
-          :color="isModerateProductsActive.substr(6)"
-          :name="'BoxIcon'"
-        />
-        <p :class="`${isModerateProductsActive} font-size-12 mt-4`">
-          {{ $t("lang-9167bd63-d7b6-4f9c-8d68-80ec6d00580c") }}
-        </p>
-      </div>
-      <div
-        @click="onMenuItemChange(MenuItems.ModerateTemplates)"
-        class="cursor-pointer d-flex flex-col items-center"
-      >
-        <SIconRender
-          :color="isModerateTemplatesActive.substr(6)"
-          :name="'BoxIcon'"
-        />
-        <p :class="`${isModerateTemplatesActive} font-size-12 mt-4`">
-          {{ $t("lang-fa1bcc3d-fe84-4e09-836e-eef57745df44") }}
-        </p>
-      </div>
-
       <div
         @click="onMenuItemChange(MenuItems.Products)"
         class="cursor-pointer d-flex flex-col items-center"
       >
         <SIconRender :color="isProductsActive.substr(6)" :name="'BoxIcon'" />
-        <p :class="`${isProductsActive} font-size-12 mt-4`">
+        <p :class="`${isProductsActive} font-size-12 s-mt-1`">
           {{ $t("lang-d7069093-a1a5-4544-8a29-e516288d719b") }}
         </p>
       </div>
@@ -42,7 +17,7 @@
         class="cursor-pointer d-flex flex-col items-center"
       >
         <SIconRender :color="isOrdersActive.substr(6)" :name="'ShopIcon'" />
-        <p :class="`${isOrdersActive} font-size-12 mt-4`">
+        <p :class="`${isOrdersActive} font-size-12 s-mt-1`">
           {{ $t("lang-6f853bc8-3f4e-44d2-9770-49d98347fc6b") }}
         </p>
       </div>
@@ -51,7 +26,7 @@
         class="cursor-pointer d-flex flex-col items-center"
       >
         <SIconRender :color="isNotifyActive.substr(6)" :name="'GridIcon'" />
-        <p :class="`${isNotifyActive} font-size-12 mt-4`">
+        <p :class="`${isNotifyActive} font-size-12 s-mt-1`">
           {{ $t("lang-12ebb268-22bc-470c-b696-394bd7c1a45f") }}
         </p>
       </div>
@@ -60,8 +35,8 @@
         class="cursor-pointer d-flex flex-col items-center"
       >
         <img src="../../../app/assets/img/empty-ava.svg" alt="" />
-        <p :class="`${isCabinetActive} font-size-12 mt-4`">
-          {{ $t("lang-2a4d7ca8-dd13-4463-89cd-38ecb17f6fec") }}
+        <p :class="`${isCabinetActive} font-size-12 s-mt-1`">
+          {{ currentUser?.firstName }}
         </p>
       </div>
     </div>
@@ -78,6 +53,7 @@ const route = useRoute();
 const router = useRouter();
 
 const activeButton = ref("");
+const currentUser = ref(JSON.parse(window.localStorage.getItem("currentUser")));
 
 Object.values(MenuItems).forEach((item: any) => {
   if (route.path.includes(item)) {
@@ -102,16 +78,6 @@ const isNotifyActive = computed(() => {
 });
 const isCabinetActive = computed(() => {
   return activeButton.value === MenuItems.Cabinet
-    ? "color-violet-700"
-    : "gray-400";
-});
-const isModerateProductsActive = computed(() => {
-  return activeButton.value === MenuItems.ModerateProducts
-    ? "color-violet-700"
-    : "gray-400";
-});
-const isModerateTemplatesActive = computed(() => {
-  return activeButton.value === MenuItems.ModerateTemplates
     ? "color-violet-700"
     : "gray-400";
 });

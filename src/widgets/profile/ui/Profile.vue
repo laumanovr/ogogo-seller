@@ -63,13 +63,15 @@
             <div class="data-label">
               {{ $t("lang-c53d0190-9e48-42e2-b346-ee9ea934955c") }}
             </div>
-            <div class="data-info">+996 775 899 080</div>
+            <div class="data-info">+{{ currentUser?.phone }}</div>
           </div>
           <div class="data-block">
             <div class="data-label">
               {{ $t("lang-6b722e0f-5196-40cc-856b-39635c043750") }}
             </div>
-            <div class="data-info">Иван Иванов Иванович</div>
+            <div class="data-info">
+              {{ currentUser?.firstName + " " + currentUser?.lastName }}
+            </div>
           </div>
           <div class="data-block">
             <div class="data-label">
@@ -80,10 +82,10 @@
         </div>
 
         <div class="content-block" v-if="tab === 'shop'">
-          <div class="photo d-flex items-center mb-40">
+          <div class="photo d-flex items-center s-mb-8">
             <img :src="profileImageUrl" alt="" />
-            <div class="photo-action ml-24">
-              <div class="hint gray mb-12 mw-400">
+            <div class="photo-action s-ml-5">
+              <div class="hint gray s-mb-3 mw-400">
                 {{ $t("lang-f1c8caf8-4ba1-45c7-94a5-42c4ec1bd59b") }}
               </div>
               <label for="file">
@@ -94,58 +96,64 @@
               </label>
             </div>
           </div>
-          <div class="data-title mb-8">
+          <div class="data-title s-mb-2">
             {{ $t("lang-b9b9a34d-ccef-4f0a-bf1d-a0c0ee522954") }}
           </div>
-          <div class="hint mb-20">
+          <div class="hint s-mb-4">
             {{ $t("lang-6711b6ad-a725-48d6-b231-1b8f90f23cf3") }}
           </div>
-          <div class="mb-16">
+          <div class="s-mb-4">
             <SInput
               :label="$t('lang-4572af8e-fb1f-4f76-a997-de5bc6aa89fb')"
               width="100%"
+              v-model="profileObj.name"
             />
           </div>
           <div>
             <STextArea
               :label="$t('lang-b1c420fe-8beb-4452-bf7c-165f69e8eabf')"
               width="100%"
+              v-model="profileObj.description"
             />
           </div>
-          <SButton color="violet" size="large" class="mt-20">
-            {{ $t("lang-a7a081b0-bf2e-421d-9393-443f97ae0ef0") }}
-          </SButton>
+          <div class="light">
+            <SButton size="large" class="s-mt-5" @click="updateProfile">
+              {{ $t("lang-a7a081b0-bf2e-421d-9393-443f97ae0ef0") }}
+            </SButton>
+          </div>
         </div>
 
         <div class="content-block" v-if="tab === 'password'">
-          <div class="data-title mb-20">
+          <div class="data-title s-mb-5">
             {{ $t("lang-df4b9d52-4813-4ed9-9111-278577ba5cf7") }}
           </div>
-          <div class="mb-16">
+          <div class="s-mb-3">
             <SInput
               :label="$t('lang-701623e1-52b5-40a1-b912-4e49b4ff56ce')"
               width="100%"
             />
           </div>
-          <div class="mb-16">
+          <div class="s-mb-3">
             <SInput
               :label="$t('lang-9dc6d3da-f6ff-4700-8b46-9b52d75deae0')"
               width="100%"
             />
           </div>
-          <div class="mb-40">
+          <div class="s-mb-6">
             <SInput
               :label="$t('lang-0184de30-27b6-48af-bafc-3995afbb020d')"
               width="100%"
             />
           </div>
-          <SButton color="violet" size="medium">
-            {{ $t("lang-fe4564b9-e2c0-4905-8dac-30f81dd94081") }}
-          </SButton>
+          <div class="light">
+            <SButton size="large">
+              {{ $t("lang-fe4564b9-e2c0-4905-8dac-30f81dd94081") }}
+            </SButton>
+          </div>
         </div>
 
         <div class="content-block" v-if="tab === 'session'">
-          <div class="data-title mb-20">Последняя сессия</div>
+          <div class="data-title s-mb-4">Последняя сессия</div>
           <div class="session-block">
             <div class="hint">Mac OS X, Mac • Браузер Chrome</div>
             <div class="hint gray">
@@ -164,13 +172,26 @@
 import { ref, computed, onMounted } from "vue";
 import { SButton, SInput, STextArea, SIconRender } from "@tumarsoft/ogogo-ui";
 import { useRouter } from "vue-router";
+import { useProfileStore } from "../store/profile.store";
+import { IProfile } from "../store/profile-store.types";
+import { IProfileApi } from "../api/profile-api.types";
 
 const router = useRouter();
+const profileStore = useProfileStore();
 const tab = ref("");
-const profileObj = ref({ image: null });
+const currentUser = ref<IProfile>(profileStore.currentUser);
+const profileObj = ref({
+  id: currentUser.value.tradeMarkId,
+  logoBase64: null,
+  name: null,
+  description: null,
+  logoFileName: null,
+  version: null,
+});
 
 onMounted(() => {
   changeTab("general");
+  fetchProfileInfo();
 });
 
 const changeTab = (val: string) => {
@@ -178,8 +199,8 @@ const changeTab = (val: string) => {
 };
 
 const profileImageUrl = computed(() =>
-  profileObj.value?.image
-    ? profileObj.value?.image
+  profileObj.value?.logoBase64
+    ? profileObj.value?.logoBase64
     : "/src/app/assets/img/empty-photo.svg"
 );
 
@@ -196,16 +217,31 @@ const convertToBase64 = (file: File) => {
   });
 };
 
-const onSelectFile = async (e: any) => {
-  const file = e.target.files[0];
+const onSelectFile = async (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  const file = target.files[0];
   if (file) {
-    profileObj.value.image = await convertToBase64(file);
+    profileObj.value.logoFileName = file.name;
+    profileObj.value.logoBase64 = await convertToBase64(file);
   }
+};
+
+const fetchProfileInfo = () => {
+  profileStore.getProfileInfo().then((response: IProfileApi) => {
+    profileObj.value.name = response.name;
+    profileObj.value.description = response.description;
+    profileObj.value.logoBase64 = response.logoBase64;
+    profileObj.value.version = response.version;
+  });
+};
+
+const updateProfile = () => {
+  profileStore.updateProfileInfo(profileObj.value);
 };
 
 const logout = () => {
   router.push("/");
-  window.localStorage.removeItem("sessionId");
+  window.localStorage.clear();
 };
 </script>
 

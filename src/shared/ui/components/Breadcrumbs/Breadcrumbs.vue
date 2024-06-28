@@ -1,7 +1,7 @@
 <template>
   <div class="breadcrumbs-container">
     <div class="breadcrumb-item" v-for="(item, i) in items" :key="i">
-      <router-link :to="item.link">{{ item.name }}</router-link>
+      <span class="item">{{ item.name }}</span>
       <span v-show="i !== items.length - 1">/</span>
     </div>
   </div>
@@ -18,14 +18,6 @@ const props = defineProps({
 });
 
 let items = reactive(props.items);
-
-//TODO: Delete later
-items = [
-  { name: "Электроника", link: "#" },
-  { name: "Смартфоны и гаджеты", link: "#" },
-  { name: "Apple", link: "#" },
-  { name: "Iphone 15 pro", link: "#" },
-];
 </script>
 
 <style lang="scss">
@@ -41,6 +33,9 @@ items = [
     }
     span {
       margin: 0 6px;
+      &.item {
+        margin: 0 2px;
+      }
     }
   }
 }
