@@ -98,6 +98,7 @@
             label="Цена со скидкой"
             width="32%"
             v-model="priceWithDiscount"
+            @input="countDiscountPercentage"
           />
         </div>
         <Comment
@@ -382,6 +383,13 @@ const countPriceDiscount = () => {
     (productStore.productTemplate.discount / 100);
   priceWithDiscount.value =
     Number(productStore.productTemplate.price) - discountSum;
+};
+
+const countDiscountPercentage = () => {
+  const diffSum =
+    Number(productStore.productTemplate.price) - priceWithDiscount.value;
+  productStore.productTemplate.discount =
+    (diffSum / productStore.productTemplate.price) * 100;
 };
 
 const onSelectVideo = (e: Event) => {
