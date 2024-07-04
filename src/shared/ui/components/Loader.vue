@@ -1,6 +1,6 @@
 <template>
   <div class="loader-container">
-    <div class="loader"></div>
+    <img src="@/shared/ui/assets/loader.gif" class="loader" />
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 .loader-container {
   position: fixed;
   z-index: 999;
-  background: rgba($gray-900, 0.6);
+  background: rgba($white, 0.5);
   width: 100%;
   height: 100%;
   top: 0;
@@ -17,14 +17,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  .loader {
-    border: 3px solid $gray-50;
-    border-radius: 50%;
-    border-top-color: $violet-500;
-    width: 50px;
-    height: 50px;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s linear infinite;
+  img {
+    width: 200px;
+    height: 200px;
   }
 }
 
