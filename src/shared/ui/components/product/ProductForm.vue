@@ -276,7 +276,7 @@ import {
 import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
-import { useProfileStore } from "@/widgets/profile/store/profile.store";
+import { useProfileStore } from "@/entities/profile/store/profile.store";
 import { requiredField } from "@/shared/lib/utils/rules";
 import Comment from "./Comment.vue";
 import { useRoute } from "vue-router";
