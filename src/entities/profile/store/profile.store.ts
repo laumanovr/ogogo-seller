@@ -55,8 +55,10 @@ export const useProfileStore = defineStore("profileStore", {
           })
           .catch((err) => {
             alertStore.showError(err.message);
-            loaderStore.setLoaderState(false);
             reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
           });
       });
     },
