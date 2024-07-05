@@ -129,24 +129,22 @@
           </div>
           <div class="s-mb-3">
             <SInput
-              :label="$t('lang-701623e1-52b5-40a1-b912-4e49b4ff56ce')"
-              width="100%"
-            />
-          </div>
-          <div class="s-mb-3">
-            <SInput
               :label="$t('lang-9dc6d3da-f6ff-4700-8b46-9b52d75deae0')"
+              type="password"
               width="100%"
+              v-model="newPassword"
             />
           </div>
           <div class="s-mb-6">
             <SInput
               :label="$t('lang-0184de30-27b6-48af-bafc-3995afbb020d')"
+              type="password"
               width="100%"
+              v-model="repeatPassword"
             />
           </div>
           <div class="light">
-            <SButton size="large">
+            <SButton size="large" @click="updatePassword">
               {{ $t("lang-fe4564b9-e2c0-4905-8dac-30f81dd94081") }}
             </SButton>
           </div>
@@ -172,13 +170,17 @@
 import { ref, computed, onMounted } from "vue";
 import { SButton, SInput, STextArea, SIconRender } from "@tumarsoft/ogogo-ui";
 import { useRouter } from "vue-router";
-import { useProfileStore } from "../store/profile.store";
-import { IProfile } from "../store/profile-store.types";
-import { IProfileApi } from "../api/profile-api.types";
+import { useProfileStore } from "@/entities/profile/store/profile.store";
+import { IProfile } from "@/entities/profile/store/profile-store.types";
+import { IProfileApi } from "@/entities/profile/api/profile-api.types";
+import { useAlertStore } from "@/shared/store/alert";
 
 const router = useRouter();
 const profileStore = useProfileStore();
+const alertStore = useAlertStore();
 const tab = ref("");
+const newPassword = ref("");
+const repeatPassword = ref("");
 const currentUser = ref<IProfile>(profileStore.currentUser);
 const profileObj = ref({
   id: currentUser.value.tradeMarkId,
@@ -242,6 +244,21 @@ const updateProfile = () => {
 const logout = () => {
   router.push("/");
   window.localStorage.clear();
+};
+
+const updatePassword = () => {
+  if (newPassword.value !== repeatPassword.value) {
+    alertStore.showInfo("Пароли не совпадают!");
+    return;
+  }
+  if (newPassword.value.length) {
+    profileStore
+      .updateUserPassword({ newPassword: newPassword.value })
+      .then(() => {
+        newPassword.value = "";
+        repeatPassword.value = "";
+      });
+  }
 };
 </script>
 
