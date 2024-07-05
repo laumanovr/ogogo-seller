@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { IProfile } from "./profile-store.types";
-import { IProfileApi } from "./../api/profile-api.types";
+import { IProfileApi } from "../api/profile-api.types";
 import { ProfileApi } from "../api/profile.api";
 const profileApi = new ProfileApi();
 const loaderStore = useLoaderStore();
@@ -34,6 +34,23 @@ export const useProfileStore = defineStore("profileStore", {
           .getProfile()
           .then((response) => {
             loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            loaderStore.setLoaderState(false);
+            reject(err);
+          });
+      });
+    },
+    updateUserPassword(payload: any) {
+      return new Promise((resolve, reject) => {
+        loaderStore.setLoaderState(true);
+        profileApi
+          .updatePassword(payload)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            alertStore.showSuccess("Пароль изменен!");
             resolve(response);
           })
           .catch((err) => {
