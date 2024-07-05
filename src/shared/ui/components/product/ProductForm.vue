@@ -98,6 +98,7 @@
             label="Цена со скидкой"
             width="32%"
             v-model="priceWithDiscount"
+            @input="countDiscountPercentage"
           />
         </div>
         <Comment
@@ -275,7 +276,7 @@ import {
 import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
-import { useProfileStore } from "@/widgets/profile/store/profile.store";
+import { useProfileStore } from "@/entities/profile/store/profile.store";
 import { requiredField } from "@/shared/lib/utils/rules";
 import Comment from "./Comment.vue";
 import { useRoute } from "vue-router";
@@ -382,6 +383,13 @@ const countPriceDiscount = () => {
     (productStore.productTemplate.discount / 100);
   priceWithDiscount.value =
     Number(productStore.productTemplate.price) - discountSum;
+};
+
+const countDiscountPercentage = () => {
+  const diffSum =
+    Number(productStore.productTemplate.price) - priceWithDiscount.value;
+  productStore.productTemplate.discount =
+    (diffSum / productStore.productTemplate.price) * 100;
 };
 
 const onSelectVideo = (e: Event) => {
