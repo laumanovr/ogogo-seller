@@ -150,9 +150,9 @@
           <div class="photo" v-for="image in productImages" :key="image">
             <img :src="image" alt="img" />
             <SIconRender
-              name="CloseRoundIcon"
-              color="grey"
+              name="close"
               class="close-icon"
+              size="small"
               @click="deleteImage(image)"
             />
           </div>
@@ -492,9 +492,8 @@ const saveAsDraft = () => {
         position: absolute;
         top: -7px;
         right: -7px;
-        & > rect {
-          fill-opacity: 0.15;
-        }
+        background: $gray-100;
+        border-radius: 6px;
       }
     }
     .add-content {
