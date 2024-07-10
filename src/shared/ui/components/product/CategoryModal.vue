@@ -146,6 +146,7 @@ const goToCreateProduct = () => {
         selectedCategoryId = parentCategoryId.value;
       }
       prepareBreadcrumbs();
+      toggleModal();
       router.push(`/product-create?id=${selectedCategoryId}`);
     }
   });
@@ -158,7 +159,7 @@ defineExpose({
 
 <style lang="scss">
 @import "../../../../app/style/colors.scss";
-.error-select {
+.dropdown.error-select {
   input {
     border-color: $red-500;
   }
