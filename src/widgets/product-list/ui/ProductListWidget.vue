@@ -69,7 +69,11 @@
           <div class="price-usd">{{ item.priceUsdWithDiscount }} $</div>
         </template>
         <template v-slot:action="{ item }">
-          <SIconRender name="PenIcon" @click="onEditProduct(item)" />
+          <SIconRender
+            name="pencil"
+            class="s-text-gray-500"
+            @click="onEditProduct(item)"
+          />
         </template>
       </STable>
     </template>
@@ -362,77 +366,78 @@ const onEditProduct = (item: any) => {
       height: 44px;
     }
   }
-  .filter-modal {
-    .modal-content {
-      height: calc(100% - 75px);
-      overflow-y: auto;
+}
 
-      &::-webkit-scrollbar {
-        width: 8px;
-      }
+.filter-modal {
+  .modal-content {
+    height: calc(100% - 75px);
+    overflow-y: auto;
 
-      &::-webkit-scrollbar-thumb {
-        background-color: $gray-300;
-        border-radius: 4px;
-      }
+    &::-webkit-scrollbar {
+      width: 8px;
     }
 
-    .filter-title {
-      font-size: 24px;
+    &::-webkit-scrollbar-thumb {
+      background-color: $gray-300;
+      border-radius: 4px;
+    }
+  }
+
+  .filter-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 35px;
+  }
+
+  .section {
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+
+    &-title {
+      font-size: 16px;
       font-weight: 700;
-      margin-bottom: 35px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .checkbox-title {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .checkbox-container {
+    margin-bottom: 8px;
+  }
+
+  .property-items {
+    overflow-y: auto;
+    margin-top: 15px;
+
+    &::-webkit-scrollbar {
+      width: 8px;
     }
 
-    .section {
-      &:not(:last-child) {
-        margin-bottom: 30px;
-      }
-
-      &-title {
-        font-size: 16px;
-        font-weight: 700;
-        margin-bottom: 20px;
-      }
+    &::-webkit-scrollbar-thumb {
+      background-color: $gray-300;
+      border-radius: 4px;
     }
+  }
 
-    .checkbox-title {
-      font-size: 14px;
-      font-weight: 500;
-    }
+  .input-container {
+    width: calc(100% - 10px);
+  }
 
-    .checkbox-container {
-      margin-bottom: 8px;
-    }
+  .filter-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 0 24px;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 56px);
 
-    .property-items {
-      overflow-y: auto;
-      margin-top: 15px;
-
-      &::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: $gray-300;
-        border-radius: 4px;
-      }
-    }
-
-    .input-container {
-      width: calc(100% - 10px);
-    }
-
-    .filter-actions {
-      display: flex;
-      justify-content: space-between;
-      padding: 24px 0 24px;
-      position: absolute;
-      bottom: 0;
-      width: calc(100% - 56px);
-
-      .button {
-        width: calc(50% - 4px);
-      }
+    .button {
+      width: calc(50% - 4px);
     }
   }
 }
