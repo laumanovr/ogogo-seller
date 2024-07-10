@@ -26,7 +26,11 @@
           <div class="sample__name">
             {{ item.productName }}
           </div>
-          <SIconRender name="TrashIcon" @click="deleteSample(item.id)" />
+          <SIconRender
+            name="delete"
+            size="small"
+            @click="deleteSample(item.id)"
+          />
         </div>
       </div>
     </STabWindow>
