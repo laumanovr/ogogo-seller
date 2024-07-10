@@ -2,7 +2,7 @@
   <div class="product-update-content">
     <div class="d-flex items-center light">
       <SButton type="secondary" variant="outlined" @click="goBack">
-        <SIconRender name="ArrowIcon" direction="left" color="black" />
+        <SIconRender name="chevron-left" size="small" />
         <span>Назад</span>
       </SButton>
       <Breadcrumbs
