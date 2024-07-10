@@ -3,7 +3,7 @@
     <SInput isSearchable width="90%" @input="onInput" />
     <div class="light">
       <SButton variant="outlined" type="secondary" @click="onClick">
-        <SIconRender name="SettingsIcon" />
+        <SIconRender name="filter" size="small" />
         {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
       </SButton>
     </div>
