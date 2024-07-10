@@ -7,8 +7,8 @@
       <div class="profile-tabs">
         <div class="tab" @click="changeTab('general')">
           <SIconRender
-            name="ProfileEditIcon"
-            :color="tab === 'general' ? 'violet' : ''"
+            name="user-edit"
+            :class="{ 's-text-violet-600': tab === 'general' }"
           />
           <span :class="{ active: tab === 'general' }">{{
             $t("lang-41ad3377-6945-4978-8a3a-ad8d08292155")
@@ -16,8 +16,8 @@
         </div>
         <div class="tab" @click="changeTab('shop')">
           <SIconRender
-            name="ShopIcon"
-            :color="tab === 'shop' ? 'violet' : 'black'"
+            name="shop"
+            :class="{ 's-text-violet-600': tab === 'shop' }"
           />
           <span :class="{ active: tab === 'shop' }">
             {{ $t("lang-595227fd-b603-43ea-a918-0b7f9edc6bac") }}</span
@@ -25,8 +25,8 @@
         </div>
         <div class="tab" @click="changeTab('password')">
           <SIconRender
-            name="PasswordIcon"
-            :color="tab === 'password' ? 'violet' : ''"
+            name="lock"
+            :class="{ 's-text-violet-600': tab === 'password' }"
           />
           <span :class="{ active: tab === 'password' }">
             {{ $t("lang-ad3a8ec6-bcb6-4dce-9ff6-a3ccc17c1e8d") }}
@@ -34,8 +34,8 @@
         </div>
         <div class="tab" @click="changeTab('session')">
           <SIconRender
-            name="SessionIcon"
-            :color="tab === 'session' ? 'violet' : ''"
+            name="tv"
+            :class="{ 's-text-violet-600': tab === 'session' }"
           />
           <span :class="{ active: tab === 'session' }">
             {{ $t("lang-3d338844-bc4d-4147-bfd3-c4d72659611e") }}
@@ -43,13 +43,16 @@
         </div>
         <div class="divider"></div>
         <div class="tab">
-          <SIconRender name="WhatsAppIcon" />
+          <SIconRender
+            name="whatsapp"
+            :class="{ 's-text-violet-600': tab === 'help' }"
+          />
           <span :class="{ active: tab === 'help' }">
             {{ $t("lang-53b4af08-0a92-4732-abc4-544486b1887a") }}
           </span>
         </div>
         <div class="tab" @click="logout">
-          <SIconRender name="LogoutIcon" />
+          <SIconRender name="logout" />
           <span>{{ $t("lang-3cca1d55-3859-4aad-8f7a-2dc7e81dd716") }}</span>
         </div>
       </div>
