@@ -7,7 +7,7 @@
         @click="onMenuItemChange(MenuItems.Products)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isProductsActive.substr(6)" :name="'BoxIcon'" />
+        <SIconRender name="box" :class="isProductsActive" />
         <p :class="`${isProductsActive} font-size-12 s-mt-1`">
           {{ $t("lang-d7069093-a1a5-4544-8a29-e516288d719b") }}
         </p>
@@ -16,7 +16,7 @@
         @click="onMenuItemChange(MenuItems.Orders)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isOrdersActive.substr(6)" :name="'ShopIcon'" />
+        <SIconRender name="shop" :class="isOrdersActive" />
         <p :class="`${isOrdersActive} font-size-12 s-mt-1`">
           {{ $t("lang-6f853bc8-3f4e-44d2-9770-49d98347fc6b") }}
         </p>
@@ -25,7 +25,7 @@
         @click="onMenuItemChange(MenuItems.Notifications)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isNotifyActive.substr(6)" :name="'GridIcon'" />
+        <SIconRender name="grid" :class="isNotifyActive" />
         <p :class="`${isNotifyActive} font-size-12 s-mt-1`">
           {{ $t("lang-12ebb268-22bc-470c-b696-394bd7c1a45f") }}
         </p>
@@ -63,23 +63,23 @@ Object.values(MenuItems).forEach((item: any) => {
 
 const isProductsActive = computed(() => {
   return activeButton.value === MenuItems.Products
-    ? "color-violet-700"
-    : "gray-400";
+    ? "s-text-violet-700"
+    : "s-text-gray-500";
 });
 const isOrdersActive = computed(() => {
   return activeButton.value === MenuItems.Orders
-    ? "color-violet-700"
-    : "gray-400";
+    ? "s-text-violet-700"
+    : "s-text-gray-500";
 });
 const isNotifyActive = computed(() => {
   return activeButton.value === MenuItems.Notifications
-    ? "color-violet-700"
-    : "gray-400";
+    ? "s-text-violet-700"
+    : "s-text-gray-500";
 });
 const isCabinetActive = computed(() => {
   return activeButton.value === MenuItems.Cabinet
     ? "color-violet-700"
-    : "gray-400";
+    : "gray-500";
 });
 
 function onMenuItemChange(value: MenuItems) {
