@@ -1,1 +1,1 @@
-declare module '@tumarsoft/ogogo-ui'
+declare module "@tumarsoft/ogogo-ui";
