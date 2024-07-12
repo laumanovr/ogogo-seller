@@ -50,25 +50,11 @@ export default function setup() {
     async function (error) {
       if (!runWhen(error)) return Promise.reject(error);
 
-      // const errorCode = error?.response?.data?.error?.errorCode;
-
-      // const customMessage = getCustomErrorMessage(errorCode);
       const certificatePing = error?.response?.request?.responseURL?.includes(
         "certificate-ping.txt"
       );
-      // if (customMessage) {
-      //   store.dispatch(
-      //     notificationActionTypes.addErrorNotification,
-      //     customMessage
-      //   );
-      //   return Promise.reject(error);
-      // } else
 
       if (certificatePing) {
-        // store.dispatch(
-        //   notificationActionTypes.addErrorNotification,
-        //   i18n.t("validations.noConnectionCerficatePing")
-        // );
         return Promise.reject(error);
       } else {
         let showError = true;
@@ -92,7 +78,6 @@ export default function setup() {
             break;
         }
         if (showError) {
-          // store.dispatch(notificationActionTypes.addErrorNotification, error);
         }
         return Promise.reject(error);
       }

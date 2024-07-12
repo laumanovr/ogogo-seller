@@ -1,5 +1,3 @@
-// import type { IRoute } from "@/utils/interfaces/route.types";
-
 import { IRoute } from "@/app/router/middlware/auth.type";
 
 export function modularize(routes: IRoute[], modulename: string[]): IRoute[] {
@@ -45,7 +43,6 @@ export function flattenRoutes(routes: IRoute[]): any[] {
 export function transformToRouter(routes: IRoute[]): any[] {
   const _routes = routes
     .map((e) => {
-      // if (e.meta.isPath) {
       return {
         path: e.path,
         name: e.name,
@@ -53,7 +50,6 @@ export function transformToRouter(routes: IRoute[]): any[] {
         meta: {
           ...e.meta,
         },
-        // };
       };
     })
     .filter((e) => e !== null);

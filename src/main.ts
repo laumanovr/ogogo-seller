@@ -21,8 +21,6 @@ router.beforeEach(
   ) => {
     const isAuthenticated = Boolean(getItem("sessionId")),
       requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-    // roleScreensObj = getItem("auth")?.roleScreensObj ?? null,
-    // currentMenu = getItem("auth")?.uiElements ?? [];
 
     if (!isAuthenticated) {
       if (

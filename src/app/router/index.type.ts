@@ -14,8 +14,6 @@ export enum ErrorCodeEnum {
 
 export const INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES = [
   ErrorCodeEnum.InvalidDateIssueOfFinancing,
-  // ErrorCodeEnum.KnoxError,
-  // ErrorCodeEnum.NoIMEICodeSpecifiedАorPhone, // turn off errors for select-fi/update products on imei add
   ErrorCodeEnum.NeedKnoxActivating,
   ErrorCodeEnum.DarekServiceUnavailable,
   ErrorCodeEnum.FaceImageNotUploaded,

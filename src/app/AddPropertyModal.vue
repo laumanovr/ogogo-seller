@@ -85,14 +85,7 @@ const onClose = () => {
   width: 100%;
 }
 
-// .add-button {
-//   width: 100%;
-//   height: 52px;
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   gap: 10px;
-// }
+
 .button {
   width: 49%;
 }

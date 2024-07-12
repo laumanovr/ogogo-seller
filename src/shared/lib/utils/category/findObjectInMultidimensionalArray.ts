@@ -15,7 +15,7 @@ export function findObjectInMultidimensionalArray<T extends ObjectWithChildren>(
   _.some(array, (obj) => {
     if (obj[propName] === propValue) {
       result = obj;
-      return true; // Exit loop if found
+      return true;
     }
 
     if (_.isArray(obj.childMarketplaceCategoryIdList)) {
@@ -24,7 +24,7 @@ export function findObjectInMultidimensionalArray<T extends ObjectWithChildren>(
         propName,
         propValue
       );
-      return !!result; // Exit loop if found
+      return !!result;
     }
 
     return false;

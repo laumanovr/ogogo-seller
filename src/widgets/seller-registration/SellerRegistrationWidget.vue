@@ -58,22 +58,13 @@ import {
   SCheckbox,
 } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
-// import { useRouter } from "vue-router";
 import { requiredField } from "@/shared/lib/utils/rules";
-// import { useAlertStore } from "@/shared/store/alert";
-// import { useLoaderStore } from "@/shared/store/loader";
 import { vMaska } from "maska";
-// import { useAuthStore } from "@/shared/store/auth";
 
 const options = reactive({
   mask: "996-(###)-##-##-##",
   eager: true,
 });
-
-// const authStore = useAuthStore();
-// const alertStore = useAlertStore();
-// const loaderStore = useLoaderStore();
-// const router = useRouter();
 
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
@@ -111,10 +102,6 @@ const onSubmitSellerRegistration = () => {};
     .button {
       width: 100%;
     }
-
-    // .input-container {
-    //   width: 100%;
-    // }
   }
 }
 </style>

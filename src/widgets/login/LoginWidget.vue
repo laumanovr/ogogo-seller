@@ -36,9 +36,6 @@
           <SButton size="large" @click="onSubmitLogin" class="s-mb-2">
             {{ $t("lang-91041855-c915-481e-a265-42816765bf51") }}
           </SButton>
-          <!-- <SButton size="large" type="secondary" @click="onSellerRegistration">
-            {{ $t("lang-dff486df-0927-4f56-afc7-d543d3ba89e7") }}
-          </SButton> -->
         </div>
       </SForm>
     </div>
@@ -71,10 +68,6 @@ const loginForm = ref(null);
 const onForgetPassword = () => {
   router.push("/password-reset");
 };
-
-// const onSellerRegistration = () => {
-//   router.push("/seller-registration");
-// };
 
 const onSubmitLogin = () => {
   const removedDashesAndBrackets = loginObj.pin.replace(/\D/g, "");
@@ -128,10 +121,6 @@ const onSubmitLogin = () => {
     .button {
       width: 100%;
     }
-
-    // .input-container {
-    //   width: 100%;
-    // }
   }
 }
 </style>

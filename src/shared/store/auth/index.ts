@@ -65,7 +65,6 @@ export const useAuthStore = defineStore("auth", {
       return new Promise((resolve, reject) => {
         login(payload)
           .then((result) => {
-            // const isAuthenticated = Boolean(getItem("sessionId"));
 
             const needChangePassword = result?.needChangePassword ?? false;
             setItem("needChangePassword", needChangePassword);
@@ -123,7 +122,6 @@ export const useAuthStore = defineStore("auth", {
 
     logout(): Promise<boolean> {
       this.user = null;
-      // this.isLoggedIn = false;
       this.accessRequestIds = {};
       setItem("active-session", false);
       setItem("sessionId", null);
