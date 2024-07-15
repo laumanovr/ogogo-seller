@@ -10,15 +10,10 @@ export interface IAlertState {
   left: IAlert[];
   right: IAlert[];
   center: IAlert[];
-  successMessage: IAlert,
-  errorMessage: IAlert,
-  infoMessage: IAlert,
 }
 
 export interface IAlert {
-  successMessage: null,
-  errorMessage: null,
-  infoMessage: null,
+  items: AlertItem[];
   id: string;
   message: string;
   caption: string;
@@ -37,6 +32,14 @@ export interface IAlert {
   badgeOptions: Partial<IBadgeOptions>;
   // v-progress-circular
   circularProgressOptions: Partial<ICircularProgressOptions>;
+}
+
+export interface AlertItem {
+  id?: string;
+  title: string;
+  content?: string;
+  type: string;
+  timeout: number;
 }
 
 export interface IAlertAction {
