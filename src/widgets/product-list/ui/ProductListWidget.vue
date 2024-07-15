@@ -1,21 +1,27 @@
 <template>
   <div class="product-content">
+    <!-- TODO: remove unused classes -->
     <div class="head-title">
       {{ $t("lang-6a3f0b82-3b93-4348-8788-a2ea2dcb2c88") }}
     </div>
     <template v-if="hasProducts">
+      <!-- TODO: use ui kit class and remove preset classes -->
       <div class="flex justify-between">
         <div class="flex filter-search-container">
           <FilterSearch @input="onSearch" @click="toggleFilterModal" />
+          <!-- TODO: remove unused button or make disabled so that we can see that it should be implemented -->
           <!-- <SButton color="white" class="ml-12">Настроить цены</SButton> -->
         </div>
+        <!-- TODO: set theme class at layout level -->
         <div class="light">
           <SButton @click="openCreateProductModal">
+            <!-- TODO: use icon for plus sign -->
             + {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
           </SButton>
         </div>
       </div>
       <STabs :tab-mode="'filter-tabs'" class="s-mb-5">
+        <!-- TODO: extract value to enum -->
         <STabItem value="14801" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-dd1a9bc2-31f2-4197-9a7d-01a23229ea82") }}
         </STabItem>
@@ -23,6 +29,7 @@
           {{ $t("lang-7db32df9-54d2-4561-ba8b-c43073ee42e9") }}
         </STabItem>
         <STabItem value="14802" :active-tab="tab" @changeTab="selectTab">
+          <!-- TODO: localize names -->
           Ожидает модерации
         </STabItem>
         <STabItem value="14806" :active-tab="tab" @changeTab="selectTab">
@@ -35,6 +42,9 @@
           {{ $t("lang-9801cd40-7281-47f7-8478-6731dc9d8388") }}
         </STabItem>
       </STabs>
+      <!-- TODO: use getters for data  -->
+      <!-- TODO: set 10 as default value for itemsPerPage -->
+      <!-- TODO: set 2 as default value for itemsPerPage -->
       <STable
         :headers="headers"
         :data="tableData"
@@ -45,7 +55,9 @@
         v-if="hasStatusProducts"
       >
         <template v-slot:productName="{ item }">
+          <!-- TODO: use ui kit class and remove preset classes -->
           <div class="flex items-center product">
+            <!-- TODO: use icon component and not base64 data for image -->
             <img
               :src="'data:image/png;base64,' + item.iconBase64"
               alt="img"
@@ -61,10 +73,12 @@
           />
         </template>
         <template v-slot:price="{ item }">
+          <!-- TODO: localize price. example: 'label-price': "{price} сом" -->
           <div>{{ item.price }} сом</div>
           <div class="price-usd">{{ item.priceUsd }} $</div>
         </template>
         <template v-slot:priceWithDiscount="{ item }">
+          <!-- TODO: localize price. example: 'label-price': "{price} сом" -->
           <div>{{ item.priceWithDiscount }} сом</div>
           <div class="price-usd">{{ item.priceUsdWithDiscount }} $</div>
         </template>
@@ -78,6 +92,7 @@
       </STable>
     </template>
     <template v-else>
+      <!-- TODO: localize text -->
       <EmptyData
         text="Пока нет товаров"
         :button-title="$t('lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505')"
@@ -87,6 +102,7 @@
 
     <CategoryModal ref="categoryModal" />
 
+    <!-- TODO: remove unused classes -->
     <SModal
       v-model="isOpenFilterModal"
       class="filter-modal full-height"
@@ -100,13 +116,16 @@
         </div>
 
         <div class="section">
+          <!-- TODO: localize titles -->
           <div class="section-title">Цена</div>
           <div class="flex">
+            <!-- TODO: localize placeholder -->
             <SInput
-              placeHolder="От"
-              type="number"
-              v-model.number="priceRange.min"
+            placeHolder="От"
+            type="number"
+            v-model.number="priceRange.min"
             />
+            <!-- TODO: localize placeholder -->
             <SInput
               placeHolder="До"
               class="s-ml-2"
@@ -117,8 +136,11 @@
         </div>
 
         <div class="section">
+          <!-- TODO: localize titles -->
           <div class="section-title">Категории</div>
+          <!-- TODO: use ui kit class for width value -->
           <SInput isSearchable width="100%" @input="onSearchCategory" />
+          <!-- TODO: remoe style attribute :) -->
           <div
             class="property-items"
             :style="{ 'max-height': maxHeight + 'px' }"
@@ -172,6 +194,7 @@ const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 const router = useRouter();
 
+// TODO: extract headers to separate/helper file
 const headers = reactive([
   {
     title: i18n.global.t("lang-463282b8-512e-4eae-8cde-815a2678e07d"),
@@ -201,12 +224,15 @@ const headers = reactive([
     title: i18n.global.t("lang-a6dc23d1-d5cc-4c0a-8412-32f6ff24a2dd"),
     key: "countOfProduct",
   },
+  // TODO: localize titles
   {
     title: "Действия",
     key: "action",
   },
 ]);
 
+// TODO: localize names
+// TODO: extract id to enum value
 const statuses = ref([
   { id: 0, name: "Все", color: "green" },
   { id: 14800, name: "Черновик", color: "grey" },
@@ -219,18 +245,26 @@ const statuses = ref([
   { id: 14807, name: "Заблокировано", color: "red" },
 ]);
 
+// TODO: should be computed from store getter
 const tableData = ref([]);
+// TODO: can be computed from tableData
 const hasProducts = ref(false);
+// TODO: can be computed from tableData
 const hasStatusProducts = ref(false);
 const tab = ref("one");
+// TODO: can be computed from pageParams
 const totalItems = ref(0);
 const searchTimer = ref(null);
 const isOpenFilterModal = ref(false);
 const modalContent = ref(null);
 const maxHeight = ref(0);
+// TODO: can be extracted to a filter object in productStore
 const priceRange = ref({ min: 0, max: 0 });
+// TODO: can be extracted to a filter object in categoryStore
 const categories = ref([]);
+// TODO: can be extracted to a filter object in categoryStore
 const selectedCategories = ref([]);
+// TODO: can be extracted to a filter object in categoryStore
 const checkboxRefs: Ref<HTMLDivElement[]> = ref([]);
 const categoryModal = ref(null);
 
@@ -239,25 +273,34 @@ const currentStatus = computed(() =>
 );
 
 onMounted(() => {
+  // TODO: extract value to enum
   selectTab("0");
 });
 
 const fetchProducts = (filterObj = {}) => {
   productStore
+  // TODO: use enum for productType and sortDirection
     .getAllProducts({ productType: 14701, sortDirection: 1, ...filterObj })
     .then((response) => {
+      // TODO: hasProducts and isProductExist is the same thing
       hasProducts.value = Boolean(response.result.totalPages);
       hasStatusProducts.value = Boolean(response.result.items.length);
+      // TODO: save pageParams(pageIndex, pageSize, totalPages) to store
       totalItems.value = response.result.totalCount;
+      // TODO: set items and page params to store
       tableData.value = response.result.items;
+
+      // TODO: set default value for searchValue parameter in fetchCategoriesByPage function definition
       fetchCategoriesByPage("");
     });
 };
 
 const fetchCategoriesByPage = (searchValue: string) => {
+  // TODO: set value of pageSize in store
   categoryStore
     .getCategoriesPagedList({ search: searchValue, pageSize: 30 })
     .then((response) => {
+      // TODO: set items and page params to store
       categories.value = response.items;
     });
 };
@@ -278,6 +321,7 @@ const onSearch = (value: string) => {
   }, 1500);
 };
 
+// TODO: can be refactored to function that returns object = {content, color} and set via v-bind to SBadge component
 const getStatusData = (item: any, field: string) => {
   const foundStatus = statuses.value.find(
     (statusObj) => statusObj.id === item.status
@@ -289,6 +333,7 @@ const toggleFilterModal = () => {
   isOpenFilterModal.value = !isOpenFilterModal.value;
   nextTick(() => {
     const rect = modalContent?.value?.getBoundingClientRect();
+    // TODO: use ui kit class to set max height or it should be implemented inside modal component
     maxHeight.value = rect?.height / 1.5;
   });
 };
@@ -330,10 +375,12 @@ const onSelectCategory = (isChecked: boolean, categoryId: string) => {
 };
 
 const openCreateProductModal = () => {
+  // TODO: use v-model variable for modal
   categoryModal.value.toggleModal();
 };
 
 const onEditProduct = (item: any) => {
+  // TODO: use object for router params. example: router.push({ name: "product-update", params: { id: item.id } });
   router.push(`/product-update/${item.id}`);
 };
 </script>

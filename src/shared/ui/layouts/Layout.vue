@@ -1,6 +1,7 @@
 <template>
   <Header />
 
+  <!-- TODO: use ui kit class for padding and margin -->
   <div class="wrapper-layout">
     <slot></slot>
   </div>

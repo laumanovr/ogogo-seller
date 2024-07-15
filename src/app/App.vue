@@ -1,6 +1,7 @@
 <template>
   <component :is="currentComponent">
     <Loader v-if="loaderStore.isLoading" />
+    <!-- TODO: change to alert component -->
     <SToaster ref="toaster" position="top-center" />
     <router-view />
   </component>
@@ -25,6 +26,7 @@ let currentComponent = shallowRef(Empty);
 
 const route = useRoute();
 
+// TODO: change component value to via computed
 watch(
   () => route.path,
   () => {
@@ -36,6 +38,7 @@ watch(
   }
 );
 
+// TODO: remove this. Alerts are added by its own store
 watch(
   () => alertStore.successMessage,
   (newValue: any) => {
@@ -45,6 +48,7 @@ watch(
   }
 );
 
+// TODO: remove this. Alerts are added by its own store
 watch(
   () => alertStore.errorMessage,
   (newValue: any) => {
@@ -54,6 +58,7 @@ watch(
   }
 );
 
+// TODO: remove this. Alerts are added by its own store
 watch(
   () => alertStore.infoMessage,
   (newValue: any) => {

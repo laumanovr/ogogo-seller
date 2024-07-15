@@ -7,6 +7,7 @@
       <FilterSearch @input="onSearch" />
 
       <STabs :tab-mode="'filter-tabs'" class="s-mb-5">
+        <!-- TODO: extract value to enum -->
         <STabItem value="14400" :active-tab="tab" @changeTab="selectTab">
           {{ $t("lang-dd1a9bc2-31f2-4197-9a7d-01a23229ea82") }}
         </STabItem>
@@ -21,6 +22,9 @@
         </STabItem>
       </STabs>
 
+      <!-- TODO: set 10 as default value for itemsPerPage -->
+      <!-- TODO: set 2 as default value for itemsPerPage -->
+      <!-- TODO: use getters for data  -->
       <STable
         :headers="headers"
         :data="orderStore.orders"
@@ -47,6 +51,7 @@
           {{ showPaymentType(item) }}
         </template>
         <template v-slot:action>
+          <!-- TODO: if it is action - button or link, then use SButton or router-link. If api is not available, then disable button/router-link and set TODO comment -->
           {{ $t("lang-23981bea-cba2-425d-a435-41ae4a591794") }}
         </template>
       </STable>
@@ -61,6 +66,7 @@ import { FilterSearch } from "@/shared/ui/components/filter-search";
 import { useOrderStore } from "@/entities/order/store/order.store";
 import { OrderEntity } from "@/entities/order/model/types";
 
+// TODO: localize titles
 const headers = ref([
   { title: "Номер заказа", key: "orderNumber" },
   { title: "Статус", key: "status" },
@@ -70,6 +76,8 @@ const headers = ref([
   { title: "Кол-во товара", key: "count" },
   { title: "Действия", key: "action" },
 ]);
+// TODO: extract id to enum
+// TODO: localize names
 const statuses = ref([
   { id: 0, name: "Все", color: "green" },
   { id: 14400, name: "Активный", color: "green" },
@@ -83,18 +91,22 @@ const hasOrders = ref(false);
 const totalItems = ref(0);
 const searchTimer = ref(null);
 
+// TODO: currentStatus can be extracted to a filter object in orderStore
 const currentStatus = computed(() =>
   Number(tab.value) ? { queryParams: { statuses: [Number(tab.value)] } } : {}
 );
 
 onMounted(() => {
+  // TODO: extract value to enum
   selectTab("14400");
 });
 
 const fetchOrders = (filterObj = {}) => {
   orderStore.getAllOrders({ ...filterObj }).then((response) => {
+    // TODO: hasOrders and isOrderExist is the same thing
     isOrderExist.value = Boolean(response.result.totalPages);
     hasOrders.value = Boolean(response.result.items.length);
+    // TODO: save pageParams(pageIndex, pageSize, totalPages) to store
     totalItems.value = response.result.totalCount;
   });
 };
@@ -116,6 +128,8 @@ const showPurchaseDate = (item: OrderEntity) => {
 };
 
 const showPaymentType = (item: OrderEntity) => {
+  // TODO: extract paymentType comparison to enum
+  // TODO: localize names
   return item.paymentType === 14500 ? "Кредит" : "Оплачено";
 };
 
@@ -131,6 +145,7 @@ const onSearch = (value: string) => {
 };
 </script>
 
+<!-- TODO: set scoped for style or use ui kit classes -->
 <style lang="scss">
 @import "../../../app/style/colors.scss";
 .order-content {

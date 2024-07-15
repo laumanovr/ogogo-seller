@@ -12,6 +12,7 @@ import { RouteLocationNormalized } from "vue-router";
 
 interceptors();
 
+// TODO: extract router interceptor setup to its own file
 router.beforeEach(
   (
     to: RouteLocationNormalized,
@@ -23,15 +24,19 @@ router.beforeEach(
       requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
     if (!isAuthenticated) {
+      // TODO: change comparison from path to name for route "to"
       if (
         requiresAuth &&
         to.path !== "/password-reset" &&
         to.path !== "/seller-registration"
       ) {
+        // TODO: change path to name
         return next("/");
       }
       next();
+      // TODO: change path to name
     } else if (to.path === "/" && !isAuthenticated) {
+      // TODO: change path to name
       next("/profile");
     } else {
       next();

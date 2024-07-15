@@ -1,10 +1,14 @@
 <template>
+  <!-- TODO: removed unused class -->
   <div class="product-update-content">
+    <!-- TODO: remove presets class and ui kit classes -->
     <div class="d-flex items-center light">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" size="small" />
+        <!-- TODO: Localize -->
         <span>Назад</span>
       </SButton>
+      <!-- TODO: use computed getter from store for category urls -->
       <Breadcrumbs
         :items="categoryStore.categoryUrls"
         class="s-ml-5"
@@ -13,6 +17,7 @@
     </div>
     <div class="d-flex s-mt-5">
       <ProductTemplate />
+      <!-- TODO: use global mode enum -->
       <ProductForm
         mode="update"
         :product-category-id="productCategoryId"
@@ -36,14 +41,19 @@ const router = useRouter();
 const route = useRoute();
 const categoryStore = useCategoryStore();
 const productStore = useProductStore();
+
 const productCategoryId = ref("");
+// TODO: isShowForm is the same as productCategoryId
 const isShowForm = ref(false);
+// TODO: using breadcrumbKey as a counter means that breadcrumbs is not reactive to its items. fix breadcrumbs component in the first place
 const breadcrumbKey = ref(0);
 
 onMounted(() => {
+  // TODO: make sure that route.params.id is a string and is not undefined
   productStore
     .getExactProductById(route.params.id as string)
     .then((response) => {
+      // TODO: set data to store state
       const foundProduct = response.result;
       productCategoryId.value = foundProduct.categoryId;
       productStore.setSelectedTemplateOrProduct({
@@ -58,6 +68,7 @@ onMounted(() => {
 });
 
 const goBack = () => {
+  // TODO: use name for route params instead of hardcoded string
   router.push("/products");
 };
 </script>

@@ -18,16 +18,20 @@ export const useOrderStore = defineStore("orderStore", {
   actions: {
     getAllOrders(payload: OrderPayload): Promise<OrderApiResponse> {
       return new Promise((resolve, reject) => {
+        // TODO: remove global loader and set local loader
         loaderStore.setLoaderState(true);
         orderApi
           .getOrders(payload)
           .then((response) => {
             this.orders = response.result.items;
+            // TODO: move to finally callback
             loaderStore.setLoaderState(false);
             resolve(response);
           })
           .catch((err) => {
+            // TODO: remove global alert 
             alertStore.showError(err.message);
+            // TODO: move to finally callback
             loaderStore.setLoaderState(false);
             reject(err);
           });

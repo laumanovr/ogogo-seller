@@ -1,6 +1,8 @@
 <template>
   <div class="product-tabs-container s-mr-8 s-pt-4">
     <STabs :tab-mode="'content-tabs'">
+      <!-- TODO: extract value to enum -->
+      <!-- TODO: localize names -->
       <STabItem value="one" :active-tab="tab" @changeTab="selectTab">
         Товары
       </STabItem>
@@ -9,6 +11,7 @@
       </STabItem>
     </STabs>
     <STabWindow value="one" :active-tab="tab">
+      <!-- TODO: use ui kit class and remove preset classes -->
       <div
         class="d-flex sample"
         :class="{ active: i + 1 === sampleIndex }"
@@ -16,12 +19,14 @@
         :key="i"
         @click="selectSample(i, item)"
       >
+        <!-- TODO: use icon component and not base64 data for image or use image from assets with src -->
         <img
           :src="'data:image/png;base64,' + item.iconBase64"
           alt="img"
           class="sample__img"
         />
         <div>
+          <!-- TODO: localize text -->
           <div class="sample__badge">Шаблон</div>
           <div class="sample__name">
             {{ item.productName }}
@@ -35,6 +40,8 @@
       </div>
     </STabWindow>
     <STabWindow value="two" :active-tab="tab">
+      <!-- TODO: localize placeholder -->
+      <!-- TODO: use ui kit class for width value -->
       <SInput
         placeHolder="Поиск..."
         isSearchable
@@ -44,6 +51,7 @@
       <div class="template-container">
         <div class="template" v-for="(item, i) in templates" :key="i">
           <SCheckbox v-model="item.selected">
+            <!-- TODO: use icon component and not base64 data for image or use image from assets with src -->
             <img
               :src="'data:image/png;base64,' + item.iconBase64"
               alt="img"
@@ -60,6 +68,7 @@
           </SCheckbox>
         </div>
       </div>
+      <!-- TODO: set theme class at layout level -->
       <div class="btn-container light">
         <SButton
           size="large"
@@ -67,6 +76,7 @@
           @click="addTemplates"
           :disabled="isDisabled"
         >
+          <!-- TODO: localize text -->
           Добавить шаблоны
         </SButton>
         <SmallLoader v-if="isDisabled" />
@@ -91,8 +101,10 @@ import SmallLoader from "@/shared/ui/components/SmallLoader.vue";
 
 const productStore = useProductStore();
 const tab = ref("one");
+// TODO: rename to selectedSampleIndex
 const sampleIndex = ref(0);
 const selectedTemplates = ref([]);
+// TODO: should be computed from store getter
 const templates = ref([]);
 const isDisabled = ref(false);
 
@@ -102,6 +114,7 @@ onMounted(() => {
 
 const fetchTemplates = () => {
   productStore.getAllProducts({ productType: 14700 }).then((response) => {
+    // TODO: set items and page params to store
     templates.value = response.result.items;
   });
 };
@@ -134,6 +147,7 @@ const deleteSample = (id: number) => {
 };
 </script>
 
+<!-- TODO: set scoped for style or use ui kit classes -->
 <style lang="scss">
 @import "../../../../app/style/colors.scss";
 .product-tabs-container {
