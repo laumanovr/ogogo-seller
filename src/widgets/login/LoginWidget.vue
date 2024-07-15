@@ -2,6 +2,7 @@
   <div class="login-container">
     <div class="login-block">
       <div class="login-logo">
+        <!-- TODO: src should be absolute path. example: src="@/shared/ui/assets/Ogogo-logo.png" -->
         <img src="../../shared/ui/assets/Ogogo-logo.png" alt="img" />
       </div>
       <SForm class="form-block" ref="loginForm">
@@ -25,6 +26,7 @@
             :rules="[requiredField]"
             v-model="loginObj.password"
           />
+          <!-- TODO: change p tag to router-link tag -->
           <p
             class="color-violet-600 font-semibold s-mt-2 cursor-pointer"
             @click="onForgetPassword"
@@ -32,6 +34,7 @@
             {{ $t("lang-11d828ce-a252-4271-a12c-9291c52de2bd") }}
           </p>
         </div>
+        <!-- TODO: set theme class at layout level -->
         <div class="light">
           <SButton size="large" @click="onSubmitLogin" class="s-mb-2">
             {{ $t("lang-91041855-c915-481e-a265-42816765bf51") }}
@@ -52,6 +55,7 @@ import { useLoaderStore } from "@/shared/store/loader";
 import { vMaska } from "maska";
 import { useAuthStore } from "@/shared/store/auth";
 
+// TODO: extract options to its own file
 const options = reactive({
   mask: "996-(###)-##-##-##",
   eager: true,
@@ -66,10 +70,12 @@ const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
 
 const onForgetPassword = () => {
+  // TODO: use name for route params instead of hardcoded string
   router.push("/password-reset");
 };
 
 const onSubmitLogin = () => {
+  // TODO: extract this to its own function in file for format functions
   const removedDashesAndBrackets = loginObj.pin.replace(/\D/g, "");
   loginObj.pin = removedDashesAndBrackets;
 
@@ -79,10 +85,13 @@ const onSubmitLogin = () => {
       authStore
         .login(loginObj)
         .then(() => {
+          // TODO: move this to finally callback
           loaderStore.setLoaderState(false);
+          // TODO: change path to name
           router.push("/profile");
         })
         .catch((err: any) => {
+          // TODO: move this to finally callback
           loaderStore.setLoaderState(false);
           alertStore.showError(err?.error?.errorMessage);
         });

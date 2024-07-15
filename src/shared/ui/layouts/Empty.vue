@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: use ui kit class for padding -->
   <div class="empty-layout">
     <slot></slot>
   </div>

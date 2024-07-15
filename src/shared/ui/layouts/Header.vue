@@ -1,13 +1,19 @@
 <template>
+  <!-- TODO: remove preset classes and use ui kit classes for all elements -->
   <div class="d-flex flex-row justify-between padding-16-40 s-h-13 s-mb-4">
+    <!-- TODO: src should be absolute path. example: src="@/shared/ui/assets/Ogogo-logo.png" -->
     <img src="../../ui/assets/Ogogo-logo.png" class="ogogo-img" />
 
     <div class="header-navigation">
+      <!-- TODO: onMenuItemChange is not valid name for click event handler -->
+      <!-- NOTE: any tag which has click event handler should be a button -->
+      <!-- TODO: better use router-link with active-class attribute to set active route -->
       <div
         @click="onMenuItemChange(MenuItems.Products)"
         class="cursor-pointer d-flex flex-col items-center"
       >
         <SIconRender name="box" :class="isProductsActive" />
+        <!-- TODO: change p tag to span tag -->
         <p :class="`${isProductsActive} font-size-12 s-mt-1`">
           {{ $t("lang-d7069093-a1a5-4544-8a29-e516288d719b") }}
         </p>
@@ -52,7 +58,9 @@ import { useRouter, useRoute } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 
+// TODO: set to computed based on route path
 const activeButton = ref("");
+// TODO: use store for current user data
 const currentUser = ref(JSON.parse(window.localStorage.getItem("currentUser")));
 
 Object.values(MenuItems).forEach((item: any) => {
@@ -61,6 +69,7 @@ Object.values(MenuItems).forEach((item: any) => {
   }
 });
 
+// TODO: when router-link is used for navigation, this following computed should be removed
 const isProductsActive = computed(() => {
   return activeButton.value === MenuItems.Products
     ? "s-text-violet-700"
@@ -82,6 +91,7 @@ const isCabinetActive = computed(() => {
     : "gray-500";
 });
 
+// TODO: when router-link is used for navigation, this following computed should be removed
 function onMenuItemChange(value: MenuItems) {
   router.push("/" + value);
   activeButton.value = value;

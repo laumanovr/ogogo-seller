@@ -4,8 +4,11 @@
   </div>
 </template>
 
+<!-- TODO: set scoped for this component -->
 <style lang="scss">
 @import "../../../app/style/colors.scss";
+
+// TODO: set bacground by class
 .loader-container {
   position: fixed;
   z-index: 999;
@@ -23,6 +26,7 @@
   }
 }
 
+// TODO: extract spin animation to ui kit utility class
 @keyframes spin {
   0% {
     transform: rotate(0deg);

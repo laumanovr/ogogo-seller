@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: remove unused classes -->
   <div class="order-container">
     <Order />
   </div>
