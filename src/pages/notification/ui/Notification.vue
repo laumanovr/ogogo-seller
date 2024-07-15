@@ -1,6 +1,5 @@
 <template>
-  <!-- TODO: remove unused classes -->
-  <div class="notification-container">
+  <div>
     <Notification />
   </div>
 </template>
