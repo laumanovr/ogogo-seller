@@ -1,6 +1,5 @@
 <template>
-  // TODO: remove unused classes
-  <div class="product-create-container">
+  <div>
     <ProductCreate />
   </div>
 </template>
