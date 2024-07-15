@@ -1,34 +1,51 @@
 import { defineStore } from "pinia";
-
-import type { IAlert } from "./index.types";
-
+import type { IAlert, AlertItem } from "./index.types";
+import { v4 as uuid } from "uuid";
 export const useAlertStore = defineStore("alert", {
   state: (): IAlert =>
     <IAlert>{
-      successMessage: null,
-      errorMessage: null,
-      infoMessage: null,
+      items: [],
     },
-  getters: {},
+  getters: {
+    getAlertItems(): AlertItem[] {
+      return this.items;
+    },
+  },
   actions: {
     showSuccess(message: string) {
-      this.successMessage = message;
-      this.clearAlerts("successMessage");
+      this.items.push({
+        id: uuid(),
+        title: message,
+        type: "success",
+        timeout: 1800,
+      });
     },
     showError(message: string) {
-      this.errorMessage = message;
-      this.clearAlerts("errorMessage");
+      this.items.push({
+        id: uuid(),
+        title: message,
+        type: "error",
+        timeout: 2500,
+      });
     },
     showInfo(message: string) {
-      this.infoMessage = message;
-      this.clearAlerts("infoMessage");
+      this.items.push({
+        id: uuid(),
+        title: message,
+        type: "info",
+        timeout: 1800,
+      });
     },
-    clearAlerts(this: Record<string, any>, field: string | null = null): void {
-      setTimeout(() => {
-        if (field && typeof this[field] !== "undefined") {
-          this[field] = null;
-        }
-      }, 800);
+    showWarning(message: string) {
+      this.items.push({
+        id: uuid(),
+        title: message,
+        type: "warning",
+        timeout: 2500,
+      });
+    },
+    closeAlert(id: string) {
+      this.items = this.items.filter((item) => item.id !== id);
     },
   },
 });
