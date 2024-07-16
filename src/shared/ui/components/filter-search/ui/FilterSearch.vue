@@ -1,18 +1,14 @@
 <template>
   <div class="filter-search">
-    <!-- TODO: use ui kit class for width value -->
     <!-- TODO: use slots for input with form tag for via slot tag -->
-    <SInput isSearchable width="90%" @input="onInput" />
-    <!-- TODO: set theme class at layout level -->
-    <div class="light">
-      <SButton variant="outlined" type="secondary" @click="onClick">
-        <SIconRender name="filter" size="small" />
-        {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
-      </SButton>
-    </div>
-    <!-- TODO: remove color attribute -->
-    <!-- TODO: localize text -->
-    <SButton color="white" v-if="props.showExcel">Скачать Excel</SButton>
+    <SInput isSearchable hide-detailsdd @input="onInput" />
+    <SButton variant="outlined" type="secondary" @click="onClick">
+      <SIconRender name="filter" size="small" />
+      {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
+    </SButton>
+    <SButton v-if="props.showExcel">
+      {{ $t("lang-2e502d97-f33a-4fa6-b3f7-ada3177e70d2") }}
+    </SButton>
   </div>
 </template>
 
@@ -37,8 +33,7 @@ const onInput = (event: Event) => {
 };
 </script>
 
-<!-- TODO: set scoped for style or use ui kit classes -->
-<style lang="scss">
+<style lang="scss" scoped>
 .filter-search {
   display: flex;
   margin-bottom: 25px;
