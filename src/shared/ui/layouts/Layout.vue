@@ -1,8 +1,6 @@
 <template>
   <Header />
-
-  <!-- TODO: use ui kit class for padding and margin -->
-  <div class="wrapper-layout">
+  <div class="wrapper-layout s-pl-10 s-pr-10 s-pb-10 light">
     <slot></slot>
   </div>
 </template>
@@ -15,6 +13,5 @@ import Header from "@/shared/ui/layouts/Header.vue";
 .wrapper-layout {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 40px 40px;
 }
 </style>
