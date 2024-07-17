@@ -169,5 +169,8 @@ export const useProductStore = defineStore("productStore", {
           });
       });
     },
+    setEmpty() {
+      this.productTemplate = { photos: [], videos: [] };
+    },
   },
 });
