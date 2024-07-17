@@ -42,6 +42,7 @@
 </template>
 
 <script lang="ts" setup>
+// TODO: why is this component used? Remove if not used or obsolete
 import {
   SButton,
   SModal,

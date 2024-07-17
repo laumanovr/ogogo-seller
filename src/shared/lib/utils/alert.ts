@@ -6,6 +6,8 @@ import i18n from "@/shared/lib/plugins/i18n";
 import { useAlertStore } from "@/shared/store/alert/index";
 import type { IAlertParams, IAlert } from "@/shared/lib/utils/alert.types";
 
+// TODO: is this even used? Remove if not used or obsolete
+
 export const useAlert = () => ({
   notify(newAlert: string | IAlertParams) {
     const currentAlert = ref(

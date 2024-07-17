@@ -10,15 +10,20 @@ import {
   CategoryWithPropertiesResponse,
 } from "../api/category-api.types";
 
+// TODO: clear default alert store actions
+// TODO: remove global loader and set local loader
+
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
 const categoryApi = new CategoryApi();
 
+// TODO: store name already contains word "store". remove it
 export const useCategoryStore = defineStore("categoryStore", {
   state: (): Partial<ICategoryState> => ({
     categories: [],
     categoryUrls: [],
   }),
+  // TODO: why no getters?
   getters: {},
   actions: {
     getAllCategories(): Promise<CategoryApiResponse> {

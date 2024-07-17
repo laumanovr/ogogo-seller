@@ -1,5 +1,6 @@
 <template>
   <component :is="currentComponent">
+    <!-- TODO: use computed for isLoading from store getter -->
     <Loader v-if="loaderStore.isLoading" />
     <SAlert :items="alertItems" @close="closeAlert" />
     <router-view />

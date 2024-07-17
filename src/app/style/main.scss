@@ -1,6 +1,8 @@
 @import "./colors.scss";
 @import "./fonts.scss";
 @import "@tumarsoft/ogogo-ui/styles";
+// TODO: remove custom classes that are already in ogogo-ui kit
+// TODO: move classes that are used globally to its components or create component with scoped styles
 
 .w-p-50 {
   width: 50%;

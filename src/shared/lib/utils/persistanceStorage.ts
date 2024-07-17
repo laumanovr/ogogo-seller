@@ -1,3 +1,5 @@
+//  TODO: remove any direct usage of localStorage. only through store
+
 export const getItem = (key: string) => {
   try {
     return JSON.parse(localStorage.getItem(key));

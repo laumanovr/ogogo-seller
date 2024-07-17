@@ -26,11 +26,13 @@ function runWhen(error: AxiosError<ErrorResponse>) {
 export default function setup() {
   axios.interceptors.request.use(
     function (config) {
+      // TODO: replace getItem with useAuthStore getter
       const isActiveSession = getItem("active-session");
       if (
         (config.url === "/api/common/Ping" && isActiveSession) ||
         config.url !== "/api/common/Ping"
       ) {
+        // TODO: replace getItem with useAuthStore getter
         const token = getItem("sessionId");
         config.headers.Authorization = token ? `Bearer ${token}` : "";
       }
@@ -64,16 +66,19 @@ export default function setup() {
           case 401:
             showError = false;
 
+            // TODO: use router name params for router
             router.push("/");
             break;
           case 403:
             showError = false;
             await authStore.logout;
+            // TODO: use router name params for router
             router.push("/");
             break;
           case 500:
             const { t } = useI18n();
 
+            // TODO: unknown locale key
             alert(t("label-5a8130e9-116a-4c54-8be2-166380fae5d1"));
             break;
         }
