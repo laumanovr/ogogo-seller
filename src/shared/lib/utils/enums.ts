@@ -16,3 +16,7 @@ ARCHIVED = 14805,
 REQUIRE_IMPROVEMENT = 14806, 
 BLOCKED = 14807, 
 }
+
+export enum ProductType {
+  NEW = 14701
+}
