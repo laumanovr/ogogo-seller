@@ -5,6 +5,9 @@ import {
   AuthLoginResultInterface,
 } from "@/shared/api/auth/types";
 
+// TODO: set one format for url style. example /Clients/Login or /clients/login for all requests
+
+// TODO: why clients module and not auth module for seller login?
 export const login = (
   credentials: AuthLoginPayloadInterface
 ): Promise<AuthLoginResultInterface> => {

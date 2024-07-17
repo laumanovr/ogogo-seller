@@ -12,12 +12,15 @@ export const useAlertStore = defineStore("alert", {
     },
   },
   actions: {
+    // TODO: what if i want to add an alert with custom timeout?
+    // TODO: where `is content` for the alert? 
     showSuccess(message: string) {
+      // TODO: learn about factory pattern
       this.items.push({
         id: uuid(),
         title: message,
         type: "success",
-        timeout: 1800,
+        timeout: 1800, // TODO: what is there some const number? what does it mean? and why 1800 or 2500?
       });
     },
     showError(message: string) {
