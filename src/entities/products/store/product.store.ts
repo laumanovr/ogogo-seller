@@ -17,6 +17,9 @@ const alertStore = useAlertStore();
 export const useProductStore = defineStore("productStore", {
   state: (): Partial<IProductState> => ({
     products: [],
+    hasProducts: false,
+    hasStatusProducts: false,
+    totalItems: 0,
     productTemplate: {
       id: "",
       toArticle: "",
@@ -36,7 +39,20 @@ export const useProductStore = defineStore("productStore", {
       properties: {},
     },
   }),
-  getters: {},
+  getters: {
+    getProducts(): any {
+      return this.products
+    },
+    getHasProducts(): any {
+      return this.hasProducts;
+    },
+    getHasStatusProducts(): any {
+      return this.hasStatusProducts;
+    },
+    getTotalItems(): any {
+      return this.totalItems;
+    }
+  },
   actions: {
     getAllProducts(payload: ProductPayload): Promise<ProductApiResponse> {
       return new Promise((resolve, reject) => {
@@ -45,6 +61,9 @@ export const useProductStore = defineStore("productStore", {
           .getProducts(payload)
           .then((response) => {
             this.products = response.result.items;
+            this.hasProducts = Boolean(response.result.totalPages);
+            this.hasStatusProducts = Boolean(response.result.items.length);
+            this.totalItems = response.result.totalCount;
             loaderStore.setLoaderState(false);
             resolve(response);
           })
