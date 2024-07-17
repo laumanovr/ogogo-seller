@@ -10,10 +10,15 @@ import {
   ProductDetailApiResponse,
 } from "../api/product-api.types";
 import { ProductTemplateEntity } from "../model/types";
+
+// TODO: clear default alert store actions
+// TODO: remove global loader and set local loader
+
 const productApi = new ProductApi();
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
 
+// TODO: store name already contains word "store". remove it
 export const useProductStore = defineStore("productStore", {
   state: (): Partial<IProductState> => ({
     products: [],
@@ -41,7 +46,7 @@ export const useProductStore = defineStore("productStore", {
   }),
   getters: {
     getProducts(): any {
-      return this.products
+      return this.products;
     },
     getHasProducts(): any {
       return this.hasProducts;
@@ -51,11 +56,12 @@ export const useProductStore = defineStore("productStore", {
     },
     getTotalItems(): any {
       return this.totalItems;
-    }
+    },
   },
   actions: {
     getAllProducts(payload: ProductPayload): Promise<ProductApiResponse> {
       return new Promise((resolve, reject) => {
+        // TODO: remove global loader and set local loader
         loaderStore.setLoaderState(true);
         productApi
           .getProducts(payload)
@@ -91,6 +97,7 @@ export const useProductStore = defineStore("productStore", {
       });
     },
     setSelectedTemplateOrProduct(item: any) {
+      // TODO: learn about factory pattern
       this.productTemplate.templateId =
         item.type === "template" ? item.product.id : "";
       this.productTemplate.id = item.type === "product" ? item.product.id : "";

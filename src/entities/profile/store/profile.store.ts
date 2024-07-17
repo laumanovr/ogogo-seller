@@ -8,10 +8,16 @@ const profileApi = new ProfileApi();
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
 
+// TODO: clear default alert store actions
+// TODO: remove global loader and set local loader
+
+// TODO: store name already contains word "store". remove it
 export const useProfileStore = defineStore("profileStore", {
   state: (): Partial<IProfile> => ({
+    // TODO: remove direct usage of localStorage actions - only through store(plugin)
     currentUser: JSON.parse(window.localStorage.getItem("currentUser")),
   }),
+  // TODO: why no getters?
   getters: {},
   actions: {
     updateProfileInfo(payload: IProfile) {
@@ -50,6 +56,7 @@ export const useProfileStore = defineStore("profileStore", {
           .updatePassword(payload)
           .then((response) => {
             loaderStore.setLoaderState(false);
+            // TODO: localize text
             alertStore.showSuccess("Пароль изменен!");
             resolve(response);
           })

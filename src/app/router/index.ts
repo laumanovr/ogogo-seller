@@ -35,6 +35,7 @@ router.beforeEach(
     from: RouteLocationNormalized,
     next: Function
   ) => {
+    // TODO: why is middlewares just declared here?
     middlewares;
     const isAuthenticated = Boolean(getItem("sessionId")),
       requiresAuth = to.matched.some((record) => record.meta.requiresAuth);

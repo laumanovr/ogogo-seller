@@ -1,5 +1,7 @@
 import { IRoute } from "@/app/router/middlware/auth.type";
 
+// TODO: is this even used? Remove if not used or obsolete
+
 export function modularize(routes: IRoute[], modulename: string[]): IRoute[] {
   const _modulename = modulename.filter((e) => e.length > 0);
 

@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: remove unused classes -->
   <div class="profile-container">
     <Profile />
   </div>

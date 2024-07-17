@@ -5,6 +5,8 @@
     </div>
     <div class="profile-info-block">
       <div class="profile-tabs">
+        <!-- TODO: use enum for tab value and changeTab parameter type everywhere-->
+        <!-- TODO: use buttons instead of div -->
         <div class="tab" @click="changeTab('general')">
           <SIconRender
             name="user-edit"
@@ -80,17 +82,20 @@
             <div class="data-label">
               {{ $t("lang-c295a98f-59c2-4da0-87ee-2d38af296c8b") }}
             </div>
+            <!-- TODO: localize text -->
             <div class="data-info">Категории товаров</div>
           </div>
         </div>
 
         <div class="content-block" v-if="tab === 'shop'">
           <div class="photo d-flex items-center s-mb-8">
+            <!-- TODO: check for profile image url when logoBase64 is null -->
             <img :src="profileImageUrl" alt="" />
             <div class="photo-action s-ml-5">
               <div class="hint gray s-mb-3 mw-400">
                 {{ $t("lang-f1c8caf8-4ba1-45c7-94a5-42c4ec1bd59b") }}
               </div>
+              <!-- TODO: change to file input component -->
               <label for="file">
                 <input type="file" id="file" @change="onSelectFile" />
                 <span class="upload-btn">
@@ -131,6 +136,7 @@
             {{ $t("lang-df4b9d52-4813-4ed9-9111-278577ba5cf7") }}
           </div>
           <div class="s-mb-3">
+            <!-- TODO: use ui kit class for input width -->
             <SInput
               :label="$t('lang-9dc6d3da-f6ff-4700-8b46-9b52d75deae0')"
               type="password"
@@ -139,6 +145,7 @@
             />
           </div>
           <div class="s-mb-6">
+            <!-- TODO: use ui kit class for input width -->
             <SInput
               :label="$t('lang-0184de30-27b6-48af-bafc-3995afbb020d')"
               type="password"
@@ -153,6 +160,7 @@
           </div>
         </div>
 
+        <!-- TODO: localize text and set todo to to-be implemented code -->
         <div class="content-block" v-if="tab === 'session'">
           <div class="data-title s-mb-4">Последняя сессия</div>
           <div class="session-block">
@@ -162,6 +170,7 @@
             </div>
           </div>
         </div>
+        <!-- TODO: remove empty content blocks -->
         <div class="content-block"></div>
         <div class="content-block"></div>
       </div>
@@ -184,7 +193,9 @@ const alertStore = useAlertStore();
 const tab = ref("");
 const newPassword = ref("");
 const repeatPassword = ref("");
+// TODO: use computed from store getter
 const currentUser = ref<IProfile>(profileStore.currentUser);
+// TODO: use computed form from store getter
 const profileObj = ref({
   id: currentUser.value.tradeMarkId,
   logoBase64: null,
@@ -195,6 +206,7 @@ const profileObj = ref({
 });
 
 onMounted(() => {
+  // TODO: set default tab value on definition
   changeTab("general");
   fetchProfileInfo();
 });
@@ -209,6 +221,7 @@ const profileImageUrl = computed(() =>
     : "/src/app/assets/img/empty-photo.svg"
 );
 
+// TODO: URL.createObjectURL(file) instead of this
 const convertToBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
@@ -231,6 +244,7 @@ const onSelectFile = async (e: Event) => {
   }
 };
 
+// TODO: set data in store
 const fetchProfileInfo = () => {
   profileStore.getProfileInfo().then((response: IProfileApi) => {
     profileObj.value.name = response.name;
@@ -245,12 +259,15 @@ const updateProfile = () => {
 };
 
 const logout = () => {
+  // TODO: use name params for router
   router.push("/");
+  // TODO: remove direct usage of localStorage actions - only through store
   window.localStorage.clear();
 };
 
 const updatePassword = () => {
   if (newPassword.value !== repeatPassword.value) {
+    // TODO: localize text
     alertStore.showInfo("Пароли не совпадают!");
     return;
   }

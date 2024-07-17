@@ -2,6 +2,7 @@
   <div class="login-container">
     <div class="login-block">
       <div class="login-logo">
+        <!-- TODO: use absolute path for image -->
         <img src="../../shared/ui/assets/Ogogo-logo.png" alt="img" />
       </div>
       <SForm class="form-block" ref="loginForm">
@@ -12,7 +13,9 @@
         <p class="">
           {{ $t("lang-5a7148a6-bad0-43eb-bed7-f9e92158b53a") }}
         </p>
+        <!-- TODO: remove presets classes and use ui kit classes instead -->
         <div class="flex flex-col">
+          <!-- TODO: remove presets classes and use ui kit classes instead -->
           <SInput
             class="w-p-100 s-mt-4"
             :rules="requiredField"
@@ -20,6 +23,7 @@
             v-maska:[options]
             :label="$t('lang-c53d0190-9e48-42e2-b346-ee9ea934955c')"
           />
+          <!-- TODO: remove presets classes and use ui kit classes instead -->
           <SInput
             class="w-p-100 s-mt-4"
             :rules="requiredField"
@@ -27,15 +31,19 @@
             v-maska:[options]
             :label="$t('lang-6b722e0f-5196-40cc-856b-39635c043750')"
           />
+          <!-- TODO: remove presets classes and use ui kit classes instead -->
           <SSelect
             :label="$t('lang-d0c19d1f-b018-45d1-93fa-2dc4a8b6878e')"
             class="w-p-100 s-mt-4"
           />
+          <!-- TODO: remove presets classes and use ui kit classes instead -->
+          <!-- TODO: invalid placeholder value -->
           <SCheckbox class="w-p-100 s-mt-4" placeholder="emir">
             {{ $t("lang-33c946fe-b106-4901-b3a0-356c7b421566") }}
           </SCheckbox>
         </div>
 
+        <!-- TODO: remove presets classes and use ui kit classes instead -->
         <SButton
           size="large"
           color="violet"
@@ -61,6 +69,7 @@ import { ref, reactive } from "vue";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { vMaska } from "maska";
 
+// TODO: extract mask options to separate file
 const options = reactive({
   mask: "996-(###)-##-##-##",
   eager: true,
@@ -69,6 +78,7 @@ const options = reactive({
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
 
+// TODO: add console error or disable button for this handler
 const onSubmitSellerRegistration = () => {};
 </script>
 
