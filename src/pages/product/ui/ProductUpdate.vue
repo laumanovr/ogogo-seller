@@ -1,6 +1,5 @@
 <template>
-  <!-- TODO: remove unused classes -->
-  <div class="product-update-container">
+  <div>
     <ProductUpdate />
   </div>
 </template>
