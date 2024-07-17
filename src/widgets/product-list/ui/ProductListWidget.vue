@@ -1,52 +1,73 @@
 <template>
   <div class="product-content">
-    <!-- TODO: remove unused classes -->
-    <div class="head-title">
+    <div class="s-text-h-2 s-mb-6 s-mt-6">
       {{ $t("lang-6a3f0b82-3b93-4348-8788-a2ea2dcb2c88") }}
     </div>
     <template v-if="hasProducts">
-      <!-- TODO: use ui kit class and remove preset classes -->
-      <div class="flex justify-between">
-        <div class="flex filter-search-container">
-          <FilterSearch @input="onSearch" @click="toggleFilterModal" />
-          <!-- TODO: remove unused button or make disabled so that we can see that it should be implemented -->
-          <!-- <SButton color="white" class="ml-12">Настроить цены</SButton> -->
-        </div>
-        <!-- TODO: set theme class at layout level -->
-        <div class="light">
-          <SButton @click="openCreateProductModal">
-            <!-- TODO: use icon for plus sign -->
-            + {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
+      <div class="s-flex s-justify-between">
+        <div class="s-flex filter-search-container">
+          <SInput isSearchable hide-details @input="onSearch" />
+          <SButton
+            variant="outlined"
+            type="secondary"
+            class="s-ml-3"
+            @click="toggleFilterModal"
+          >
+            <SIconRender name="filter" size="small" />
+            {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
           </SButton>
         </div>
+        <SButton @click="openCreateProductModal">
+          <SIconRender name="plus" class="s-text-white" />
+          {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
+        </SButton>
       </div>
-      <STabs :tab-mode="'filter-tabs'" class="s-mb-5">
-        <!-- TODO: extract value to enum -->
-        <STabItem value="14801" :active-tab="tab" @changeTab="selectTab">
+      <STabs :tab-mode="'filter-tabs'" class="s-mt-5 s-mb-5">
+        <STabItem
+          :value="ProductStatus.PUBLISHED"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
           {{ $t("lang-dd1a9bc2-31f2-4197-9a7d-01a23229ea82") }}
         </STabItem>
-        <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
+        <STabItem
+          :value="ProductStatus.ALL"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
           {{ $t("lang-7db32df9-54d2-4561-ba8b-c43073ee42e9") }}
         </STabItem>
-        <STabItem value="14802" :active-tab="tab" @changeTab="selectTab">
-          <!-- TODO: localize names -->
-          Ожидает модерации
+        <STabItem
+          :value="ProductStatus.AWAITING_MODERATION"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
+          {{ $t("lang-938e2295-e2c3-40b2-a4d0-024ab55a3c53") }}
         </STabItem>
-        <STabItem value="14806" :active-tab="tab" @changeTab="selectTab">
-          Требует доработки
+        <STabItem
+          :value="ProductStatus.REQUIRE_IMPROVEMENT"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
+          {{ $t("lang-7b040343-d1ec-4f64-94f6-39bad5df1c49") }}
         </STabItem>
-        <STabItem value="14800" :active-tab="tab" @changeTab="selectTab">
+        <STabItem
+          :value="ProductStatus.DRAFT"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
           {{ $t("lang-7b5895ca-c485-48ea-abfc-b8c9198f3826") }}
         </STabItem>
-        <STabItem value="14805" :active-tab="tab" @changeTab="selectTab">
+        <STabItem
+          :value="ProductStatus.ARCHIVED"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
           {{ $t("lang-9801cd40-7281-47f7-8478-6731dc9d8388") }}
         </STabItem>
       </STabs>
-      <!-- TODO: use getters for data  -->
-      <!-- TODO: set 10 as default value for itemsPerPage -->
-      <!-- TODO: set 2 as default value for itemsPerPage -->
       <STable
-        :headers="headers"
+        :headers="tableHeaders"
         :data="tableData"
         :totalItems="totalItems"
         itemsPerPage="10"
@@ -55,8 +76,7 @@
         v-if="hasStatusProducts"
       >
         <template v-slot:productName="{ item }">
-          <!-- TODO: use ui kit class and remove preset classes -->
-          <div class="flex items-center product">
+          <div class="s-flex s-items-center product">
             <!-- TODO: use icon component and not base64 data for image -->
             <img
               :src="'data:image/png;base64,' + item.iconBase64"
@@ -73,13 +93,17 @@
           />
         </template>
         <template v-slot:price="{ item }">
-          <!-- TODO: localize price. example: 'label-price': "{price} сом" -->
-          <div>{{ item.price }} сом</div>
+          <div>
+            {{ item.price }}
+            {{ $t("lang-0143ecc9-a4c2-415a-9338-5a701228a8a2") }}
+          </div>
           <div class="price-usd">{{ item.priceUsd }} $</div>
         </template>
         <template v-slot:priceWithDiscount="{ item }">
-          <!-- TODO: localize price. example: 'label-price': "{price} сом" -->
-          <div>{{ item.priceWithDiscount }} сом</div>
+          <div>
+            {{ item.priceWithDiscount }}
+            {{ $t("lang-0143ecc9-a4c2-415a-9338-5a701228a8a2") }}
+          </div>
           <div class="price-usd">{{ item.priceUsdWithDiscount }} $</div>
         </template>
         <template v-slot:action="{ item }">
@@ -92,9 +116,8 @@
       </STable>
     </template>
     <template v-else>
-      <!-- TODO: localize text -->
       <EmptyData
-        text="Пока нет товаров"
+        :text="$t('lang-8fdbc6ac-fe6c-4aee-b8c4-2ebc312b7505')"
         :button-title="$t('lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505')"
         @click="openCreateProductModal"
       />
@@ -102,10 +125,9 @@
 
     <CategoryModal ref="categoryModal" />
 
-    <!-- TODO: remove unused classes -->
     <SModal
       v-model="isOpenFilterModal"
-      class="filter-modal full-height"
+      class="filter-modal"
       width="420px"
       position="right"
       @onClose="toggleFilterModal"
@@ -116,18 +138,17 @@
         </div>
 
         <div class="section">
-          <!-- TODO: localize titles -->
-          <div class="section-title">Цена</div>
-          <div class="flex">
-            <!-- TODO: localize placeholder -->
+          <div class="section-title">
+            {{ $t("lang-333319c2-2df4-4057-a56a-28ddd7a790a1") }}
+          </div>
+          <div class="s-flex">
             <SInput
-            placeHolder="От"
-            type="number"
-            v-model.number="priceRange.min"
+              :placeHolder="$t('lang-8b476311-980c-42d5-92a9-dcf3f5809d18')"
+              type="number"
+              v-model.number="priceRange.min"
             />
-            <!-- TODO: localize placeholder -->
             <SInput
-              placeHolder="До"
+              :placeHolder="$t('lang-846ca970-3a56-41ae-9d90-6334b3a6b260')"
               class="s-ml-2"
               type="number"
               v-model.number="priceRange.max"
@@ -136,15 +157,11 @@
         </div>
 
         <div class="section">
-          <!-- TODO: localize titles -->
-          <div class="section-title">Категории</div>
-          <!-- TODO: use ui kit class for width value -->
-          <SInput isSearchable width="100%" @input="onSearchCategory" />
-          <!-- TODO: remoe style attribute :) -->
-          <div
-            class="property-items"
-            :style="{ 'max-height': maxHeight + 'px' }"
-          >
+          <div class="section-title">
+            {{ $t("lang-75805fdb-eac2-4c87-b481-563e318789b5") }}
+          </div>
+          <SInput isSearchable @input="onSearchCategory" />
+          <div class="property-items">
             <div
               v-for="category in categories"
               :key="category.id"
@@ -182,127 +199,99 @@ import {
   SIconRender,
 } from "@tumarsoft/ogogo-ui";
 import { EmptyData } from "@/shared/ui/components/empty-data";
-import { FilterSearch } from "@/shared/ui/components/filter-search";
 import CategoryModal from "@/shared/ui/components/product/CategoryModal.vue";
-import { ref, reactive, onMounted, computed, nextTick, Ref } from "vue";
-import i18n from "@/shared/lib/plugins/i18n";
+import { ref, onMounted, computed, Ref } from "vue";
+import { ProductStatus, ProductType } from "@/shared/lib/utils/enums";
+import { tableHeaders } from "@/shared/helpers/helper";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useRouter } from "vue-router";
+import i18n from "@/shared/lib/plugins/i18n";
 
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 const router = useRouter();
 
-// TODO: extract headers to separate/helper file
-const headers = reactive([
-  {
-    title: i18n.global.t("lang-463282b8-512e-4eae-8cde-815a2678e07d"),
-    key: "productName",
-  },
-  {
-    title: i18n.global.t("lang-0d638a69-fc78-48bc-8b4f-58582c384a1d"),
-    key: "status",
-  },
-  {
-    title: i18n.global.t("lang-059d243d-445e-4100-ac56-a5e7910df626"),
-    key: "articleNumber",
-  },
-  {
-    title: i18n.global.t("lang-333319c2-2df4-4057-a56a-28ddd7a790a1"),
-    key: "price",
-  },
-  {
-    title: i18n.global.t("lang-1f6f2dca-070c-48bc-941f-e1300024ffbb"),
-    key: "discount",
-  },
-  {
-    title: i18n.global.t("lang-5eb99c46-ed5f-4a24-85ad-d551ad812256"),
-    key: "priceWithDiscount",
-  },
-  {
-    title: i18n.global.t("lang-a6dc23d1-d5cc-4c0a-8412-32f6ff24a2dd"),
-    key: "countOfProduct",
-  },
-  // TODO: localize titles
-  {
-    title: "Действия",
-    key: "action",
-  },
-]);
-
-// TODO: localize names
-// TODO: extract id to enum value
 const statuses = ref([
-  { id: 0, name: "Все", color: "green" },
-  { id: 14800, name: "Черновик", color: "grey" },
-  { id: 14801, name: "Опубликовано", color: "green" },
-  { id: 14802, name: "Ожидает модерации", color: "blue" },
-  { id: 14803, name: "Ожидает одобрения ТО", color: "orange" },
-  { id: 14804, name: "Одобрено", color: "green" },
-  { id: 14805, name: "В архиве", color: "dark-grey" },
-  { id: 14806, name: "Требует доработки", color: "red" },
-  { id: 14807, name: "Заблокировано", color: "red" },
+  {
+    id: ProductStatus.ALL,
+    name: i18n.global.t("lang-7db32df9-54d2-4561-ba8b-c43073ee42e9"),
+    color: "green",
+  },
+  {
+    id: ProductStatus.DRAFT,
+    name: i18n.global.t("lang-7b5895ca-c485-48ea-abfc-b8c9198f3826"),
+    color: "grey",
+  },
+  {
+    id: ProductStatus.PUBLISHED,
+    name: i18n.global.t("lang-aa314c3b-22d1-49c4-abf0-c8153a445ea4"),
+    color: "green",
+  },
+  {
+    id: ProductStatus.AWAITING_MODERATION,
+    name: i18n.global.t("lang-938e2295-e2c3-40b2-a4d0-024ab55a3c53"),
+    color: "blue",
+  },
+  {
+    id: ProductStatus.AWAITING_APPROVE_TO,
+    name: i18n.global.t("lang-f4c62d07-e267-41ea-9695-e63c17e1601c"),
+    color: "orange",
+  },
+  {
+    id: ProductStatus.APPROVED,
+    name: i18n.global.t("lang-a95d3772-a255-4ae6-b88a-d15f9903b202"),
+    color: "green",
+  },
+  {
+    id: ProductStatus.ARCHIVED,
+    name: i18n.global.t("lang-d5753b25-3e39-4fbd-9ae2-bf2c05a41896"),
+    color: "dark-grey",
+  },
+  {
+    id: ProductStatus.REQUIRE_IMPROVEMENT,
+    name: i18n.global.t("lang-7b040343-d1ec-4f64-94f6-39bad5df1c49"),
+    color: "red",
+  },
+  {
+    id: ProductStatus.BLOCKED,
+    name: i18n.global.t("lang-a2dc3ce2-664b-42fe-9800-5849e5f23e7e"),
+    color: "red",
+  },
 ]);
 
-// TODO: should be computed from store getter
-const tableData = ref([]);
-// TODO: can be computed from tableData
-const hasProducts = ref(false);
-// TODO: can be computed from tableData
-const hasStatusProducts = ref(false);
 const tab = ref("one");
-// TODO: can be computed from pageParams
-const totalItems = ref(0);
 const searchTimer = ref(null);
 const isOpenFilterModal = ref(false);
 const modalContent = ref(null);
-const maxHeight = ref(0);
-// TODO: can be extracted to a filter object in productStore
 const priceRange = ref({ min: 0, max: 0 });
-// TODO: can be extracted to a filter object in categoryStore
-const categories = ref([]);
-// TODO: can be extracted to a filter object in categoryStore
 const selectedCategories = ref([]);
-// TODO: can be extracted to a filter object in categoryStore
 const checkboxRefs: Ref<HTMLDivElement[]> = ref([]);
 const categoryModal = ref(null);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? { statuses: [Number(tab.value)] } : {}
 );
+const hasProducts = computed(() => productStore.getHasProducts);
+const hasStatusProducts = computed(() => productStore.getHasStatusProducts);
+const totalItems = computed(() => productStore.getTotalItems);
+const tableData = computed(() => productStore.getProducts);
+const categories = computed(() => categoryStore.getPagedCategories);
 
 onMounted(() => {
-  // TODO: extract value to enum
-  selectTab("0");
+  selectTab(String(ProductStatus.ALL));
 });
 
 const fetchProducts = (filterObj = {}) => {
   productStore
-  // TODO: use enum for productType and sortDirection
-    .getAllProducts({ productType: 14701, sortDirection: 1, ...filterObj })
-    .then((response) => {
-      // TODO: hasProducts and isProductExist is the same thing
-      hasProducts.value = Boolean(response.result.totalPages);
-      hasStatusProducts.value = Boolean(response.result.items.length);
-      // TODO: save pageParams(pageIndex, pageSize, totalPages) to store
-      totalItems.value = response.result.totalCount;
-      // TODO: set items and page params to store
-      tableData.value = response.result.items;
-
-      // TODO: set default value for searchValue parameter in fetchCategoriesByPage function definition
+    .getAllProducts({ productType: ProductType.NEW, ...filterObj })
+    .then(() => {
       fetchCategoriesByPage("");
     });
 };
 
 const fetchCategoriesByPage = (searchValue: string) => {
-  // TODO: set value of pageSize in store
-  categoryStore
-    .getCategoriesPagedList({ search: searchValue, pageSize: 30 })
-    .then((response) => {
-      // TODO: set items and page params to store
-      categories.value = response.items;
-    });
+  categoryStore.getCategoriesPagedList({ search: searchValue, pageSize: 30 });
 };
 
 const selectTab = (value: string) => {
@@ -321,7 +310,6 @@ const onSearch = (value: string) => {
   }, 1500);
 };
 
-// TODO: can be refactored to function that returns object = {content, color} and set via v-bind to SBadge component
 const getStatusData = (item: any, field: string) => {
   const foundStatus = statuses.value.find(
     (statusObj) => statusObj.id === item.status
@@ -331,18 +319,13 @@ const getStatusData = (item: any, field: string) => {
 
 const toggleFilterModal = () => {
   isOpenFilterModal.value = !isOpenFilterModal.value;
-  nextTick(() => {
-    const rect = modalContent?.value?.getBoundingClientRect();
-    // TODO: use ui kit class to set max height or it should be implemented inside modal component
-    maxHeight.value = rect?.height / 1.5;
-  });
 };
 
 const filterBy = () => {
-  const categories = selectedCategories.value.length
+  const filterCategories = selectedCategories.value.length
     ? { categories: selectedCategories.value }
     : {};
-  fetchProducts({ priceRange: priceRange.value, ...categories });
+  fetchProducts({ priceRange: priceRange.value, ...filterCategories });
 };
 
 const clearFilter = () => {
@@ -375,13 +358,11 @@ const onSelectCategory = (isChecked: boolean, categoryId: string) => {
 };
 
 const openCreateProductModal = () => {
-  // TODO: use v-model variable for modal
   categoryModal.value.toggleModal();
 };
 
 const onEditProduct = (item: any) => {
-  // TODO: use object for router params. example: router.push({ name: "product-update", params: { id: item.id } });
-  router.push(`/product-update/${item.id}`);
+  router.push({ name: "productUpdate", params: { id: item.id } });
 };
 </script>
 
