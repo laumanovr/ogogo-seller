@@ -18,8 +18,13 @@ export const useCategoryStore = defineStore("categoryStore", {
   state: (): Partial<ICategoryState> => ({
     categories: [],
     categoryUrls: [],
+    pagedCategories: []
   }),
-  getters: {},
+  getters: {
+    getPagedCategories(): any {
+      return this.pagedCategories;
+    }
+  },
   actions: {
     getAllCategories(): Promise<CategoryApiResponse> {
       return new Promise((resolve, reject) => {
@@ -47,6 +52,7 @@ export const useCategoryStore = defineStore("categoryStore", {
           .getCategoriesPagedList(payload)
           .then((response) => {
             loaderStore.setLoaderState(false);
+            this.pagedCategories = response.items
             resolve(response);
           })
           .catch((err) => {
