@@ -28,6 +28,9 @@ export const useCategoryStore = defineStore("categoryStore", {
     getPagedCategories(): any {
       return this.pagedCategories;
     },
+    getCategoryUrls(): any {
+      return this.categoryUrls;
+    },
   },
   actions: {
     getAllCategories(): Promise<CategoryApiResponse> {
