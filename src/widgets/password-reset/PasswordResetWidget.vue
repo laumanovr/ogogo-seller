@@ -13,8 +13,7 @@
         <p class="">
           {{ $t("lang-71ebd9a8-09f5-4a3a-a45d-7420459d2b4b") }}
         </p>
-        <div class="flex justify-between">
-          <!-- TODO: use ui kit class for width value -->
+        <div class="s-flex s-justify-between">
           <SInput
             class="w-p-100 s-mt-4 s-mb-8"
             :rules="requiredField"

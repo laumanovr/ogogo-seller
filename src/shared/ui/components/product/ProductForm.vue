@@ -28,8 +28,7 @@
           "
         />
       </div>
-      <!-- TODO: remove preset classes and use ui kit classes -->
-      <div class="d-flex items-end s-mt-4">
+      <div class="s-flex s-items-end s-mt-4">
         <!-- TODO: localize text -->
         <!-- TODO: use ui kit class for width value -->
         <!-- TODO: use computed getter for v-model value -->
@@ -65,12 +64,11 @@
           "
         />
       </div>
-      <!-- TODO: remove preset classes and use ui kit classes -->
-      <div class="d-flex items-center justify-between s-mt-8 s-mb-6">
+      <div class="s-flex s-items-center s-justify-between s-mt-8 s-mb-6">
         <!-- TODO: localize titles -->
         <div class="head-title md">Цена</div>
         <!-- TODO: remove preset classes and use ui kit classes -->
-        <div class="d-flex">
+        <div class="s-flex">
           <!-- TODO: use computed getter for v-model value -->
           <SRadioButtonGroup
             v-model="productStore.productTemplate.productPriceType"
@@ -98,7 +96,7 @@
       </div>
       <div>
         <!-- TODO: remove preset classes and use ui kit classes -->
-        <div class="d-flex justify-between">
+        <div class="s-flex justify-between">
           <!-- TODO: localize placeholder -->
           <!-- TODO: use ui kit class for width value -->
           <SInput
@@ -181,7 +179,7 @@
           Размер файла – не более 15 МБ.
         </p>
         <!-- TODO: remove preset classes and use ui kit classes -->
-        <div class="d-flex flex-wrap">
+        <div class="s-flex flex-wrap">
           <div class="photo" v-for="image in productImages" :key="image">
             <img :src="image" alt="img" />
             <SIconRender
@@ -226,7 +224,7 @@
           Принимаем качественные ролики <br />
           не больше 30 МБ и не длинее 5 минут.
         </p>
-        <div class="d-flex">
+        <div class="s-flex">
           <video
             class="video"
             controls
@@ -268,7 +266,7 @@
           материал, объем и другие характеристики, которые могут варьироваться
           для одного и того же товара
         </p>
-        <div class="d-flex justify-between flex-wrap">
+        <div class="s-flex justify-between flex-wrap">
           <div
             class="select-item s-mb-2"
             v-for="property in properties"
@@ -290,7 +288,7 @@
       </div>
       <!-- TODO: set theme class at layout level -->
       <!-- TODO: remove preset classes and use ui kit classes -->
-      <div class="light d-flex justify-end s-mt-10">
+      <div class="light s-flex justify-end s-mt-10">
         <!-- TODO: extract mode to global enum  -->
         <SButton
           type="secondary"

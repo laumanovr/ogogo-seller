@@ -9,7 +9,7 @@
         <div class="form-title">
           {{ $t("lang-eff9e30c-a766-47df-b026-189d888586b8") }}
         </div>
-        <div class="flex justify-between">
+        <div class="s-flex s-justify-between">
           <SInput
             class="w-p-100"
             :rules="[requiredField]"

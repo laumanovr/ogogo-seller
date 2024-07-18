@@ -1,8 +1,6 @@
 <template>
-  <!-- TODO: removed unused class -->
   <div class="product-update-content">
-    <!-- TODO: remove presets class and ui kit classes -->
-    <div class="d-flex items-center light">
+    <div class="s-flex s-items-center light">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" size="small" />
         <!-- TODO: Localize -->
@@ -15,7 +13,7 @@
         :key="breadcrumbKey"
       />
     </div>
-    <div class="d-flex s-mt-5">
+    <div class="s-flex s-mt-5">
       <ProductTemplate />
       <!-- TODO: use global mode enum -->
       <ProductForm

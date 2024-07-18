@@ -26,7 +26,7 @@
         v-model="select.selectedCategoryId"
         @change="selectChildCategory($event, i)"
       />
-      <div class="flex flex-row w-p-100 gap-10 s-mt-2 justify-between light">
+      <div class="s-flex s-flex-row w-p-100 gap-10 s-mt-2 s-justify-between light">
         <SButton type="secondary" class="button w-p-50" @click="toggleModal">
           {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
         </SButton>

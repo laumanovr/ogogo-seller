@@ -13,9 +13,7 @@
         <p class="">
           {{ $t("lang-5a7148a6-bad0-43eb-bed7-f9e92158b53a") }}
         </p>
-        <!-- TODO: remove presets classes and use ui kit classes instead -->
-        <div class="flex flex-col">
-          <!-- TODO: remove presets classes and use ui kit classes instead -->
+        <div class="s-flex s-flex-col">
           <SInput
             class="w-p-100 s-mt-4"
             :rules="requiredField"

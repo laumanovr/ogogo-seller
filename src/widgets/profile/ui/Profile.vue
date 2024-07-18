@@ -88,7 +88,7 @@
         </div>
 
         <div class="content-block" v-if="tab === 'shop'">
-          <div class="photo d-flex items-center s-mb-8">
+          <div class="photo s-flex items-center s-mb-8">
             <!-- TODO: check for profile image url when logoBase64 is null -->
             <img :src="profileImageUrl" alt="" />
             <div class="photo-action s-ml-5">

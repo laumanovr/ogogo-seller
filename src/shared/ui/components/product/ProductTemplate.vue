@@ -11,9 +11,8 @@
       </STabItem>
     </STabs>
     <STabWindow value="one" :active-tab="tab">
-      <!-- TODO: use ui kit class and remove preset classes -->
       <div
-        class="d-flex sample"
+        class="s-flex sample"
         :class="{ active: i + 1 === sampleIndex }"
         v-for="(item, i) in selectedTemplates"
         :key="i"

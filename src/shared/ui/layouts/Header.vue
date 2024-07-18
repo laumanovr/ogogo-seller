@@ -1,6 +1,5 @@
 <template>
-  <!-- TODO: remove preset classes and use ui kit classes for all elements -->
-  <div class="d-flex flex-row justify-between padding-16-40 s-h-13 s-mb-4">
+  <div class="s-flex s-flex-row s-justify-between padding-16-40 s-h-13 s-mb-4">
     <!-- TODO: src should be absolute path. example: src="@/shared/ui/assets/Ogogo-logo.png" -->
     <img src="../../ui/assets/Ogogo-logo.png" class="ogogo-img" />
 
@@ -10,7 +9,7 @@
       <!-- TODO: better use router-link with active-class attribute to set active route -->
       <div
         @click="onMenuItemChange(MenuItems.Products)"
-        class="cursor-pointer d-flex flex-col items-center"
+        class="cursor-pointer s-flex s-flex-col s-items-center"
       >
         <SIconRender name="box" :class="isProductsActive" />
         <!-- TODO: change p tag to span tag -->
@@ -20,7 +19,7 @@
       </div>
       <div
         @click="onMenuItemChange(MenuItems.Orders)"
-        class="cursor-pointer d-flex flex-col items-center"
+        class="cursor-pointer s-flex s-flex-col s-items-center"
       >
         <SIconRender name="shop" :class="isOrdersActive" />
         <p :class="`${isOrdersActive} font-size-12 s-mt-1`">
@@ -29,7 +28,7 @@
       </div>
       <div
         @click="onMenuItemChange(MenuItems.Notifications)"
-        class="cursor-pointer d-flex flex-col items-center"
+        class="cursor-pointer s-flex s-flex-col s-items-center"
       >
         <SIconRender name="grid" :class="isNotifyActive" />
         <p :class="`${isNotifyActive} font-size-12 s-mt-1`">
@@ -38,7 +37,7 @@
       </div>
       <div
         @click="onMenuItemChange(MenuItems.Cabinet)"
-        class="cursor-pointer d-flex flex-col items-center"
+        class="cursor-pointer s-flex s-flex-col s-items-center"
       >
         <img src="../../../app/assets/img/empty-ava.svg" alt="" />
         <p :class="`${isCabinetActive} font-size-12 s-mt-1`">
