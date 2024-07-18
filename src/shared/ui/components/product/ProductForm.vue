@@ -1,7 +1,7 @@
 <template>
   <div class="product-form-container">
     <!-- TODO: localize titles -->
-    <div class="head-title md">Главное о товаре</div>
+    <div class="s-text-title-1 s-mb-6 s-mt-6">Главное о товаре</div>
     <SForm ref="productForm">
       <div>
         <!-- TODO: localize placeholder -->
@@ -66,7 +66,7 @@
       </div>
       <div class="s-flex s-items-center s-justify-between s-mt-8 s-mb-6">
         <!-- TODO: localize titles -->
-        <div class="head-title md">Цена</div>
+        <div class="s-text-title-1 s-mb-6 s-mt-6">Цена</div>
         <!-- TODO: remove preset classes and use ui kit classes -->
         <div class="s-flex">
           <!-- TODO: use computed getter for v-model value -->
@@ -171,7 +171,7 @@
       </div>
       <div class="content-block">
         <!-- TODO: localize titles -->
-        <div class="head-title md">Фото</div>
+        <div class="s-text-title-1 s-mb-6 s-mt-6">Фото</div>
         <p class="content-hint">
           <!-- TODO: localize text -->
           Добавьте изображение товара. Изображение максимум 2000 х 2000 px, в
@@ -217,7 +217,7 @@
       </div>
       <div class="content-block s-mt-8">
         <!-- TODO: localize titles -->
-        <div class="head-title md">Видео</div>
+        <div class="s-text-title-1 s-mb-6 s-mt-6">Видео</div>
         <p class="content-hint">
           <!-- TODO: localize text -->
           На карточке может быть только одно видео – покажем его первым.
@@ -258,7 +258,7 @@
       </div>
       <div class="content-block s-mt-8">
         <!-- TODO: localize titles -->
-        <div class="head-title md">Характеристики</div>
+        <div class="s-text-title-1 s-mb-6 s-mt-6">Характеристики</div>
         <p class="content-hint">
           <!-- TODO: localize text -->
           Это характеристики товара, которые могут быть выбраны покупателем при

@@ -1,6 +1,6 @@
 <template>
   <div class="order-content">
-    <div class="head-title">
+    <div class="s-text-h-2 s-mb-6 s-mt-6">
       {{ $t("lang-6f853bc8-3f4e-44d2-9770-49d98347fc6b") }}
     </div>
     <template v-if="isOrderExist">
