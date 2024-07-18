@@ -15,7 +15,7 @@
         </p>
         <div class="s-flex s-flex-col">
           <SInput
-            class="w-p-100 s-mt-4"
+            class="s-w-full s-mt-4"
             :rules="requiredField"
             v-model="loginObj.pin"
             v-maska:[options]
@@ -23,7 +23,7 @@
           />
           <!-- TODO: remove presets classes and use ui kit classes instead -->
           <SInput
-            class="w-p-100 s-mt-4"
+            class="s-w-full s-mt-4"
             :rules="requiredField"
             v-model="loginObj.pin"
             v-maska:[options]
@@ -32,11 +32,11 @@
           <!-- TODO: remove presets classes and use ui kit classes instead -->
           <SSelect
             :label="$t('lang-d0c19d1f-b018-45d1-93fa-2dc4a8b6878e')"
-            class="w-p-100 s-mt-4"
+            class="s-w-full s-mt-4"
           />
           <!-- TODO: remove presets classes and use ui kit classes instead -->
           <!-- TODO: invalid placeholder value -->
-          <SCheckbox class="w-p-100 s-mt-4" placeholder="emir">
+          <SCheckbox class="s-w-full s-mt-4" placeholder="emir">
             {{ $t("lang-33c946fe-b106-4901-b3a0-356c7b421566") }}
           </SCheckbox>
         </div>

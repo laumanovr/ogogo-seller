@@ -6,7 +6,7 @@
     <SForm ref="productForm">
       <SSelect
         :label="$t('lang-89bfcd93-3986-425f-b7f8-732462da1a5f')"
-        class="w-p-100"
+        class="s-w-full"
         :items="allCategories"
         :rules="[requiredField]"
         itemTitle="categoryName"
@@ -18,7 +18,7 @@
         v-for="(select, i) in subCategorySelects"
         :key="i"
         :label="$t('lang-97c9b3e4-5040-4730-b73e-3ebf3309f13a')"
-        class="w-p-100"
+        class="s-w-full"
         :class="{ 'error-select': select.isEmpty }"
         :items="select.items"
         itemTitle="categoryName"
@@ -26,11 +26,13 @@
         v-model="select.selectedCategoryId"
         @change="selectChildCategory($event, i)"
       />
-      <div class="s-flex s-flex-row w-p-100 gap-10 s-mt-2 s-justify-between light">
-        <SButton type="secondary" class="button w-p-50" @click="toggleModal">
+      <div
+        class="s-flex s-flex-row s-w-full gap-10 s-mt-2 s-justify-between light"
+      >
+        <SButton type="secondary" class="button s-w-1/2" @click="toggleModal">
           {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
         </SButton>
-        <SButton class="button w-p-50" @click="goToCreateProduct">
+        <SButton class="button s-w-1/2" @click="goToCreateProduct">
           {{ $t("lang-aea72790-6410-4376-9965-2a4ccbce8e9a") }}
         </SButton>
       </div>

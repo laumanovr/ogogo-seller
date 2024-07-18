@@ -71,7 +71,7 @@
       <div class="btn-container light">
         <SButton
           size="large"
-          class="w-p-100 s-mt-5"
+          class="s-w-full s-mt-5"
           @click="addTemplates"
           :disabled="isDisabled"
         >

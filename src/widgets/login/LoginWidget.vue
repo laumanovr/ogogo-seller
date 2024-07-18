@@ -11,7 +11,7 @@
         </div>
         <div class="s-flex s-justify-between">
           <SInput
-            class="w-p-100"
+            class="s-w-full"
             :rules="[requiredField]"
             v-model="loginObj.pin"
             v-maska:[options]

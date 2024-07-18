@@ -41,7 +41,7 @@
         />
       </div>
       <!-- TODO: remove preset classes and use ui kit classes -->
-      <div class="s-mt-4 w-p-100">
+      <div class="s-mt-4 s-w-full">
         <!-- TODO: localize placeholder -->
         <!-- TODO: use ui kit class for width value -->
         <STextArea
@@ -274,7 +274,7 @@
           >
             <!-- TODO: use ui kit class for width value -->
             <SSelect
-              class="w-p-100"
+              class="s-w-full"
               :label="showPropertyName(property)"
               :items="property.allowedValues"
               :rules="[requiredField]"
