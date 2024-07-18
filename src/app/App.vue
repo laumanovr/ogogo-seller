@@ -1,7 +1,6 @@
 <template>
   <component :is="currentComponent">
-    <!-- TODO: use computed for isLoading from store getter -->
-    <Loader v-if="loaderStore.isLoading" />
+    <Loader v-if="isLoading" />
     <SAlert :items="alertItems" @close="closeAlert" />
     <router-view />
   </component>
@@ -26,6 +25,7 @@ let currentComponent = shallowRef(Empty);
 const route = useRoute();
 
 const alertItems = computed(() => alertStore.getAlertItems);
+const isLoading = computed(() => loaderStore.getLoadingState);
 
 const closeAlert = (id: string) => {
   alertStore.closeAlert(id);
