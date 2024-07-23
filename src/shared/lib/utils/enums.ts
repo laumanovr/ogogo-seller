@@ -35,3 +35,11 @@ export enum TabValue {
   ONE = "one",
   TWO = "two",
 }
+
+export enum ProfileTab {
+  GENERAL = "general",
+  SHOP = "shop",
+  PASSWORD = "password",
+  SESSION = "session",
+  HELP = "help",
+}
