@@ -11,4 +11,5 @@ export interface IProfile {
   logoFileName?: string;
   version?: number;
   organizationId?: string;
+  profileObj?: IProfile;
 }

@@ -16,9 +16,24 @@ export const useProfileStore = defineStore("profileStore", {
   state: (): Partial<IProfile> => ({
     // TODO: remove direct usage of localStorage actions - only through store(plugin)
     currentUser: JSON.parse(window.localStorage.getItem("currentUser")),
+    profileObj: {
+      id: null,
+      logoBase64: null,
+      name: null,
+      description: null,
+      logoFileName: null,
+      version: null,
+    },
   }),
   // TODO: why no getters?
-  getters: {},
+  getters: {
+    getCurrentUser(): any {
+      return this.currentUser;
+    },
+    getProfileObj(): any {
+      return this.profileObj;
+    },
+  },
   actions: {
     updateProfileInfo(payload: IProfile) {
       loaderStore.setLoaderState(true);
@@ -39,6 +54,10 @@ export const useProfileStore = defineStore("profileStore", {
         profileApi
           .getProfile()
           .then((response) => {
+            this.profileObj.name = response.name;
+            this.profileObj.description = response.description;
+            this.profileObj.logoBase64 = response.logoBase64;
+            this.profileObj.version = response.version;
             loaderStore.setLoaderState(false);
             resolve(response);
           })
