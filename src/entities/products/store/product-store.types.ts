@@ -6,4 +6,5 @@ export interface IProductState {
   hasProducts: boolean;
   hasStatusProducts: boolean;
   totalItems: number;
+  productCategoryId: string
 }

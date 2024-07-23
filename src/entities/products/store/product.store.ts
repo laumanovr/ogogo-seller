@@ -42,6 +42,7 @@ export const useProductStore = defineStore("product", {
       isSaveAsDraft: false,
       properties: {},
     },
+    productCategoryId: "",
   }),
   getters: {
     getProducts(): any {
@@ -57,7 +58,7 @@ export const useProductStore = defineStore("product", {
       return this.totalItems;
     },
     getProductTemplate(): any {
-      return this.productTemplate
+      return this.productTemplate;
     },
     getValidationName(): any {
       return this.productTemplate.validationDetails?.fields?.name;
@@ -73,6 +74,9 @@ export const useProductStore = defineStore("product", {
     },
     getValidationFile(): any {
       return this.productTemplate.validationDetails?.files;
+    },
+    getProductCategoryId(): any {
+      return this.productCategoryId;
     },
   },
   actions: {
@@ -103,6 +107,12 @@ export const useProductStore = defineStore("product", {
         productApi
           .getProductById(id)
           .then((response) => {
+            const foundProduct = response.result;
+            this.productCategoryId = foundProduct.categoryId;
+            this.setSelectedTemplateOrProduct({
+              product: foundProduct,
+              type: "product",
+            });
             loaderStore.setLoaderState(false);
             resolve(response);
           })
