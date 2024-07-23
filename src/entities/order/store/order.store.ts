@@ -13,13 +13,27 @@ const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
 const orderApi = new OrderApi();
 
-// TODO: store name already contains word "store". remove it
-export const useOrderStore = defineStore("orderStore", {
+export const useOrderStore = defineStore("order", {
   state: (): Partial<IOrderState> => ({
     orders: [],
+    isOrderExist: false,
+    hasOrders: false,
+    totalItems: 0,
   }),
-  // TODO: why no getters?
-  getters: {},
+  getters: {
+    getOrders(): any {
+      return this.orders
+    },
+    getIsOrderExist(): any {
+      return this.isOrderExist
+    },
+    getHasOrders(): any {
+      return this.hasOrders
+    },
+    getTotalItems(): any {
+      return this.totalItems
+    }
+  },
   actions: {
     getAllOrders(payload: OrderPayload): Promise<OrderApiResponse> {
       return new Promise((resolve, reject) => {
@@ -29,16 +43,18 @@ export const useOrderStore = defineStore("orderStore", {
           .getOrders(payload)
           .then((response) => {
             this.orders = response.result.items;
-            // TODO: move to finally callback
-            loaderStore.setLoaderState(false);
+            this.isOrderExist = Boolean(response.result.totalPages);
+            this.hasOrders = Boolean(response.result.items.length);
+            this.totalItems = response.result.totalCount;
             resolve(response);
           })
           .catch((err) => {
-            // TODO: remove global alert 
+            // TODO: remove global alert
             alertStore.showError(err.message);
-            // TODO: move to finally callback
-            loaderStore.setLoaderState(false);
             reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
           });
       });
     },

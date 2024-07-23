@@ -7,27 +7,39 @@
       <FilterSearch @input="onSearch" />
 
       <STabs :tab-mode="'filter-tabs'" class="s-mb-5">
-        <!-- TODO: extract value to enum -->
-        <STabItem value="14400" :active-tab="tab" @changeTab="selectTab">
+        <STabItem
+          :value="OrderStatus.ACTIVE"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
           {{ $t("lang-dd1a9bc2-31f2-4197-9a7d-01a23229ea82") }}
         </STabItem>
-        <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
+        <STabItem
+          :value="OrderStatus.ALL"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
           {{ $t("lang-7db32df9-54d2-4561-ba8b-c43073ee42e9") }}
         </STabItem>
-        <STabItem value="14401" :active-tab="tab" @changeTab="selectTab">
+        <STabItem
+          :value="OrderStatus.CANCELLED"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
           {{ $t("lang-b5ea90d6-b263-4058-b295-b41b2d72c542") }}
         </STabItem>
-        <STabItem value="14402" :active-tab="tab" @changeTab="selectTab">
+        <STabItem
+          :value="OrderStatus.ARCHIVED"
+          :active-tab="tab"
+          @changeTab="selectTab"
+        >
           {{ $t("lang-9801cd40-7281-47f7-8478-6731dc9d8388") }}
         </STabItem>
       </STabs>
 
-      <!-- TODO: set 10 as default value for itemsPerPage -->
-      <!-- TODO: set 2 as default value for itemsPerPage -->
-      <!-- TODO: use getters for data  -->
       <STable
         :headers="headers"
-        :data="orderStore.orders"
+        :data="orderData"
         :totalItems="totalItems"
         itemsPerPage="10"
         paginateRange="2"
@@ -51,8 +63,9 @@
           {{ showPaymentType(item) }}
         </template>
         <template v-slot:action>
-          <!-- TODO: if it is action - button or link, then use SButton or router-link. If api is not available, then disable button/router-link and set TODO comment -->
-          {{ $t("lang-23981bea-cba2-425d-a435-41ae4a591794") }}
+          <SButton disabled type="text">
+            {{ $t("lang-23981bea-cba2-425d-a435-41ae4a591794") }}
+          </SButton>
         </template>
       </STable>
     </template>
@@ -65,50 +78,78 @@ import { ref, onMounted, computed } from "vue";
 import { FilterSearch } from "@/shared/ui/components/filter-search";
 import { useOrderStore } from "@/entities/order/store/order.store";
 import { OrderEntity } from "@/entities/order/model/types";
+import { OrderStatus, PaymentType } from "@/shared/lib/utils/enums";
+import i18n from "@/shared/lib/plugins/i18n";
 
-// TODO: localize titles
 const headers = ref([
-  { title: "Номер заказа", key: "orderNumber" },
-  { title: "Статус", key: "status" },
-  { title: "Дата оформления", key: "registrationDate" },
-  { title: "Оплата", key: "paymentType" },
-  { title: "Сумма заказа", key: "price" },
-  { title: "Кол-во товара", key: "count" },
-  { title: "Действия", key: "action" },
+  {
+    title: i18n.global.t("lang-38d23cac-13c8-48f7-ac75-ba28e214a121"),
+    key: "orderNumber",
+  },
+  {
+    title: i18n.global.t("lang-0d638a69-fc78-48bc-8b4f-58582c384a1d"),
+    key: "status",
+  },
+  {
+    title: i18n.global.t("lang-291d15a2-e9e7-4c34-b347-ad9301255aaa"),
+    key: "registrationDate",
+  },
+  {
+    title: i18n.global.t("lang-b6856c6b-d988-47de-955d-8fad999702ae"),
+    key: "paymentType",
+  },
+  {
+    title: i18n.global.t("lang-25e84a54-cb83-475c-b8b5-51592842bd51"),
+    key: "price",
+  },
+  {
+    title: i18n.global.t("lang-9d087818-5d05-424c-a631-1f9a4a981e21"),
+    key: "count",
+  },
+  {
+    title: i18n.global.t("lang-0543ee76-db56-47ac-b2e9-3b96fc831a8c"),
+    key: "action",
+  },
 ]);
-// TODO: extract id to enum
-// TODO: localize names
 const statuses = ref([
-  { id: 0, name: "Все", color: "green" },
-  { id: 14400, name: "Активный", color: "green" },
-  { id: 14401, name: "Отмененный", color: "green" },
-  { id: 14402, name: "Архив", color: "green" },
+  {
+    id: OrderStatus.ALL,
+    name: i18n.global.t("lang-7db32df9-54d2-4561-ba8b-c43073ee42e9"),
+    color: "green",
+  },
+  {
+    id: OrderStatus.ACTIVE,
+    name: i18n.global.t("lang-5195beba-a122-494a-893d-e37182f4b42f"),
+    color: "green",
+  },
+  {
+    id: OrderStatus.CANCELLED,
+    name: i18n.global.t("lang-0e411f42-92fd-48f1-839f-b39e3b4c83c1"),
+    color: "green",
+  },
+  {
+    id: OrderStatus.ARCHIVED,
+    name: i18n.global.t("lang-9801cd40-7281-47f7-8478-6731dc9d8388"),
+    color: "green",
+  },
 ]);
 const orderStore = useOrderStore();
 const tab = ref("one");
-const isOrderExist = ref(false);
-const hasOrders = ref(false);
-const totalItems = ref(0);
 const searchTimer = ref(null);
-
-// TODO: currentStatus can be extracted to a filter object in orderStore
+const orderData = computed(() => orderStore.getOrders);
+const isOrderExist = computed(() => orderStore.getIsOrderExist);
+const hasOrders = computed(() => orderStore.getHasOrders);
+const totalItems = computed(() => orderStore.getTotalItems);
 const currentStatus = computed(() =>
   Number(tab.value) ? { queryParams: { statuses: [Number(tab.value)] } } : {}
 );
 
 onMounted(() => {
-  // TODO: extract value to enum
-  selectTab("14400");
+  selectTab(String(OrderStatus.ACTIVE));
 });
 
 const fetchOrders = (filterObj = {}) => {
-  orderStore.getAllOrders({ ...filterObj }).then((response) => {
-    // TODO: hasOrders and isOrderExist is the same thing
-    isOrderExist.value = Boolean(response.result.totalPages);
-    hasOrders.value = Boolean(response.result.items.length);
-    // TODO: save pageParams(pageIndex, pageSize, totalPages) to store
-    totalItems.value = response.result.totalCount;
-  });
+  orderStore.getAllOrders({ ...filterObj });
 };
 
 const selectTab = (value: string) => {
@@ -128,9 +169,9 @@ const showPurchaseDate = (item: OrderEntity) => {
 };
 
 const showPaymentType = (item: OrderEntity) => {
-  // TODO: extract paymentType comparison to enum
-  // TODO: localize names
-  return item.paymentType === 14500 ? "Кредит" : "Оплачено";
+  return item.paymentType === PaymentType.CREDIT
+    ? i18n.global.t("lang-49ee216a-cacc-4efa-aaa3-d61ca8d5471c")
+    : i18n.global.t("lang-cab4e851-832e-4cfc-9b92-4133a05e7bcd");
 };
 
 const onChangePage = (page: number) => {
@@ -145,8 +186,7 @@ const onSearch = (value: string) => {
 };
 </script>
 
-<!-- TODO: set scoped for style or use ui kit classes -->
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../../app/style/colors.scss";
 .order-content {
   .price-usd {
