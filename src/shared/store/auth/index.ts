@@ -69,6 +69,9 @@ export const useAuthStore = defineStore("auth", {
     getRoleName(): string {
       return this.user.roleName;
     },
+    getSessionId(): string {
+      return JSON.parse(window.localStorage.getItem("sessionId"));
+    }
   },
   actions: {
     login(
