@@ -18,8 +18,7 @@ const productApi = new ProductApi();
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
 
-// TODO: store name already contains word "store". remove it
-export const useProductStore = defineStore("productStore", {
+export const useProductStore = defineStore("product", {
   state: (): Partial<IProductState> => ({
     products: [],
     hasProducts: false,
@@ -56,6 +55,21 @@ export const useProductStore = defineStore("productStore", {
     },
     getTotalItems(): any {
       return this.totalItems;
+    },
+    getValidationName(): any {
+      return this.productTemplate.validationDetails?.fields?.name;
+    },
+    getValidationDescription(): any {
+      return this.productTemplate.validationDetails?.fields?.description;
+    },
+    getValidationPrice(): any {
+      return this.productTemplate.validationDetails?.fields?.price;
+    },
+    getValidationCount(): any {
+      return this.productTemplate.validationDetails?.fields?.countofproduct;
+    },
+    getValidationFile(): any {
+      return this.productTemplate.validationDetails?.files;
     },
   },
   actions: {
