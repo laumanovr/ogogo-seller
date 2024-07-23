@@ -43,3 +43,15 @@ export enum ProfileTab {
   SESSION = "session",
   HELP = "help",
 }
+
+export enum OrderStatus {
+  ALL = 0,
+  ACTIVE = 14400,
+  CANCELLED = 14401,
+  ARCHIVED = 14402
+}
+
+export enum PaymentType {
+  CREDIT = 14500,
+  CASH = 14501
+}
