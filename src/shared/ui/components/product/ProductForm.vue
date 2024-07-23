@@ -8,7 +8,7 @@
         <SInput
           :label="$t('lang-cb1dea14-fb31-4e97-9364-9e33b4227c3a')"
           :rules="[requiredField]"
-          v-model="productStore.productTemplate.productName"
+          v-model="productTemplate.productName"
         />
         <Comment
           :comment="validationName?.validationComment"
@@ -17,18 +17,17 @@
         />
       </div>
       <div class="s-flex s-items-end s-mt-4">
-        <!-- TODO: use computed getter for v-model value -->
         <SInput
           :label="$t('lang-55e1b440-eda4-4966-96a0-220a338bcda1')"
           class="article"
           :rules="[requiredField]"
-          v-model="productStore.productTemplate.toArticle"
+          v-model="productTemplate.toArticle"
         />
       </div>
       <div class="s-mt-4 s-w-full">
         <STextArea
           :label="$t('lang-240d2d7a-5a93-4647-a066-22a368702e04')"
-          v-model="productStore.productTemplate.description"
+          v-model="productTemplate.description"
         />
         <Comment
           :comment="validationDesc?.validationComment"
@@ -41,10 +40,7 @@
           {{ $t("lang-333319c2-2df4-4057-a56a-28ddd7a790a1") }}
         </div>
         <div class="s-flex">
-          <!-- TODO: use computed getter for v-model value -->
-          <SRadioButtonGroup
-            v-model="productStore.productTemplate.productPriceType"
-          >
+          <SRadioButtonGroup v-model="productTemplate.productPriceType">
             <SRadioButton
               class="s-mr-5 radio-btn"
               :value="PriceType.KGS"
@@ -69,13 +65,13 @@
             class="s-w-64"
             type="number"
             :rules="[requiredField]"
-            v-model="productStore.productTemplate.price"
+            v-model="productTemplate.price"
           />
           <SInput
             type="number"
             :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')"
             class="s-w-64"
-            v-model="productStore.productTemplate.discount"
+            v-model="productTemplate.discount"
             @input="countPriceDiscount"
           />
           <SInput
@@ -93,14 +89,13 @@
         />
       </div>
       <div class="s-mt-4 s-mb-8">
-        <!-- TODO: use computed getter for v-model value -->
         <SInput
           :label="$t('lang-3997683f-c3d7-42a4-8f3e-f5aa235c4655')"
           class="s-w-full"
           type="number"
           required
           :rules="[requiredField]"
-          v-model="productStore.productTemplate.countOfProduct"
+          v-model="productTemplate.countOfProduct"
         />
         <Comment
           :comment="validationCount?.validationComment"
@@ -265,6 +260,7 @@ const propertyObject = ref<any>({});
 const productImages = ref([]);
 const productForm = ref(null);
 const isPhotoValid = ref(true);
+const productTemplate = computed(() => productStore.getProductTemplate);
 const validationName = computed(() => productStore.getValidationName);
 const validationDesc = computed(() => productStore.getValidationDescription);
 const validationPrice = computed(() => productStore.getValidationPrice);
@@ -277,14 +273,14 @@ onMounted(() => {
   if (props.mode === ProductMode.UPDATE) {
     // TODO: set baseUrl here??? set base url in main or use service provider for another domain request
     // TODO: image src should be defined at image src attribute. example: src="getImageUrl(image)"
-    productStore.productTemplate.photos.forEach((photoId) => {
+    productTemplate.value.photos.forEach((photoId: any) => {
       const photo = `${axios.defaults.baseURL}File/FileById?id=${photoId}&sessionId=${sessionId.value}`;
       productImages.value.push(photo);
     });
 
     // TODO: video src should be defined at video src attribute. example: src="getVideoUrl(video)"
-    if (productStore.productTemplate.videos.length) {
-      const videoId = productStore.productTemplate.videos[0];
+    if (productTemplate.value.videos.length) {
+      const videoId = productTemplate.value.videos[0];
       videoUrl.value = `${axios.defaults.baseURL}File/FileById?id=${videoId}&sessionId=${sessionId.value}`;
     }
   } else {
@@ -295,11 +291,11 @@ onMounted(() => {
 });
 
 const isEmptyPhoto = computed(
-  () => !isPhotoValid.value && !productStore.productTemplate.photos.length
+  () => !isPhotoValid.value && !productTemplate.value.photos.length
 );
 
 const isPriceSelected = (priceType: number) => {
-  return productStore.productTemplate.productPriceType == priceType;
+  return productTemplate.value.productPriceType == priceType;
 };
 
 // TODO: use FileInput component in ui kit with upload handler
@@ -309,32 +305,30 @@ const onSelectPhoto = async (e: Event) => {
   if (file) {
     productStore.uploadFile(file).then((response) => {
       productImages.value.push(URL.createObjectURL(file));
-      productStore.productTemplate.photos.push(response.result.fileId);
+      productTemplate.value.photos.push(response.result.fileId);
     });
   }
 };
 
 const deleteImage = (imgUrl: string) => {
-  const index = productStore.productTemplate.photos.findIndex(
+  const index = productTemplate.value.photos.findIndex(
     (imageUrl: any) => imageUrl === imgUrl
   );
   productImages.value.splice(index, 1);
-  productStore.productTemplate.photos.splice(index, 1);
+  productTemplate.value.photos.splice(index, 1);
 };
 
 const countPriceDiscount = () => {
   const discountSum =
-    Number(productStore.productTemplate.price) *
-    (productStore.productTemplate.discount / 100);
-  priceWithDiscount.value =
-    Number(productStore.productTemplate.price) - discountSum;
+    Number(productTemplate.value.price) *
+    (productTemplate.value.discount / 100);
+  priceWithDiscount.value = Number(productTemplate.value.price) - discountSum;
 };
 
 const countDiscountPercentage = () => {
-  const diffSum =
-    Number(productStore.productTemplate.price) - priceWithDiscount.value;
-  productStore.productTemplate.discount =
-    (diffSum / productStore.productTemplate.price) * 100;
+  const diffSum = Number(productTemplate.value.price) - priceWithDiscount.value;
+  productTemplate.value.discount =
+    (diffSum / productTemplate.value.price) * 100;
 };
 
 const onSelectVideo = (e: Event) => {
@@ -347,7 +341,7 @@ const onSelectVideo = (e: Event) => {
       reader.onload = () => {
         videoUrl.value = reader.result as string;
         videoKey.value++;
-        productStore.productTemplate.videos = [response.result.fileId];
+        productTemplate.value.videos = [response.result.fileId];
       };
     });
   }
@@ -362,27 +356,27 @@ const onSelectProperty = (property: any) => {
 };
 
 const prepareFormFields = () => {
-  productStore.productTemplate.organizationId =
+  productTemplate.value.organizationId =
     profileStore.currentUser.organizationId;
-  productStore.productTemplate.productType = 14701;
-  productStore.productTemplate.categoryId = selectedCategoryId as string;
-  delete productStore.productTemplate.validationDetails;
+  productTemplate.value.productType = 14701;
+  productTemplate.value.categoryId = selectedCategoryId as string;
+  delete productTemplate.value.validationDetails;
   if (Object.entries(propertyObject.value).length) {
-    productStore.productTemplate.properties = propertyObject.value;
+    productTemplate.value.properties = propertyObject.value;
   }
 };
 
 const submitProduct = () => {
-  isPhotoValid.value = Boolean(productStore.productTemplate.photos.length);
+  isPhotoValid.value = Boolean(productTemplate.value.photos.length);
   productForm.value.validate().then((isValid: boolean) => {
     if (isValid && !isEmptyPhoto.value) {
       prepareFormFields();
       if (props.mode === ProductMode.CREATE) {
-        productStore.createProduct(productStore.productTemplate).then(() => {
+        productStore.createProduct(productTemplate.value).then(() => {
           router.push("/products");
         });
       } else {
-        productStore.updateProduct(productStore.productTemplate).then(() => {
+        productStore.updateProduct(productTemplate.value).then(() => {
           router.push("/products");
         });
       }
@@ -392,8 +386,8 @@ const submitProduct = () => {
 
 const saveAsDraft = () => {
   prepareFormFields();
-  productStore.productTemplate.isSaveAsDraft = true;
-  productStore.createProduct(productStore.productTemplate).then(() => {
+  productTemplate.value.isSaveAsDraft = true;
+  productStore.createProduct(productTemplate.value).then(() => {
     router.push("/products");
   });
 };

@@ -56,6 +56,9 @@ export const useProductStore = defineStore("product", {
     getTotalItems(): any {
       return this.totalItems;
     },
+    getProductTemplate(): any {
+      return this.productTemplate
+    },
     getValidationName(): any {
       return this.productTemplate.validationDetails?.fields?.name;
     },
