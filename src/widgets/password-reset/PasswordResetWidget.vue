@@ -2,8 +2,7 @@
   <div class="login-container">
     <div class="login-block">
       <div class="login-logo">
-        <!-- TODO: set absolute path for image -->
-        <img src="../../shared/ui/assets/Ogogo-logo.png" alt="img" />
+        <img src="@/shared/ui/assets/Ogogo-logo.png" alt="img" />
       </div>
       <SForm class="form-block" ref="loginForm">
         <div class="form-title">
@@ -16,17 +15,15 @@
         <div class="s-flex s-justify-between">
           <SInput
             class="s-w-full s-mt-4 s-mb-8"
-            :rules="requiredField"
+            :rules="[requiredField]"
             v-model="loginObj.pin"
             v-maska:[options]
             :label="$t('lang-c53d0190-9e48-42e2-b346-ee9ea934955c')"
           />
         </div>
 
-        <!-- TODO: remove deprecated attributes -->
         <SButton
           size="large"
-          color="violet"
           @click="onSubmitPasswordReset"
           class="s-mb-2 w-p50"
         >
@@ -38,7 +35,6 @@
 </template>
 
 <script lang="ts" setup>
-// TODO: removed unused imports
 import { SButton, SForm, SInput } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 import { requiredField } from "@/shared/lib/utils/rules";
@@ -53,12 +49,10 @@ const options = reactive({
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
 
-// TODO: add console error for un-implemented methods or disable button/action
 const onSubmitPasswordReset = () => {};
 </script>
 
 <style lang="scss" scoped>
-// TODO: remove commented code
 .login-container {
   display: flex;
   justify-content: center;
