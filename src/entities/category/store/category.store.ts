@@ -9,20 +9,22 @@ import {
   CategoryPagedResponse,
   CategoryWithPropertiesResponse,
 } from "../api/category-api.types";
+import { useProductStore } from "@/entities/products/store/product.store";
 
 // TODO: clear default alert store actions
 // TODO: remove global loader and set local loader
 
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
+const productStore = useProductStore();
 const categoryApi = new CategoryApi();
 
-// TODO: store name already contains word "store". remove it
-export const useCategoryStore = defineStore("categoryStore", {
+export const useCategoryStore = defineStore("category", {
   state: (): Partial<ICategoryState> => ({
     categories: [],
     categoryUrls: [],
     pagedCategories: [],
+    categoryWithProperties: [],
   }),
   getters: {
     getPagedCategories(): any {
@@ -30,6 +32,9 @@ export const useCategoryStore = defineStore("categoryStore", {
     },
     getCategoryUrls(): any {
       return this.categoryUrls;
+    },
+    getCategoryWithProperties(): any {
+      return this.categoryWithProperties;
     },
   },
   actions: {
@@ -77,6 +82,27 @@ export const useCategoryStore = defineStore("categoryStore", {
         categoryApi
           .getCategoryById(id)
           .then((response) => {
+            this.categoryWithProperties = response.result.properties;
+            const selectedPropValues: any = [];
+            this.saveSelectedCategoryPath([
+              { name: response.result.categoryName },
+            ]);
+            if (productStore?.productTemplate?.properties) {
+              Object.entries(productStore.productTemplate.properties).forEach(
+                (item) => {
+                  selectedPropValues.push({ key: item[0], valueId: item[1] });
+                }
+              );
+              this.categoryWithProperties = this.categoryWithProperties.map(
+                (property) => {
+                  const selectedObj = selectedPropValues.find(
+                    (item: any) => item.key === property.key
+                  );
+                  property.selectedValueId = selectedObj?.valueId;
+                  return property;
+                }
+              );
+            }
             loaderStore.setLoaderState(false);
             resolve(response);
           })
