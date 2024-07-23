@@ -1,185 +1,121 @@
 <template>
   <div class="product-form-container">
-    <!-- TODO: localize titles -->
-    <div class="s-text-title-1 s-mb-6 s-mt-6">Главное о товаре</div>
+    <div class="s-text-title-1 s-mb-6 s-mt-6">
+      {{ $t("lang-3c525f10-24ab-44fa-9eda-8a503e97b2e9") }}
+    </div>
     <SForm ref="productForm">
       <div>
-        <!-- TODO: localize placeholder -->
-        <!-- TODO: use ui kit class for width value -->
         <SInput
-          label="Наименование товара"
-          width="100%"
+          :label="$t('lang-cb1dea14-fb31-4e97-9364-9e33b4227c3a')"
           :rules="[requiredField]"
           v-model="productStore.productTemplate.productName"
         />
-        <!-- TODO: what a train of null coalescing operators! use computed getter from store -->
         <Comment
-          :comment="
-            productStore.productTemplate.validationDetails?.fields?.name
-              ?.validationComment
-          "
-          :date="
-            productStore.productTemplate.validationDetails?.fields?.name
-              .moderationDate
-          "
-          v-if="
-            productStore.productTemplate.validationDetails?.fields?.name
-              ?.validationComment
-          "
+          :comment="validationName?.validationComment"
+          :date="validationName?.moderationDate"
+          v-if="validationName?.validationComment"
         />
       </div>
       <div class="s-flex s-items-end s-mt-4">
-        <!-- TODO: localize text -->
-        <!-- TODO: use ui kit class for width value -->
         <!-- TODO: use computed getter for v-model value -->
         <SInput
-          label="Ваш артикул"
-          width="100%"
+          :label="$t('lang-55e1b440-eda4-4966-96a0-220a338bcda1')"
           class="article"
           :rules="[requiredField]"
           v-model="productStore.productTemplate.toArticle"
         />
       </div>
-      <!-- TODO: remove preset classes and use ui kit classes -->
       <div class="s-mt-4 s-w-full">
-        <!-- TODO: localize placeholder -->
-        <!-- TODO: use ui kit class for width value -->
         <STextArea
-          label="Описание товара"
-          width="100%"
+          :label="$t('lang-240d2d7a-5a93-4647-a066-22a368702e04')"
           v-model="productStore.productTemplate.description"
         />
         <Comment
-          :comment="
-            productStore.productTemplate.validationDetails?.fields?.description
-              ?.validationComment
-          "
-          :date="
-            productStore.productTemplate.validationDetails?.fields?.description
-              .moderationDate
-          "
-          v-if="
-            productStore.productTemplate.validationDetails?.fields?.description
-              ?.validationComment
-          "
+          :comment="validationDesc?.validationComment"
+          :date="validationDesc?.moderationDate"
+          v-if="validationDesc?.validationComment"
         />
       </div>
       <div class="s-flex s-items-center s-justify-between s-mt-8 s-mb-6">
-        <!-- TODO: localize titles -->
-        <div class="s-text-title-1 s-mb-6 s-mt-6">Цена</div>
-        <!-- TODO: remove preset classes and use ui kit classes -->
+        <div class="s-text-title-1 s-mb-6 s-mt-6">
+          {{ $t("lang-333319c2-2df4-4057-a56a-28ddd7a790a1") }}
+        </div>
         <div class="s-flex">
           <!-- TODO: use computed getter for v-model value -->
           <SRadioButtonGroup
             v-model="productStore.productTemplate.productPriceType"
           >
-            <!-- TODO: use enum for value and checked -->
             <SRadioButton
               class="s-mr-5 radio-btn"
-              value="14600"
-              :checked="isPriceSelected(14600)"
+              :value="PriceType.KGS"
+              :checked="isPriceSelected(PriceType.KGS)"
             >
-              <!-- TODO: localize text -->
-              В сомах
+              {{ $t("lang-b72e9501-50f0-4b6f-947f-ff1a0fa982f4") }}
             </SRadioButton>
-            <!-- TODO: use enum for value and checked -->
             <SRadioButton
               class="radio-btn"
-              value="14601"
-              :checked="isPriceSelected(14601)"
+              :value="PriceType.USD"
+              :checked="isPriceSelected(PriceType.USD)"
             >
-              <!-- TODO: localize text -->
-              В долларах
+              {{ $t("lang-8367cd2d-3749-406a-a51d-21ada23297f8") }}
             </SRadioButton>
           </SRadioButtonGroup>
         </div>
       </div>
       <div>
-        <!-- TODO: remove preset classes and use ui kit classes -->
-        <div class="s-flex justify-between">
-          <!-- TODO: localize placeholder -->
-          <!-- TODO: use ui kit class for width value -->
+        <div class="s-flex s-justify-between">
           <SInput
-            label="Цена"
-            width="32%"
+            :label="$t('lang-333319c2-2df4-4057-a56a-28ddd7a790a1')"
+            class="s-w-64"
             type="number"
             :rules="[requiredField]"
             v-model="productStore.productTemplate.price"
           />
-          <!-- TODO: localize placeholder -->
-          <!-- TODO: use ui kit class for width value -->
           <SInput
             type="number"
-            label="Скидка в %"
-            width="32%"
+            :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')"
+            class="s-w-64"
             v-model="productStore.productTemplate.discount"
             @input="countPriceDiscount"
           />
-          <!-- TODO: localize placeholder -->
-          <!-- TODO: use ui kit class for width value -->
           <SInput
             type="number"
-            label="Цена со скидкой"
-            width="32%"
+            :label="$t('lang-5eb99c46-ed5f-4a24-85ad-d551ad812256')"
+            class="s-w-64"
             v-model="priceWithDiscount"
             @input="countDiscountPercentage"
           />
         </div>
-        <!-- TODO: what a train of null coalescing operators! use computed getter from store -->
         <Comment
-          :comment="
-            productStore.productTemplate.validationDetails?.fields?.price
-              ?.validationComment
-          "
-          :date="
-            productStore.productTemplate.validationDetails?.fields?.price
-              .moderationDate
-          "
-          v-if="
-            productStore.productTemplate.validationDetails?.fields?.price
-              ?.validationComment
-          "
+          :comment="validationPrice?.validationComment"
+          :date="validationPrice?.moderationDate"
+          v-if="validationPrice?.validationComment"
         />
       </div>
       <div class="s-mt-4 s-mb-8">
-        <!-- TODO: localize placeholder -->
-        <!-- TODO: use ui kit class for width value -->
-        <!-- TODO: use required attribute for input -->
         <!-- TODO: use computed getter for v-model value -->
         <SInput
-          label="Наличие (кол-во) *"
-          width="100%"
+          :label="$t('lang-3997683f-c3d7-42a4-8f3e-f5aa235c4655')"
+          class="s-w-full"
           type="number"
+          required
           :rules="[requiredField]"
           v-model="productStore.productTemplate.countOfProduct"
         />
-        <!-- TODO: what a train of null coalescing operators! use computed getter from store -->
         <Comment
-          :comment="
-            productStore.productTemplate.validationDetails?.fields
-              ?.countofproduct?.validationComment
-          "
-          :date="
-            productStore.productTemplate.validationDetails?.fields
-              ?.countofproduct.moderationDate
-          "
-          v-if="
-            productStore.productTemplate.validationDetails?.fields
-              ?.countofproduct?.validationComment
-          "
+          :comment="validationCount?.validationComment"
+          :date="validationCount?.moderationDate"
+          v-if="validationCount?.validationComment"
         />
       </div>
       <div class="content-block">
-        <!-- TODO: localize titles -->
-        <div class="s-text-title-1 s-mb-6 s-mt-6">Фото</div>
+        <div class="s-text-title-1 s-mb-6 s-mt-6">
+          {{ $t("lang-d820a72f-7c7f-4ac0-b993-8d57d1904dde") }}
+        </div>
         <p class="content-hint">
-          <!-- TODO: localize text -->
-          Добавьте изображение товара. Изображение максимум 2000 х 2000 px, в
-          формате PNG или JPEG. <br />
-          Размер файла – не более 15 МБ.
+          {{ $t("lang-24ffb5fa-8580-4360-903e-8368b2102a65") }}
         </p>
-        <!-- TODO: remove preset classes and use ui kit classes -->
-        <div class="s-flex flex-wrap">
+        <div class="s-flex s-flex-wrap">
           <div class="photo" v-for="image in productImages" :key="image">
             <img :src="image" alt="img" />
             <SIconRender
@@ -199,30 +135,18 @@
             <span>+</span>
           </label>
         </div>
-        <!-- TODO: what a train of null coalescing operators! use computed getter from store -->
         <Comment
-          :comment="
-            productStore.productTemplate.validationDetails?.files?.photo
-              ?.validationComment
-          "
-          :date="
-            productStore.productTemplate.validationDetails?.files?.photo
-              .moderationDate
-          "
-          v-if="
-            productStore.productTemplate.validationDetails?.files?.photo
-              ?.validationComment
-          "
+          :comment="validationFile?.photo?.validationComment"
+          :date="validationFile?.photo?.moderationDate"
+          v-if="validationFile?.photo?.validationComment"
         />
       </div>
       <div class="content-block s-mt-8">
-        <!-- TODO: localize titles -->
-        <div class="s-text-title-1 s-mb-6 s-mt-6">Видео</div>
+        <div class="s-text-title-1 s-mb-6 s-mt-6">
+          {{ $t("lang-65a33216-17a3-4f12-9e78-ef1b73efcdf0") }}
+        </div>
         <p class="content-hint">
-          <!-- TODO: localize text -->
-          На карточке может быть только одно видео – покажем его первым.
-          Принимаем качественные ролики <br />
-          не больше 30 МБ и не длинее 5 минут.
+          {{ $t("lang-7e304bc9-dc84-4bbc-8433-3a819a81b006") }}
         </p>
         <div class="s-flex">
           <video
@@ -240,31 +164,18 @@
             <span>+</span>
           </label>
         </div>
-        <!-- TODO: what a train of null coalescing operators! use computed getter from store -->
         <Comment
-          :comment="
-            productStore.productTemplate.validationDetails?.files?.video
-              ?.validationComment
-          "
-          :date="
-            productStore.productTemplate.validationDetails?.files?.video
-              .moderationDate
-          "
-          v-if="
-            productStore.productTemplate.validationDetails?.files?.video
-              ?.validationComment
-          "
+          :comment="validationFile?.video?.validationComment"
+          :date="validationFile?.video?.moderationDate"
+          v-if="validationFile?.video?.validationComment"
         />
       </div>
       <div class="content-block s-mt-8">
-        <!-- TODO: localize titles -->
-        <div class="s-text-title-1 s-mb-6 s-mt-6">Характеристики</div>
+        <div class="s-text-title-1 s-mb-6 s-mt-6">
+          {{ $t("lang-c00a03d8-8bb2-4d54-93e7-fc0379b86f51") }}
+        </div>
         <p class="content-hint">
-          <!-- TODO: localize text -->
-          Это характеристики товара, которые могут быть выбраны покупателем при
-          покупке. Например, цвет, <br />
-          материал, объем и другие характеристики, которые могут варьироваться
-          для одного и того же товара
+          {{ $t("lang-57fa3e1f-c77d-4680-971b-cfbeff2846c8") }}
         </p>
         <div class="s-flex justify-between flex-wrap">
           <div
@@ -272,7 +183,6 @@
             v-for="property in properties"
             :key="property.propertyId"
           >
-            <!-- TODO: use ui kit class for width value -->
             <SSelect
               class="s-w-full"
               :label="showPropertyName(property)"
@@ -286,24 +196,22 @@
           </div>
         </div>
       </div>
-      <!-- TODO: set theme class at layout level -->
-      <!-- TODO: remove preset classes and use ui kit classes -->
-      <div class="light s-flex justify-end s-mt-10">
-        <!-- TODO: extract mode to global enum  -->
+      <div class="s-flex s-justify-end s-mt-10">
         <SButton
           type="secondary"
           size="large"
           class="s-mr-2"
           @click="saveAsDraft"
-          v-if="props.mode === 'create'"
+          v-if="props.mode === ProductMode.CREATE"
         >
-          <!-- TODO: localize text -->
-          Сохранить как черновик
+          {{ $t("lang-7456f0e4-daa3-4886-b15e-5fc41b19b2d4") }}
         </SButton>
-        <!-- TODO: localize text -->
-        <!-- TODO: use global enum for mode -->
         <SButton size="large" @click="submitProduct">
-          {{ props.mode === "create" ? "Опубликовать" : "Редактировать" }}
+          {{
+            props.mode === ProductMode.CREATE
+              ? $t("lang-01b61f03-58d8-4b95-880e-a6b75920efad")
+              : $t("lang-8f48f729-499b-4bc4-af8c-fe41ecee4475")
+          }}
         </SButton>
       </div>
     </SForm>
@@ -325,11 +233,13 @@ import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useProfileStore } from "@/entities/profile/store/profile.store";
+import { useAuthStore } from "@/shared/store/auth";
 import { requiredField } from "@/shared/lib/utils/rules";
 import Comment from "./Comment.vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 import axios from "axios";
+import { PriceType, ProductMode } from "@/shared/lib/utils/enums";
 
 const props = defineProps({
   mode: {
@@ -344,88 +254,50 @@ const props = defineProps({
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 const profileStore = useProfileStore();
+const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
-
-// TODO: can be extracted to a store state
 const priceWithDiscount = ref(0);
-// TODO: can be removed if videoUrl is extracted to a store state
 const videoKey = ref(0);
-// TODO: can be extracted to a store state
 const videoUrl = ref("");
-// TODO: can be extracted to a store state
-const properties = ref([]);
-// TODO: can be extracted to a store state
 const selectedCategoryId = route.query.id || props.productCategoryId;
-// TODO: can be extracted to a store state
 const propertyObject = ref<any>({});
-// TODO: can be extracted to a store state
 const productImages = ref([]);
 const productForm = ref(null);
-// TODO: can be removed and replaced by SForm with input component validations via rules attribute
 const isPhotoValid = ref(true);
+const validationName = computed(() => productStore.getValidationName);
+const validationDesc = computed(() => productStore.getValidationDescription);
+const validationPrice = computed(() => productStore.getValidationPrice);
+const validationCount = computed(() => productStore.getValidationCount);
+const validationFile = computed(() => productStore.getValidationFile);
+const sessionId = computed(() => authStore.getSessionId);
+const properties = computed(() => categoryStore.getCategoryWithProperties);
 
 onMounted(() => {
-  // TODO: use global enum for mode
-  if (props.mode === "update") {
-    // TODO: use getters from auth store. no direct access to sessionId should be allowed!
-    const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
+  if (props.mode === ProductMode.UPDATE) {
     // TODO: set baseUrl here??? set base url in main or use service provider for another domain request
-    const defaultUrl = axios.defaults.baseURL;
     // TODO: image src should be defined at image src attribute. example: src="getImageUrl(image)"
     productStore.productTemplate.photos.forEach((photoId) => {
-      const photo = `${defaultUrl}File/FileById?id=${photoId}&sessionId=${sessionId}`;
+      const photo = `${axios.defaults.baseURL}File/FileById?id=${photoId}&sessionId=${sessionId.value}`;
       productImages.value.push(photo);
     });
 
     // TODO: video src should be defined at video src attribute. example: src="getVideoUrl(video)"
     if (productStore.productTemplate.videos.length) {
       const videoId = productStore.productTemplate.videos[0];
-      videoUrl.value = `${defaultUrl}File/FileById?id=${videoId}&sessionId=${sessionId}`;
+      videoUrl.value = `${axios.defaults.baseURL}File/FileById?id=${videoId}&sessionId=${sessionId.value}`;
     }
   } else {
     priceWithDiscount.value = 0;
   }
 
-  categoryStore
-    .getCategoryWithPropertiesById(selectedCategoryId as string)
-    .then((response) => {
-      // TODO: set items and page params to store
-      // TODO: getCategoryWithPropertiesById should return only properties object. no response.result accessing
-      properties.value = response.result.properties;
-      // TODO: use global enum for mode
-      if (props.mode === "update") {
-        const selectedPropValues: any = [];
-        categoryStore.saveSelectedCategoryPath([
-          { name: response.result.categoryName },
-        ]);
-        // TODO: set data to store and use getters from store
-        Object.entries(productStore.productTemplate.properties).forEach(
-          (item) => {
-            selectedPropValues.push({ key: item[0], valueId: item[1] });
-          }
-        );
-
-        // TODO: set selectedValueId at the store level
-        properties.value = properties.value.map((property) => {
-          const selectedObj = selectedPropValues.find(
-            (item: any) => item.key === property.key
-          );
-          if (selectedObj) {
-            property.selectedValueId = selectedObj.valueId;
-          }
-          return property;
-        });
-      }
-    });
+  categoryStore.getCategoryWithPropertiesById(selectedCategoryId as string);
 });
 
-// TODO: can be removed after SForm with input component validations via rules attribute is used
 const isEmptyPhoto = computed(
   () => !isPhotoValid.value && !productStore.productTemplate.photos.length
 );
 
-// TODO: priceType should be type of enum
 const isPriceSelected = (priceType: number) => {
   return productStore.productTemplate.productPriceType == priceType;
 };
@@ -505,7 +377,7 @@ const submitProduct = () => {
   productForm.value.validate().then((isValid: boolean) => {
     if (isValid && !isEmptyPhoto.value) {
       prepareFormFields();
-      if (props.mode === "create") {
+      if (props.mode === ProductMode.CREATE) {
         productStore.createProduct(productStore.productTemplate).then(() => {
           router.push("/products");
         });
@@ -527,27 +399,21 @@ const saveAsDraft = () => {
 };
 </script>
 
-<!-- TODO: set scoped for style or use ui kit classes -->
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../../../app/style/colors.scss";
 .product-form-container {
   width: 68%;
-  .head-title {
-    margin: 0 0 25px;
-  }
   .radio-btn {
     .radio-label {
       height: 20px;
     }
   }
   .content-block {
-    .head-title {
-      margin: 0;
-    }
     .content-hint {
       font-size: 14px;
       font-weight: 500;
       margin: 8px 0 24px;
+      white-space: break-spaces;
     }
     .photo {
       position: relative;
