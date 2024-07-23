@@ -1,23 +1,16 @@
 <template>
   <div class="product-update-content">
-    <div class="s-flex s-items-center light">
+    <div class="s-flex s-items-center">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" size="small" />
-        <!-- TODO: Localize -->
-        <span>Назад</span>
+        <span>{{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}</span>
       </SButton>
-      <!-- TODO: use computed getter from store for category urls -->
-      <Breadcrumbs
-        :items="categoryStore.categoryUrls"
-        class="s-ml-5"
-        :key="breadcrumbKey"
-      />
+      <Breadcrumbs :items="categoryUrls" class="s-ml-5" :key="breadcrumbKey" />
     </div>
     <div class="s-flex s-mt-5">
       <ProductTemplate />
-      <!-- TODO: use global mode enum -->
       <ProductForm
-        mode="update"
+        :mode="ProductMode.UPDATE"
         :product-category-id="productCategoryId"
         v-if="isShowForm"
       />
@@ -26,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { SButton, SIconRender } from "@tumarsoft/ogogo-ui";
 import ProductTemplate from "../../../shared/ui/components/product/ProductTemplate.vue";
 import ProductForm from "../../../shared/ui/components/product/ProductForm.vue";
@@ -34,39 +27,29 @@ import Breadcrumbs from "@/shared/ui/components/Breadcrumbs/Breadcrumbs.vue";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useRouter, useRoute } from "vue-router";
+import { ProductMode } from "@/shared/lib/utils/enums";
 
+const categoryUrls = computed(() => categoryStore.getCategoryUrls);
+const productCategoryId = computed(() => productStore.getProductCategoryId);
 const router = useRouter();
 const route = useRoute();
 const categoryStore = useCategoryStore();
 const productStore = useProductStore();
 
-const productCategoryId = ref("");
-// TODO: isShowForm is the same as productCategoryId
 const isShowForm = ref(false);
 // TODO: using breadcrumbKey as a counter means that breadcrumbs is not reactive to its items. fix breadcrumbs component in the first place
 const breadcrumbKey = ref(0);
 
 onMounted(() => {
-  // TODO: make sure that route.params.id is a string and is not undefined
-  productStore
-    .getExactProductById(route.params.id as string)
-    .then((response) => {
-      // TODO: set data to store state
-      const foundProduct = response.result;
-      productCategoryId.value = foundProduct.categoryId;
-      productStore.setSelectedTemplateOrProduct({
-        product: foundProduct,
-        type: "product",
-      });
-      isShowForm.value = true;
-      setTimeout(() => {
-        breadcrumbKey.value++;
-      }, 500);
-    });
+  productStore.getExactProductById(route.params.id as string).then(() => {
+    isShowForm.value = true;
+    setTimeout(() => {
+      breadcrumbKey.value++;
+    }, 500);
+  });
 });
 
 const goBack = () => {
-  // TODO: use name for route params instead of hardcoded string
-  router.push("/products");
+  router.push({ name: "products" });
 };
 </script>
