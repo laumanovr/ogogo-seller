@@ -5,62 +5,64 @@
     </div>
     <div class="profile-info-block">
       <div class="profile-tabs">
-        <!-- TODO: use enum for tab value and changeTab parameter type everywhere-->
-        <!-- TODO: use buttons instead of div -->
-        <div class="tab" @click="changeTab('general')">
+        <SButton type="text" class="tab" @click="changeTab(ProfileTab.GENERAL)">
           <SIconRender
             name="user-edit"
-            :class="{ 's-text-violet-600': tab === 'general' }"
+            :class="{ 's-text-violet-600': tab === ProfileTab.GENERAL }"
           />
-          <span :class="{ active: tab === 'general' }">{{
+          <span :class="{ active: tab === ProfileTab.GENERAL }">{{
             $t("lang-41ad3377-6945-4978-8a3a-ad8d08292155")
           }}</span>
-        </div>
-        <div class="tab" @click="changeTab('shop')">
+        </SButton>
+        <SButton type="text" class="tab" @click="changeTab(ProfileTab.SHOP)">
           <SIconRender
             name="shop"
-            :class="{ 's-text-violet-600': tab === 'shop' }"
+            :class="{ 's-text-violet-600': tab === ProfileTab.SHOP }"
           />
-          <span :class="{ active: tab === 'shop' }">
+          <span :class="{ active: tab === ProfileTab.SHOP }">
             {{ $t("lang-595227fd-b603-43ea-a918-0b7f9edc6bac") }}</span
           >
-        </div>
-        <div class="tab" @click="changeTab('password')">
+        </SButton>
+        <SButton
+          type="text"
+          class="tab"
+          @click="changeTab(ProfileTab.PASSWORD)"
+        >
           <SIconRender
             name="lock"
-            :class="{ 's-text-violet-600': tab === 'password' }"
+            :class="{ 's-text-violet-600': tab === ProfileTab.PASSWORD }"
           />
-          <span :class="{ active: tab === 'password' }">
+          <span :class="{ active: tab === ProfileTab.PASSWORD }">
             {{ $t("lang-ad3a8ec6-bcb6-4dce-9ff6-a3ccc17c1e8d") }}
           </span>
-        </div>
-        <div class="tab" @click="changeTab('session')">
+        </SButton>
+        <SButton type="text" class="tab" @click="changeTab(ProfileTab.SESSION)">
           <SIconRender
             name="tv"
-            :class="{ 's-text-violet-600': tab === 'session' }"
+            :class="{ 's-text-violet-600': tab === ProfileTab.SESSION }"
           />
-          <span :class="{ active: tab === 'session' }">
+          <span :class="{ active: tab === ProfileTab.SESSION }">
             {{ $t("lang-3d338844-bc4d-4147-bfd3-c4d72659611e") }}
           </span>
-        </div>
+        </SButton>
         <div class="divider"></div>
-        <div class="tab">
+        <SButton type="text" class="tab">
           <SIconRender
             name="whatsapp"
-            :class="{ 's-text-violet-600': tab === 'help' }"
+            :class="{ 's-text-violet-600': tab === ProfileTab.HELP }"
           />
-          <span :class="{ active: tab === 'help' }">
+          <span :class="{ active: tab === ProfileTab.HELP }">
             {{ $t("lang-53b4af08-0a92-4732-abc4-544486b1887a") }}
           </span>
-        </div>
-        <div class="tab" @click="logout">
+        </SButton>
+        <SButton type="text" class="tab" @click="logout">
           <SIconRender name="logout" />
           <span>{{ $t("lang-3cca1d55-3859-4aad-8f7a-2dc7e81dd716") }}</span>
-        </div>
+        </SButton>
       </div>
 
       <div class="profile-data">
-        <div class="content-block" v-if="tab === 'general'">
+        <div class="content-block" v-if="tab === ProfileTab.GENERAL">
           <div class="data-title">
             {{ $t("lang-41ad3377-6945-4978-8a3a-ad8d08292155") }}
           </div>
@@ -82,15 +84,15 @@
             <div class="data-label">
               {{ $t("lang-c295a98f-59c2-4da0-87ee-2d38af296c8b") }}
             </div>
-            <!-- TODO: localize text -->
-            <div class="data-info">Категории товаров</div>
+            <div class="data-info">
+              {{ $t("lang-6a3f0b82-3b93-4348-8788-a2ea2dcb2c88") }}
+            </div>
           </div>
         </div>
 
-        <div class="content-block" v-if="tab === 'shop'">
+        <div class="content-block" v-if="tab === ProfileTab.SHOP">
           <div class="photo s-flex items-center s-mb-8">
-            <!-- TODO: check for profile image url when logoBase64 is null -->
-            <img :src="profileImageUrl" alt="" />
+            <img :src="profileImageUrl" alt="" v-if="profileImageUrl" />
             <div class="photo-action s-ml-5">
               <div class="hint gray s-mb-3 mw-400">
                 {{ $t("lang-f1c8caf8-4ba1-45c7-94a5-42c4ec1bd59b") }}
@@ -131,25 +133,21 @@
           </div>
         </div>
 
-        <div class="content-block" v-if="tab === 'password'">
+        <div class="content-block" v-if="tab === ProfileTab.PASSWORD">
           <div class="data-title s-mb-5">
             {{ $t("lang-df4b9d52-4813-4ed9-9111-278577ba5cf7") }}
           </div>
           <div class="s-mb-3">
-            <!-- TODO: use ui kit class for input width -->
             <SInput
               :label="$t('lang-9dc6d3da-f6ff-4700-8b46-9b52d75deae0')"
               type="password"
-              width="100%"
               v-model="newPassword"
             />
           </div>
           <div class="s-mb-6">
-            <!-- TODO: use ui kit class for input width -->
             <SInput
               :label="$t('lang-0184de30-27b6-48af-bafc-3995afbb020d')"
               type="password"
-              width="100%"
               v-model="repeatPassword"
             />
           </div>
@@ -160,9 +158,10 @@
           </div>
         </div>
 
-        <!-- TODO: localize text and set todo to to-be implemented code -->
-        <div class="content-block" v-if="tab === 'session'">
-          <div class="data-title s-mb-4">Последняя сессия</div>
+        <div class="content-block" v-if="tab === ProfileTab.SESSION">
+          <div class="data-title s-mb-4">
+            {{ $t("lang-b6a40817-e615-4625-9aa0-0a3f59ef6bf2") }}
+          </div>
           <div class="session-block">
             <div class="hint">Mac OS X, Mac • Браузер Chrome</div>
             <div class="hint gray">
@@ -170,9 +169,6 @@
             </div>
           </div>
         </div>
-        <!-- TODO: remove empty content blocks -->
-        <div class="content-block"></div>
-        <div class="content-block"></div>
       </div>
     </div>
   </div>
@@ -183,9 +179,9 @@ import { ref, computed, onMounted } from "vue";
 import { SButton, SInput, STextArea, SIconRender } from "@tumarsoft/ogogo-ui";
 import { useRouter } from "vue-router";
 import { useProfileStore } from "@/entities/profile/store/profile.store";
-import { IProfile } from "@/entities/profile/store/profile-store.types";
-import { IProfileApi } from "@/entities/profile/api/profile-api.types";
 import { useAlertStore } from "@/shared/store/alert";
+import { ProfileTab } from "@/shared/lib/utils/enums";
+import i18n from "@/shared/lib/plugins/i18n";
 
 const router = useRouter();
 const profileStore = useProfileStore();
@@ -193,21 +189,12 @@ const alertStore = useAlertStore();
 const tab = ref("");
 const newPassword = ref("");
 const repeatPassword = ref("");
-// TODO: use computed from store getter
-const currentUser = ref<IProfile>(profileStore.currentUser);
-// TODO: use computed form from store getter
-const profileObj = ref({
-  id: currentUser.value.tradeMarkId,
-  logoBase64: null,
-  name: null,
-  description: null,
-  logoFileName: null,
-  version: null,
-});
+const currentUser = computed(() => profileStore.getCurrentUser);
+const profileObj = computed(() => profileStore.getProfileObj);
+profileObj.value.id = currentUser.value.tradeMarkId;
 
 onMounted(() => {
-  // TODO: set default tab value on definition
-  changeTab("general");
+  changeTab(ProfileTab.GENERAL);
   fetchProfileInfo();
 });
 
@@ -244,14 +231,8 @@ const onSelectFile = async (e: Event) => {
   }
 };
 
-// TODO: set data in store
 const fetchProfileInfo = () => {
-  profileStore.getProfileInfo().then((response: IProfileApi) => {
-    profileObj.value.name = response.name;
-    profileObj.value.description = response.description;
-    profileObj.value.logoBase64 = response.logoBase64;
-    profileObj.value.version = response.version;
-  });
+  profileStore.getProfileInfo();
 };
 
 const updateProfile = () => {
@@ -259,16 +240,16 @@ const updateProfile = () => {
 };
 
 const logout = () => {
-  // TODO: use name params for router
-  router.push("/");
+  router.push({ name: "login" });
   // TODO: remove direct usage of localStorage actions - only through store
   window.localStorage.clear();
 };
 
 const updatePassword = () => {
   if (newPassword.value !== repeatPassword.value) {
-    // TODO: localize text
-    alertStore.showInfo("Пароли не совпадают!");
+    alertStore.showInfo(
+      i18n.global.t("lang-00ada6c1-f6fc-4ab9-aa11-67280334a86d")
+    );
     return;
   }
   if (newPassword.value.length) {
