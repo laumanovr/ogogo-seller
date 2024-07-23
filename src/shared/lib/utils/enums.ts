@@ -30,3 +30,8 @@ export enum ProductMode {
   CREATE = "create",
   UPDATE = "update",
 }
+
+export enum TabValue {
+  ONE = "one",
+  TWO = "two",
+}

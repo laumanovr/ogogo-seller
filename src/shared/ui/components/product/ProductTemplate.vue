@@ -1,19 +1,17 @@
 <template>
   <div class="product-tabs-container s-mr-8 s-pt-4">
     <STabs :tab-mode="'content-tabs'">
-      <!-- TODO: extract value to enum -->
-      <!-- TODO: localize names -->
-      <STabItem value="one" :active-tab="tab" @changeTab="selectTab">
-        Товары
+      <STabItem :value="TabValue.ONE" :active-tab="tab" @changeTab="selectTab">
+        {{ $t("lang-d7069093-a1a5-4544-8a29-e516288d719b") }}
       </STabItem>
-      <STabItem value="two" :active-tab="tab" @changeTab="selectTab">
-        Шаблоны
+      <STabItem :value="TabValue.TWO" :active-tab="tab" @changeTab="selectTab">
+        {{ $t("lang-2edf1954-daaa-4b6b-830d-9e8488fbe03a") }}
       </STabItem>
     </STabs>
-    <STabWindow value="one" :active-tab="tab">
+    <STabWindow :value="TabValue.ONE" :active-tab="tab">
       <div
         class="s-flex sample"
-        :class="{ active: i + 1 === sampleIndex }"
+        :class="{ active: i + 1 === selectedSampleIndex }"
         v-for="(item, i) in selectedTemplates"
         :key="i"
         @click="selectSample(i, item)"
@@ -25,8 +23,9 @@
           class="sample__img"
         />
         <div>
-          <!-- TODO: localize text -->
-          <div class="sample__badge">Шаблон</div>
+          <div class="sample__badge">
+            {{ $t("lang-9dd76e10-ff80-4296-be42-2311538b5cb7") }}
+          </div>
           <div class="sample__name">
             {{ item.productName }}
           </div>
@@ -38,17 +37,14 @@
         </div>
       </div>
     </STabWindow>
-    <STabWindow value="two" :active-tab="tab">
-      <!-- TODO: localize placeholder -->
-      <!-- TODO: use ui kit class for width value -->
+    <STabWindow :value="TabValue.TWO" :active-tab="tab">
       <SInput
-        placeHolder="Поиск..."
+        :placeHolder="$t('lang-034dcb9a-5b5b-4886-abfe-c4f5d88d140c')"
         isSearchable
-        width="100%"
         class="s-mt-3 s-mb-3"
       />
       <div class="template-container">
-        <div class="template" v-for="(item, i) in templates" :key="i">
+        <div class="template" v-for="(item, i) in productTemplates" :key="i">
           <SCheckbox v-model="item.selected">
             <!-- TODO: use icon component and not base64 data for image or use image from assets with src -->
             <img
@@ -67,16 +63,14 @@
           </SCheckbox>
         </div>
       </div>
-      <!-- TODO: set theme class at layout level -->
-      <div class="btn-container light">
+      <div class="btn-container">
         <SButton
           size="large"
           class="s-w-full s-mt-5"
           @click="addTemplates"
           :disabled="isDisabled"
         >
-          <!-- TODO: localize text -->
-          Добавить шаблоны
+          {{ $t("lang-0f8b6b66-a9d9-489f-94d7-4457517a6ccf") }}
         </SButton>
         <SmallLoader v-if="isDisabled" />
       </div>
@@ -94,28 +88,24 @@ import {
   SInput,
   SCheckbox,
 } from "@tumarsoft/ogogo-ui";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import SmallLoader from "@/shared/ui/components/SmallLoader.vue";
+import { TabValue } from "@/shared/lib/utils/enums";
 
 const productStore = useProductStore();
 const tab = ref("one");
-// TODO: rename to selectedSampleIndex
-const sampleIndex = ref(0);
+const selectedSampleIndex = ref(0);
 const selectedTemplates = ref([]);
-// TODO: should be computed from store getter
-const templates = ref([]);
 const isDisabled = ref(false);
+const productTemplates = computed(() => productStore.getProducts);
 
 onMounted(() => {
   fetchTemplates();
 });
 
 const fetchTemplates = () => {
-  productStore.getAllProducts({ productType: 14700 }).then((response) => {
-    // TODO: set items and page params to store
-    templates.value = response.result.items;
-  });
+  productStore.getAllProducts({ productType: 14700 });
 };
 
 const selectTab = (selectedTab: string) => {
@@ -123,7 +113,7 @@ const selectTab = (selectedTab: string) => {
 };
 
 const selectSample = (index: number, item: any) => {
-  sampleIndex.value = index + 1;
+  selectedSampleIndex.value = index + 1;
   productStore.setSelectedTemplateOrProduct({
     product: item,
     type: "template",
@@ -132,7 +122,9 @@ const selectSample = (index: number, item: any) => {
 
 const addTemplates = () => {
   isDisabled.value = true;
-  selectedTemplates.value = templates.value.filter((item) => item.selected);
+  selectedTemplates.value = productTemplates.value.filter(
+    (item: any) => item.selected
+  );
   setTimeout(() => {
     isDisabled.value = false;
   }, 800);
@@ -146,8 +138,7 @@ const deleteSample = (id: number) => {
 };
 </script>
 
-<!-- TODO: set scoped for style or use ui kit classes -->
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../../../app/style/colors.scss";
 .product-tabs-container {
   width: 32%;
@@ -156,7 +147,6 @@ const deleteSample = (id: number) => {
     .tab-item {
       margin: 0;
       width: 50%;
-      text-align: center;
       &.active {
         color: $violet-600;
         border-color: $violet-600;
