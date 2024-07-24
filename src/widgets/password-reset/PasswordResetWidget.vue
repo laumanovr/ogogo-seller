@@ -17,7 +17,7 @@
             class="s-w-full s-mt-4 s-mb-8"
             :rules="[requiredField]"
             v-model="loginObj.pin"
-            v-maska:[options]
+            v-maska:[maskOptions]
             :label="$t('lang-c53d0190-9e48-42e2-b346-ee9ea934955c')"
           />
         </div>
@@ -39,12 +39,7 @@ import { SButton, SForm, SInput } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { vMaska } from "maska";
-
-// TODO: exract mask to separate file
-const options = reactive({
-  mask: "996-(###)-##-##-##",
-  eager: true,
-});
+import { maskOptions } from "@/shared/helpers/mask-option";
 
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
