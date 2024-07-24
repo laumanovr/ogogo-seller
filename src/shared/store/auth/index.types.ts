@@ -24,22 +24,7 @@ export interface ILogin {
 
 export interface AuthState {
   user: IUser | null;
-
-  isLoading: boolean;
-  isLoggedIn: boolean;
-  fidoAuth: boolean;
   theme?: any;
-  accessRequestIds: {
-    [key: string]: boolean;
-  };
-  availableLanguages?: any;
-  currentUser: AuthGetProfileResultInterface;
-  needChangePassword: boolean;
-  roleScreensObj: {};
-  sipAccount: {
-    login: string;
-    password: string;
-  };
 }
 export interface makeAssertionOptionsType {
   challenge: any;
