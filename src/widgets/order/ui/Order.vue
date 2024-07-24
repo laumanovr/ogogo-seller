@@ -3,9 +3,10 @@
     <div class="s-text-h-2 s-mb-6 s-mt-6">
       {{ $t("lang-6f853bc8-3f4e-44d2-9770-49d98347fc6b") }}
     </div>
+    <div class="filter-search s-mb-4">
+      <SInput isSearchable hide-details @input="onSearch" />
+    </div>
     <template v-if="isOrderExist">
-      <FilterSearch @input="onSearch" />
-
       <STabs :tab-mode="'filter-tabs'" class="s-mb-5">
         <STabItem
           :value="OrderStatus.ACTIVE"
@@ -73,9 +74,8 @@
 </template>
 
 <script lang="ts" setup>
-import { STable, STabs, STabItem, SBadge } from "@tumarsoft/ogogo-ui";
+import { STable, STabs, STabItem, SBadge, SInput } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted, computed } from "vue";
-import { FilterSearch } from "@/shared/ui/components/filter-search";
 import { useOrderStore } from "@/entities/order/store/order.store";
 import { OrderEntity } from "@/entities/order/model/types";
 import { OrderStatus, PaymentType } from "@/shared/lib/utils/enums";
