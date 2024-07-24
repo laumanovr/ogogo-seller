@@ -1,12 +1,5 @@
 <template>
-  <!-- TODO: use ui kit class for padding -->
-  <div class="empty-layout">
+  <div class="s-pl-10 s-pr-10">
     <slot></slot>
   </div>
 </template>
-
-<style lang="scss">
-.empty-layout {
-  padding: 0 40px 40px;
-}
-</style>
