@@ -2,8 +2,7 @@
   <div class="login-container">
     <div class="login-block">
       <div class="login-logo">
-        <!-- TODO: use absolute path for image -->
-        <img src="../../shared/ui/assets/Ogogo-logo.png" alt="img" />
+        <img src="@/shared/ui/assets/Ogogo-logo.png" alt="img" />
       </div>
       <SForm class="form-block" ref="loginForm">
         <div class="form-title">
@@ -16,37 +15,32 @@
         <div class="s-flex s-flex-col">
           <SInput
             class="s-w-full s-mt-4"
-            :rules="requiredField"
+            :rules="[requiredField]"
             v-model="loginObj.pin"
-            v-maska:[options]
+            v-maska:[maskOptions]
             :label="$t('lang-c53d0190-9e48-42e2-b346-ee9ea934955c')"
           />
-          <!-- TODO: remove presets classes and use ui kit classes instead -->
           <SInput
             class="s-w-full s-mt-4"
-            :rules="requiredField"
+            :rules="[requiredField]"
             v-model="loginObj.pin"
-            v-maska:[options]
+            v-maska:[maskOptions]
             :label="$t('lang-6b722e0f-5196-40cc-856b-39635c043750')"
           />
-          <!-- TODO: remove presets classes and use ui kit classes instead -->
           <SSelect
             :label="$t('lang-d0c19d1f-b018-45d1-93fa-2dc4a8b6878e')"
             class="s-w-full s-mt-4"
           />
-          <!-- TODO: remove presets classes and use ui kit classes instead -->
-          <!-- TODO: invalid placeholder value -->
-          <SCheckbox class="s-w-full s-mt-4" placeholder="emir">
+          <SCheckbox class="s-w-full s-mt-4">
             {{ $t("lang-33c946fe-b106-4901-b3a0-356c7b421566") }}
           </SCheckbox>
         </div>
 
-        <!-- TODO: remove presets classes and use ui kit classes instead -->
         <SButton
           size="large"
-          color="violet"
           @click="onSubmitSellerRegistration"
-          class="s-mb-2 w-p50 s-mt-4"
+          disabled
+          class="s-mb-2 s-w-1/2 s-mt-4"
         >
           {{ $t("lang-c4fdfffa-0730-4213-869b-e689860fa95d") }}
         </SButton>
@@ -66,17 +60,11 @@ import {
 import { ref, reactive } from "vue";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { vMaska } from "maska";
-
-// TODO: extract mask options to separate file
-const options = reactive({
-  mask: "996-(###)-##-##-##",
-  eager: true,
-});
+import { maskOptions } from "@/shared/helpers/mask-option";
 
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
 
-// TODO: add console error or disable button for this handler
 const onSubmitSellerRegistration = () => {};
 </script>
 
