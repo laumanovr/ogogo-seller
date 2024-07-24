@@ -25,7 +25,6 @@ export const useProfileStore = defineStore("profileStore", {
       version: null,
     },
   }),
-  // TODO: why no getters?
   getters: {
     getCurrentUser(): any {
       return this.currentUser;
