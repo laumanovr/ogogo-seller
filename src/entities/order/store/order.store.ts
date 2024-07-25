@@ -1,16 +1,13 @@
 import { OrderApiResponse } from "./../api/order-api.types";
 import { OrderPayload } from "../";
 import { defineStore } from "pinia";
-import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { IOrderState } from "./order-store.types";
 import { OrderApi } from "../api/order.api";
 
-// TODO: clear default alert store actions
 // TODO: remove global loader and set local loader
 
 const loaderStore = useLoaderStore();
-const alertStore = useAlertStore();
 const orderApi = new OrderApi();
 
 export const useOrderStore = defineStore("order", {
@@ -22,21 +19,21 @@ export const useOrderStore = defineStore("order", {
   }),
   getters: {
     getOrders(): any {
-      return this.orders
+      return this.orders;
     },
     getIsOrderExist(): any {
-      return this.isOrderExist
+      return this.isOrderExist;
     },
     getHasOrders(): any {
-      return this.hasOrders
+      return this.hasOrders;
     },
     getTotalItems(): any {
-      return this.totalItems
-    }
+      return this.totalItems;
+    },
   },
   actions: {
     getAllOrders(payload: OrderPayload): Promise<OrderApiResponse> {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve,_) => {
         // TODO: remove global loader and set local loader
         loaderStore.setLoaderState(true);
         orderApi
@@ -47,11 +44,6 @@ export const useOrderStore = defineStore("order", {
             this.hasOrders = Boolean(response.result.items.length);
             this.totalItems = response.result.totalCount;
             resolve(response);
-          })
-          .catch((err) => {
-            // TODO: remove global alert
-            alertStore.showError(err.message);
-            reject(err);
           })
           .finally(() => {
             loaderStore.setLoaderState(false);
