@@ -235,6 +235,7 @@ import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import { PriceType, ProductMode } from "@/shared/lib/utils/enums";
+import { useAlertStore } from "@/shared/store/alert";
 
 const props = defineProps({
   mode: {
@@ -246,6 +247,7 @@ const props = defineProps({
   },
 });
 
+const alertStore = useAlertStore();
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 const profileStore = useProfileStore();
@@ -373,11 +375,13 @@ const submitProduct = () => {
       prepareFormFields();
       if (props.mode === ProductMode.CREATE) {
         productStore.createProduct(productTemplate.value).then(() => {
-          router.push("/products");
+          router.push({ name: "products" });
+          alertStore.showSuccess("Успешно создано");
         });
       } else {
         productStore.updateProduct(productTemplate.value).then(() => {
-          router.push("/products");
+          router.push({ name: "products" });
+          alertStore.showSuccess("Успешно обновлено");
         });
       }
     }
@@ -388,7 +392,8 @@ const saveAsDraft = () => {
   prepareFormFields();
   productTemplate.value.isSaveAsDraft = true;
   productStore.createProduct(productTemplate.value).then(() => {
-    router.push("/products");
+    router.push({ name: "products" });
+    alertStore.showSuccess("Черновик создан");
   });
 };
 </script>
