@@ -1,18 +1,14 @@
 import { defineStore } from "pinia";
-import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { IProfile } from "./profile-store.types";
 import { IProfileApi } from "../api/profile-api.types";
 import { ProfileApi } from "../api/profile.api";
 const profileApi = new ProfileApi();
 const loaderStore = useLoaderStore();
-const alertStore = useAlertStore();
 
-// TODO: clear default alert store actions
 // TODO: remove global loader and set local loader
 
-// TODO: store name already contains word "store". remove it
-export const useProfileStore = defineStore("profileStore", {
+export const useProfileStore = defineStore("profile", {
   state: (): Partial<IProfile> => ({
     // TODO: remove direct usage of localStorage actions - only through store(plugin)
     currentUser: JSON.parse(window.localStorage.getItem("currentUser")),
@@ -39,16 +35,14 @@ export const useProfileStore = defineStore("profileStore", {
       profileApi
         .updateProfile(payload)
         .then((response) => {
-          loaderStore.setLoaderState(false);
           return response;
         })
-        .catch((err) => {
-          alertStore.showError(err.message);
+        .finally(() => {
           loaderStore.setLoaderState(false);
         });
     },
     getProfileInfo(): Promise<IProfileApi> {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         loaderStore.setLoaderState(true);
         profileApi
           .getProfile()
@@ -57,30 +51,20 @@ export const useProfileStore = defineStore("profileStore", {
             this.profileObj.description = response.description;
             this.profileObj.logoBase64 = response.logoBase64;
             this.profileObj.version = response.version;
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
-          .catch((err) => {
-            alertStore.showError(err.message);
+          .finally(() => {
             loaderStore.setLoaderState(false);
-            reject(err);
           });
       });
     },
     updateUserPassword(payload: any) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         loaderStore.setLoaderState(true);
         profileApi
           .updatePassword(payload)
           .then((response) => {
-            loaderStore.setLoaderState(false);
-            // TODO: localize text
-            alertStore.showSuccess("Пароль изменен!");
             resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err.message);
-            reject(err);
           })
           .finally(() => {
             loaderStore.setLoaderState(false);
