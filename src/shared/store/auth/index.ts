@@ -8,17 +8,25 @@ import {
   ILoginResultSuccess,
 } from "./index.types";
 import { getCurrentUser, login } from "@/shared/api/auth";
-import { getItem, setItem } from "@/shared/lib/utils/persistanceStorage";
 
 export const useAuthStore = defineStore("auth", {
   state: (): AuthState => {
     return {
-      user: null,
+      currentUser: null,
+      needChangePassword: false,
+      sessionId: "",
+      activeSession: false,
     };
   },
   getters: {
     getSessionId(): string {
-      return JSON.parse(window.localStorage.getItem("sessionId"));
+      return this.sessionId;
+    },
+    getActiveSession(): boolean {
+      return this.activeSession;
+    },
+    getCurrentProfile(): any {
+      return this.currentUser;
     },
   },
   actions: {
@@ -30,15 +38,11 @@ export const useAuthStore = defineStore("auth", {
       return new Promise((resolve, reject) => {
         login(payload)
           .then((result) => {
-            const needChangePassword = result?.needChangePassword ?? false;
-            // TODO: remove direct usage of localStorage actions - only through store(plugin)
-            setItem("needChangePassword", needChangePassword);
-            // TODO: remove direct usage of localStorage actions - only through store(plugin)
-            setItem("sessionId", result?.sessionId);
+            this.needChangePassword = result?.needChangePassword ?? false;
+            this.sessionId = result?.sessionId;
             return this.getCurrentUser()
               .then((user) => {
-                // TODO: remove direct usage of localStorage actions - only through store(plugin)
-                setItem("active-session", true);
+                this.activeSession = true;
                 resolve(user);
               })
               .catch(reject);
@@ -57,8 +61,7 @@ export const useAuthStore = defineStore("auth", {
       return new Promise<AuthGetProfileResultInterface>((resolve, reject) => {
         getCurrentUser()
           .then((user) => {
-            // TODO: remove direct usage of localStorage actions - only through store(plugin)
-            window.localStorage.setItem("currentUser", JSON.stringify(user));
+            this.currentUser = user;
             resolve(user);
           })
           .catch((error) => {
@@ -68,13 +71,13 @@ export const useAuthStore = defineStore("auth", {
     },
 
     logout(): Promise<boolean> {
-      this.user = null;
-      // TODO: remove direct usage of localStorage actions - only through store(plugin)
-      setItem("active-session", false);
-      // TODO: remove direct usage of localStorage actions - only through store(plugin)
-      setItem("sessionId", null);
+      this.currentUser = null;
+      this.sessionId = "";
+      this.activeSession = false;
       return Promise.resolve(true);
     },
   },
-  persist: true,
+  persist: {
+    storage: localStorage,
+  },
 });
