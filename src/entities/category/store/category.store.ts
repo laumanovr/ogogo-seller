@@ -1,6 +1,5 @@
 import { CategoryApiResponse } from "../api/category-api.types";
 import { defineStore } from "pinia";
-import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { ICategoryState } from "./category-store.types";
 import { CategoryApi } from "../api/category.api";
@@ -11,11 +10,9 @@ import {
 } from "../api/category-api.types";
 import { useProductStore } from "@/entities/products/store/product.store";
 
-// TODO: clear default alert store actions
 // TODO: remove global loader and set local loader
 
 const loaderStore = useLoaderStore();
-const alertStore = useAlertStore();
 const productStore = useProductStore();
 const categoryApi = new CategoryApi();
 
@@ -39,45 +36,39 @@ export const useCategoryStore = defineStore("category", {
   },
   actions: {
     getAllCategories(): Promise<CategoryApiResponse> {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         loaderStore.setLoaderState(true);
         categoryApi
           .getCategories()
           .then((response) => {
             this.categories = response.result;
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
-          .catch((err) => {
-            alertStore.showError(err.message);
+          .finally(() => {
             loaderStore.setLoaderState(false);
-            reject(err);
           });
       });
     },
     getCategoriesPagedList(
       payload: CategoryPagedPayload
     ): Promise<CategoryPagedResponse> {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         loaderStore.setLoaderState(true);
         categoryApi
           .getCategoriesPagedList(payload)
           .then((response) => {
-            loaderStore.setLoaderState(false);
             this.pagedCategories = response.items;
             resolve(response);
           })
-          .catch((err) => {
-            alertStore.showError(err.message);
+          .finally(() => {
             loaderStore.setLoaderState(false);
-            reject(err);
           });
       });
     },
     getCategoryWithPropertiesById(
       id: string
     ): Promise<CategoryWithPropertiesResponse> {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         loaderStore.setLoaderState(true);
         categoryApi
           .getCategoryById(id)
@@ -103,13 +94,10 @@ export const useCategoryStore = defineStore("category", {
                 }
               );
             }
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
-          .catch((err) => {
-            alertStore.showError(err.message);
+          .finally(() => {
             loaderStore.setLoaderState(false);
-            reject(err);
           });
       });
     },
