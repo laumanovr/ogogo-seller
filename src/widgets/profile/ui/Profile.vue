@@ -179,19 +179,21 @@ import { ref, computed, onMounted } from "vue";
 import { SButton, SInput, STextArea, SIconRender } from "@tumarsoft/ogogo-ui";
 import { useRouter } from "vue-router";
 import { useProfileStore } from "@/entities/profile/store/profile.store";
+import { useAuthStore } from "@/shared/store/auth";
 import { useAlertStore } from "@/shared/store/alert";
 import { ProfileTab } from "@/shared/lib/utils/enums";
 import i18n from "@/shared/lib/plugins/i18n";
 
 const router = useRouter();
 const profileStore = useProfileStore();
+const authStore = useAuthStore();
 const alertStore = useAlertStore();
 const tab = ref("");
 const newPassword = ref("");
 const repeatPassword = ref("");
-const currentUser = computed(() => profileStore.getCurrentUser);
+const currentUser = computed(() => authStore.getCurrentProfile);
 const profileObj = computed(() => profileStore.getProfileObj);
-profileObj.value.id = currentUser.value.tradeMarkId;
+profileObj.value.id = currentUser.value?.tradeMarkId;
 
 onMounted(() => {
   changeTab(ProfileTab.GENERAL);
@@ -240,9 +242,8 @@ const updateProfile = () => {
 };
 
 const logout = () => {
+  authStore.logout()
   router.push({ name: "login" });
-  // TODO: remove direct usage of localStorage actions - only through store
-  window.localStorage.clear();
 };
 
 const updatePassword = () => {

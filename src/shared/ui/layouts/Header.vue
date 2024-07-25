@@ -95,13 +95,14 @@
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { MenuItems } from "@/shared/lib/utils/enums";
-import { ref } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
+import { useAuthStore } from "@/shared/store/auth";
 
 const route = useRoute();
+const authStore = useAuthStore();
 
-// TODO: use store for current user data
-const currentUser = ref(JSON.parse(window.localStorage.getItem("currentUser")));
+const currentUser = computed(() => authStore.getCurrentProfile);
 </script>
 
 <style lang="scss" scoped>
