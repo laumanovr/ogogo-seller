@@ -14,9 +14,10 @@ import { shallowRef, watch, computed } from "vue";
 import { SAlert } from "@tumarsoft/ogogo-ui";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
-import { getItem } from "@/shared/lib/utils/persistanceStorage";
+import { useAuthStore } from "@/shared/store/auth";
 import { useRoute } from "vue-router";
 
+const authStore = useAuthStore();
 const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();
 
@@ -35,7 +36,7 @@ const closeAlert = (id: string) => {
 watch(
   () => route.path,
   () => {
-    if (Boolean(getItem("sessionId"))) {
+    if (Boolean(authStore.getSessionId)) {
       currentComponent.value = Layout;
     } else {
       currentComponent.value = Empty;

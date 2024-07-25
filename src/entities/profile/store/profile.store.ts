@@ -10,8 +10,6 @@ const loaderStore = useLoaderStore();
 
 export const useProfileStore = defineStore("profile", {
   state: (): Partial<IProfile> => ({
-    // TODO: remove direct usage of localStorage actions - only through store(plugin)
-    currentUser: JSON.parse(window.localStorage.getItem("currentUser")),
     profileObj: {
       id: null,
       logoBase64: null,
@@ -22,9 +20,6 @@ export const useProfileStore = defineStore("profile", {
     },
   }),
   getters: {
-    getCurrentUser(): any {
-      return this.currentUser;
-    },
     getProfileObj(): any {
       return this.profileObj;
     },

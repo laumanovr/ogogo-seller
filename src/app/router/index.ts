@@ -1,7 +1,7 @@
 import { AuthMiddleware } from "@/app/router/middlware/auth";
 import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import { getItem } from "@/shared/lib/utils/persistanceStorage";
+import { useAuthStore } from "@/shared/store/auth";
 import { RouteLocationNormalized } from "vue-router";
 import loginRoutes from "@/pages/login/router";
 import passwordReset from "@/pages/password-reset/router";
@@ -35,9 +35,9 @@ router.beforeEach(
     from: RouteLocationNormalized,
     next: Function
   ) => {
-    // TODO: why is middlewares just declared here?
     middlewares;
-    const isAuthenticated = Boolean(getItem("sessionId")),
+    const authStore = useAuthStore();
+    const isAuthenticated = Boolean(authStore.getSessionId),
       requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
     if (!isAuthenticated) {
