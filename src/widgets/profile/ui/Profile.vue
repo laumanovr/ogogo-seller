@@ -258,6 +258,9 @@ const updatePassword = () => {
       .then(() => {
         newPassword.value = "";
         repeatPassword.value = "";
+        alertStore.showSuccess(
+          i18n.global.t("lang-07c7e723-8d94-4595-9cbc-86754bf563d1")
+        );
       });
   }
 };
