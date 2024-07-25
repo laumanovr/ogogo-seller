@@ -47,14 +47,12 @@ import { SButton, SForm, SInput } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { requiredField } from "@/shared/lib/utils/rules";
-import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { vMaska } from "maska";
 import { useAuthStore } from "@/shared/store/auth";
 import { maskOptions } from "@/shared/helpers/mask-option";
 
 const authStore = useAuthStore();
-const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();
 const router = useRouter();
 
@@ -72,9 +70,6 @@ const onSubmitLogin = () => {
         .login(loginObj)
         .then(() => {
           router.push({ name: "profile" });
-        })
-        .catch((err: any) => {
-          alertStore.showError(err?.error?.errorMessage);
         })
         .finally(() => {
           loaderStore.setLoaderState(false);
