@@ -1,12 +1,10 @@
 import { useI18n } from "vue-i18n";
 import axios, { AxiosError } from "axios";
-
-import { getItem } from "../utils/persistanceStorage";
 import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from "@/app/router/index.type";
 import { useAuthStore } from "@/shared/store/auth";
-
 import router from "@/app/router/";
 import { ErrorCodeEnum } from "../utils/error-dictionary";
+import { useAlertStore } from "@/shared/store/alert";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_SERVER;
 
@@ -26,14 +24,13 @@ function runWhen(error: AxiosError<ErrorResponse>) {
 export default function setup() {
   axios.interceptors.request.use(
     function (config) {
-      // TODO: replace getItem with useAuthStore getter
-      const isActiveSession = getItem("active-session");
+      const authStore = useAuthStore();
+      const isActiveSession = authStore.getActiveSession;
       if (
         (config.url === "/api/common/Ping" && isActiveSession) ||
         config.url !== "/api/common/Ping"
       ) {
-        // TODO: replace getItem with useAuthStore getter
-        const token = getItem("sessionId");
+        const token = authStore.getSessionId;
         config.headers.Authorization = token ? `Bearer ${token}` : "";
       }
 
@@ -61,28 +58,30 @@ export default function setup() {
       } else {
         let showError = true;
         const authStore = useAuthStore();
-
         switch (error?.response?.status) {
           case 401:
             showError = false;
-
-            // TODO: use router name params for router
-            router.push("/");
+            router.push({ name: "login" });
             break;
           case 403:
             showError = false;
             await authStore.logout;
-            // TODO: use router name params for router
-            router.push("/");
+            router.push({ name: "login" });
             break;
           case 500:
             const { t } = useI18n();
-
-            // TODO: unknown locale key
-            alert(t("label-5a8130e9-116a-4c54-8be2-166380fae5d1"));
+            alert(t("lang-a42e481a-3030-401e-ae41-080883f1675a"));
             break;
         }
         if (showError) {
+          const alertStore = useAlertStore();
+          if (error.response?.data?.error) {
+            alertStore.showError(
+              error.response.data.error?.errorMessage || "Что-то пошло не так"
+            );
+          } else {
+            alertStore.showError(error?.message || "Что-то пошло не так");
+          }
         }
         return Promise.reject(error);
       }
