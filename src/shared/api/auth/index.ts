@@ -5,9 +5,7 @@ import {
   AuthLoginResultInterface,
 } from "@/shared/api/auth/types";
 
-// TODO: set one format for url style. example /Clients/Login or /clients/login for all requests
 
-// TODO: why clients module and not auth module for seller login?
 export const login = (
   credentials: AuthLoginPayloadInterface
 ): Promise<AuthLoginResultInterface> => {
@@ -46,14 +44,10 @@ export const forgotPassword = (payload?: {
   return axios.post("Auth/ForgotPassword", payload).then((res) => res.data.ok);
 };
 
-export const getSipAccount = (): Promise<{ login: string; password: string }> =>
-  axios.get("Auth/GetSipAccount").then((res) => res.data.result);
-
 export default {
   login,
   getCurrentUser,
   logout,
   updatePassword,
   forgotPassword,
-  getSipAccount,
 };

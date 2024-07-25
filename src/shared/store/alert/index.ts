@@ -12,39 +12,40 @@ export const useAlertStore = defineStore("alert", {
     },
   },
   actions: {
-    // TODO: what if i want to add an alert with custom timeout?
-    // TODO: where `is content` for the alert? 
-    showSuccess(message: string) {
-      // TODO: learn about factory pattern
+    showSuccess(message: string, timer: number = 2000) {
       this.items.push({
         id: uuid(),
         title: message,
+        content: "",
         type: "success",
-        timeout: 1800, // TODO: what is there some const number? what does it mean? and why 1800 or 2500?
+        timeout: timer,
       });
     },
-    showError(message: string) {
+    showError(message: string, timer: number = 2000) {
       this.items.push({
         id: uuid(),
         title: message,
+        content: "",
         type: "error",
-        timeout: 2500,
+        timeout: timer,
       });
     },
-    showInfo(message: string) {
+    showInfo(message: string, timer: number = 2000) {
       this.items.push({
         id: uuid(),
         title: message,
+        content: "",
         type: "info",
-        timeout: 1800,
+        timeout: timer,
       });
     },
-    showWarning(message: string) {
+    showWarning(message: string, timer: number = 2000) {
       this.items.push({
         id: uuid(),
         title: message,
+        content: "",
         type: "warning",
-        timeout: 2500,
+        timeout: timer,
       });
     },
     closeAlert(id: string) {

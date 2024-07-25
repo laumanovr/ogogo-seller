@@ -7,13 +7,8 @@ import {
   ILoginResultFail,
   ILoginResultSuccess,
 } from "./index.types";
-// import { useAlertStore } from "@/shared/store/alert";
 import { getCurrentUser, login } from "@/shared/api/auth";
 import { getItem, setItem } from "@/shared/lib/utils/persistanceStorage";
-import {
-  AuthorizationChannelEvent,
-  BroadcastChannelName,
-} from "@/shared/lib/utils/consts";
 
 export const useAuthStore = defineStore("auth", {
   state: (): AuthState => {
@@ -38,29 +33,10 @@ export const useAuthStore = defineStore("auth", {
             const needChangePassword = result?.needChangePassword ?? false;
             // TODO: remove direct usage of localStorage actions - only through store(plugin)
             setItem("needChangePassword", needChangePassword);
-
-            // TODO: remove direct usage of localStorage actions - only through store(plugin)
-            const oldSessionId = getItem("sessionId");
-
             // TODO: remove direct usage of localStorage actions - only through store(plugin)
             setItem("sessionId", result?.sessionId);
             return this.getCurrentUser()
               .then((user) => {
-                // send event of updating profile and redirecting to route path to other tabs
-                if (BroadcastChannel) {
-                  const tabId = sessionStorage.getItem("tabId");
-
-                  const bc = new BroadcastChannel(
-                    BroadcastChannelName.AuthorizationChannel
-                  );
-                  if (oldSessionId && oldSessionId !== result?.sessionId) {
-                    bc.postMessage({
-                      event: AuthorizationChannelEvent.LoggingIn,
-                      tabId,
-                    });
-                  }
-                }
-
                 // TODO: remove direct usage of localStorage actions - only through store(plugin)
                 setItem("active-session", true);
                 resolve(user);
@@ -97,8 +73,6 @@ export const useAuthStore = defineStore("auth", {
       setItem("active-session", false);
       // TODO: remove direct usage of localStorage actions - only through store(plugin)
       setItem("sessionId", null);
-      // const alertStore = useAlertStore();
-      // alertStore.clearAlerts();
       return Promise.resolve(true);
     },
   },
