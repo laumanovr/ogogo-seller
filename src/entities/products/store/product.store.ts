@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
@@ -11,12 +10,10 @@ import {
 } from "../api/product-api.types";
 import { ProductTemplateEntity } from "../model/types";
 
-// TODO: clear default alert store actions
 // TODO: remove global loader and set local loader
 
 const productApi = new ProductApi();
 const loaderStore = useLoaderStore();
-const alertStore = useAlertStore();
 
 export const useProductStore = defineStore("product", {
   state: (): Partial<IProductState> => ({
@@ -81,7 +78,7 @@ export const useProductStore = defineStore("product", {
   },
   actions: {
     getAllProducts(payload: ProductPayload): Promise<ProductApiResponse> {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         // TODO: remove global loader and set local loader
         loaderStore.setLoaderState(true);
         productApi
@@ -91,18 +88,15 @@ export const useProductStore = defineStore("product", {
             this.hasProducts = Boolean(response.result.totalPages);
             this.hasStatusProducts = Boolean(response.result.items.length);
             this.totalItems = response.result.totalCount;
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
-          .catch((err) => {
-            alertStore.showError(err.message);
+          .finally(() => {
             loaderStore.setLoaderState(false);
-            reject(err);
           });
       });
     },
     getExactProductById(id: string): Promise<ProductDetailApiResponse> {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         loaderStore.setLoaderState(true);
         productApi
           .getProductById(id)
@@ -113,18 +107,14 @@ export const useProductStore = defineStore("product", {
               product: foundProduct,
               type: "product",
             });
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
-          .catch((err) => {
-            alertStore.showError(err.message);
+          .finally(() => {
             loaderStore.setLoaderState(false);
-            reject(err);
           });
       });
     },
     setSelectedTemplateOrProduct(item: any) {
-      // TODO: learn about factory pattern
       this.productTemplate.templateId =
         item.type === "template" ? item.product.id : "";
       this.productTemplate.id = item.type === "product" ? item.product.id : "";
@@ -147,52 +137,41 @@ export const useProductStore = defineStore("product", {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("type", "0");
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         loaderStore.setLoaderState(true);
         productApi
           .uploadFile(formData)
           .then((response) => {
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
-          .catch((err) => {
-            alertStore.showError(err.message);
+          .finally(() => {
             loaderStore.setLoaderState(false);
-            reject(err);
           });
       });
     },
     createProduct(payload: ProductTemplateEntity) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         loaderStore.setLoaderState(true);
         productApi
           .createProduct(payload)
           .then((response: any) => {
-            loaderStore.setLoaderState(false);
-            alertStore.showSuccess("Успешно создан!");
             resolve(response);
           })
-          .catch((err: any) => {
-            alertStore.showError(err.message);
+          .finally(() => {
             loaderStore.setLoaderState(false);
-            reject(err);
           });
       });
     },
     updateProduct(payload: ProductTemplateEntity) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         loaderStore.setLoaderState(true);
         productApi
           .updateProduct(payload)
           .then((response: any) => {
-            loaderStore.setLoaderState(false);
-            alertStore.showSuccess("Успешно обновлено!");
             resolve(response);
           })
-          .catch((err: any) => {
-            alertStore.showError(err.message);
+          .finally(() => {
             loaderStore.setLoaderState(false);
-            reject(err);
           });
       });
     },
