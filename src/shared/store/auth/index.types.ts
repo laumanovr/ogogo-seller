@@ -23,7 +23,11 @@ export interface ILogin {
 }
 
 export interface AuthState {
-  user: IUser | null;
+  currentUser: object;
+  needChangePassword: boolean | string;
+  sessionId: string;
+  activeSession: boolean;
+  user?: IUser | null;
   theme?: any;
 }
 export interface makeAssertionOptionsType {
