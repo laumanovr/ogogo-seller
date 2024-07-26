@@ -16,7 +16,7 @@
           ]"
         />
         <span
-          class="font-size-12 s-mt-1"
+          class="s-mt-1"
           :class="[
             route.name === MenuItems.Products
               ? 's-text-violet-700'
@@ -39,7 +39,7 @@
           ]"
         />
         <span
-          class="font-size-12 s-mt-1"
+          class="s-mt-1"
           :class="[
             route.name === MenuItems.Orders
               ? 's-text-violet-700'
@@ -62,7 +62,7 @@
           ]"
         />
         <span
-          class="font-size-12 s-mt-1"
+          class="s-mt-1"
           :class="[
             route.name === MenuItems.Notifications
               ? 's-text-violet-700'
@@ -78,7 +78,7 @@
       >
         <img src="../../../app/assets/img/empty-ava.svg" alt="" />
         <span
-          class="font-size-12 s-mt-1"
+          class="s-mt-1"
           :class="[
             route.name === MenuItems.Cabinet
               ? 's-text-violet-700'
@@ -127,6 +127,9 @@ const currentUser = computed(() => authStore.getCurrentProfile);
   gap: 30px;
   a {
     text-decoration: none;
+  }
+  span {
+    font-size: 12px;
   }
   .header-profile {
     background: $gray-150;

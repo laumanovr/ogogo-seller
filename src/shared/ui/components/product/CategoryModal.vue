@@ -27,7 +27,7 @@
         @change="selectChildCategory($event, i)"
       />
       <div
-        class="s-flex s-flex-row s-w-full gap-10 s-mt-2 s-justify-between light"
+        class="s-flex s-flex-row s-w-full s-gap-3 s-mt-2 s-justify-between light"
       >
         <SButton type="secondary" class="button s-w-1/2" @click="toggleModal">
           {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
