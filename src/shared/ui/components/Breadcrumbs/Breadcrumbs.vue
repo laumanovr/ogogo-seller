@@ -1,14 +1,14 @@
 <template>
   <div class="breadcrumbs-container">
-    <div class="breadcrumb-item" v-for="(item, i) in items" :key="i">
+    <div class="breadcrumb-item" v-for="(item, i) in props.items" :key="i">
       <span class="item">{{ item.name }}</span>
-      <span v-show="i !== items.length - 1">/</span>
+      <span v-show="i !== props.items.length - 1">/</span>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, PropType } from "vue";
+import { PropType } from "vue";
 
 const props = defineProps({
   items: {
@@ -16,8 +16,6 @@ const props = defineProps({
     default: () => [],
   },
 });
-
-let items = reactive(props.items);
 </script>
 
 <style lang="scss">
