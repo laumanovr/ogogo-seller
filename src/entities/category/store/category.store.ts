@@ -75,10 +75,10 @@ export const useCategoryStore = defineStore("category", {
           .then((response) => {
             this.categoryWithProperties = response.result.properties;
             const selectedPropValues: any = [];
-            this.saveSelectedCategoryPath([
-              { name: response.result.categoryName },
-            ]);
             if (productStore?.productTemplate?.properties) {
+              this.saveSelectedCategoryPath([
+                { name: response.result.categoryName },
+              ]);
               Object.entries(productStore.productTemplate.properties).forEach(
                 (item) => {
                   selectedPropValues.push({ key: item[0], valueId: item[1] });
