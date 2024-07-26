@@ -16,9 +16,8 @@
         :key="i"
         @click="selectSample(i, item)"
       >
-        <!-- TODO: use icon component and not base64 data for image or use image from assets with src -->
         <img
-          :src="'data:image/png;base64,' + item.iconBase64"
+          :src="getFullIcon(item.iconBase64)"
           alt="img"
           class="sample__img"
         />
@@ -46,9 +45,8 @@
       <div class="template-container">
         <div class="template" v-for="(item, i) in productTemplates" :key="i">
           <SCheckbox v-model="item.selected">
-            <!-- TODO: use icon component and not base64 data for image or use image from assets with src -->
             <img
-              :src="'data:image/png;base64,' + item.iconBase64"
+              :src="getFullIcon(item.iconBase64)"
               alt="img"
               class="sample__img"
             />
@@ -92,6 +90,7 @@ import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import SmallLoader from "@/shared/ui/components/SmallLoader.vue";
 import { TabValue } from "@/shared/lib/utils/enums";
+import { getFullIcon } from "@/shared/composable";
 
 const productStore = useProductStore();
 const tab = ref("one");
