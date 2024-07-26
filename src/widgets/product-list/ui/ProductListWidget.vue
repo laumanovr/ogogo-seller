@@ -77,9 +77,8 @@
       >
         <template v-slot:productName="{ item }">
           <div class="s-flex s-items-center product">
-            <!-- TODO: use icon component and not base64 data for image -->
             <img
-              :src="'data:image/png;base64,' + item.iconBase64"
+              :src="getFullIcon(item.iconBase64)"
               alt="img"
               v-if="item.iconBase64"
             />
@@ -206,6 +205,7 @@ import { tableHeaders } from "@/shared/helpers/helper";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useRouter } from "vue-router";
+import { getFullIcon } from "@/shared/composable";
 import i18n from "@/shared/lib/plugins/i18n";
 
 const productStore = useProductStore();
