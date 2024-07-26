@@ -5,7 +5,7 @@
         <SIconRender name="chevron-left" size="small" />
         <span>{{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}</span>
       </SButton>
-      <Breadcrumbs :items="categoryUrls" class="s-ml-5" :key="breadcrumbKey" />
+      <Breadcrumbs :items="categoryUrls" class="s-ml-5" />
     </div>
     <div class="s-flex s-mt-5">
       <ProductTemplate />
@@ -37,15 +37,10 @@ const categoryStore = useCategoryStore();
 const productStore = useProductStore();
 
 const isShowForm = ref(false);
-// TODO: using breadcrumbKey as a counter means that breadcrumbs is not reactive to its items. fix breadcrumbs component in the first place
-const breadcrumbKey = ref(0);
 
 onMounted(() => {
   productStore.getExactProductById(route.params.id as string).then(() => {
     isShowForm.value = true;
-    setTimeout(() => {
-      breadcrumbKey.value++;
-    }, 500);
   });
 });
 
