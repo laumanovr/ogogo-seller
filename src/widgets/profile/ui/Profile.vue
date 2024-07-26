@@ -210,7 +210,6 @@ const profileImageUrl = computed(() =>
     : "/src/app/assets/img/empty-photo.svg"
 );
 
-// TODO: URL.createObjectURL(file) instead of this
 const convertToBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
