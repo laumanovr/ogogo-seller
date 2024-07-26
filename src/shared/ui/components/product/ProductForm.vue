@@ -111,13 +111,17 @@
           {{ $t("lang-24ffb5fa-8580-4360-903e-8368b2102a65") }}
         </p>
         <div class="s-flex s-flex-wrap">
-          <div class="photo" v-for="image in productImages" :key="image">
-            <img :src="image" alt="img" />
+          <div
+            class="photo"
+            v-for="imageId in productTemplate.photos"
+            :key="imageId"
+          >
+            <img :src="getFileById(imageId)" alt="img" />
             <SIconRender
               name="close"
               class="close-icon"
               size="small"
-              @click="deleteImage(image)"
+              @click="deleteImage(imageId)"
             />
           </div>
           <!-- TODO: extract to FileInput component in ui kit -->
@@ -151,7 +155,10 @@
             height="180"
             :key="videoKey"
           >
-            <source :src="videoUrl" type="video/mp4" />
+            <source
+              :src="getFileById(productTemplate.videos[0])"
+              type="video/mp4"
+            />
           </video>
           <!-- TODO: extract to FileInput component in ui kit -->
           <label for="video" class="add-content s-ml-6">
@@ -228,14 +235,13 @@ import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useProfileStore } from "@/entities/profile/store/profile.store";
-import { useAuthStore } from "@/shared/store/auth";
 import { requiredField } from "@/shared/lib/utils/rules";
 import Comment from "./Comment.vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
-import axios from "axios";
 import { PriceType, ProductMode } from "@/shared/lib/utils/enums";
 import { useAlertStore } from "@/shared/store/alert";
+import { getFileById } from "@/shared/composable";
 
 const props = defineProps({
   mode: {
@@ -251,15 +257,12 @@ const alertStore = useAlertStore();
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 const profileStore = useProfileStore();
-const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
 const priceWithDiscount = ref(0);
 const videoKey = ref(0);
-const videoUrl = ref("");
 const selectedCategoryId = route.query.id || props.productCategoryId;
 const propertyObject = ref<any>({});
-const productImages = ref([]);
 const productForm = ref(null);
 const isPhotoValid = ref(true);
 const productTemplate = computed(() => productStore.getProductTemplate);
@@ -268,27 +271,12 @@ const validationDesc = computed(() => productStore.getValidationDescription);
 const validationPrice = computed(() => productStore.getValidationPrice);
 const validationCount = computed(() => productStore.getValidationCount);
 const validationFile = computed(() => productStore.getValidationFile);
-const sessionId = computed(() => authStore.getSessionId);
 const properties = computed(() => categoryStore.getCategoryWithProperties);
 
 onMounted(() => {
-  if (props.mode === ProductMode.UPDATE) {
-    // TODO: set baseUrl here??? set base url in main or use service provider for another domain request
-    // TODO: image src should be defined at image src attribute. example: src="getImageUrl(image)"
-    productTemplate.value.photos.forEach((photoId: any) => {
-      const photo = `${axios.defaults.baseURL}File/FileById?id=${photoId}&sessionId=${sessionId.value}`;
-      productImages.value.push(photo);
-    });
-
-    // TODO: video src should be defined at video src attribute. example: src="getVideoUrl(video)"
-    if (productTemplate.value.videos.length) {
-      const videoId = productTemplate.value.videos[0];
-      videoUrl.value = `${axios.defaults.baseURL}File/FileById?id=${videoId}&sessionId=${sessionId.value}`;
-    }
-  } else {
+  if (props.mode === ProductMode.CREATE) {
     priceWithDiscount.value = 0;
   }
-
   categoryStore.getCategoryWithPropertiesById(selectedCategoryId as string);
 });
 
@@ -306,7 +294,6 @@ const onSelectPhoto = async (e: Event) => {
   const file = target?.files[0];
   if (file) {
     productStore.uploadFile(file).then((response) => {
-      productImages.value.push(URL.createObjectURL(file));
       productTemplate.value.photos.push(response.result.fileId);
     });
   }
@@ -316,7 +303,6 @@ const deleteImage = (imgUrl: string) => {
   const index = productTemplate.value.photos.findIndex(
     (imageUrl: any) => imageUrl === imgUrl
   );
-  productImages.value.splice(index, 1);
   productTemplate.value.photos.splice(index, 1);
 };
 
@@ -341,7 +327,6 @@ const onSelectVideo = (e: Event) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        videoUrl.value = reader.result as string;
         videoKey.value++;
         productTemplate.value.videos = [response.result.fileId];
       };
