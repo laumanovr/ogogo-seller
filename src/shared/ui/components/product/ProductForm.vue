@@ -59,10 +59,9 @@
         </div>
       </div>
       <div>
-        <div class="s-flex s-justify-between">
+        <div class="s-flex s-gap-5 s-justify-between">
           <SInput
             :label="$t('lang-333319c2-2df4-4057-a56a-28ddd7a790a1')"
-            class="s-w-64"
             type="number"
             :rules="[requiredField]"
             v-model="productTemplate.price"
@@ -70,14 +69,12 @@
           <SInput
             type="number"
             :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')"
-            class="s-w-64"
             v-model="productTemplate.discount"
             @input="countPriceDiscount"
           />
           <SInput
             type="number"
             :label="$t('lang-5eb99c46-ed5f-4a24-85ad-d551ad812256')"
-            class="s-w-64"
             v-model="priceWithDiscount"
             @input="countDiscountPercentage"
           />
