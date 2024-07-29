@@ -13,12 +13,12 @@
             class="s-ml-3"
             @click="toggleFilterModal"
           >
-            <SIconRender name="filter" size="small" />
+            <SIconRender name="filter" size="small" class="s-mr-2" />
             {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
           </SButton>
         </div>
         <SButton @click="openCreateProductModal">
-          <SIconRender name="plus" class="s-text-white" />
+          <SIconRender name="plus" class="s-text-white s-mr-2" />
           {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
         </SButton>
       </div>
