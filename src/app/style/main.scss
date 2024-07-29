@@ -1,7 +1,6 @@
 @import "./colors.scss";
 @import "./fonts.scss";
 @import "@tumarsoft/ogogo-ui/styles";
-// TODO: move classes that are used globally to its components or create component with scoped styles
 
 
 * {
@@ -17,11 +16,6 @@ body {
   margin: 0;
 }
 
-.sm-img {
-  width: 24px;
-  height: 24px;
-}
-
 .textarea-container {
   width: 100%;
 }
@@ -29,9 +23,6 @@ body {
 .button {
   display: flex;
   align-items: center;
-  svg {
-    margin-right: 8px;
-  }
 }
 
 .modal {
