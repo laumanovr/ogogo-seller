@@ -2,7 +2,7 @@
   <div class="product-update-content">
     <div class="s-flex s-items-center">
       <SButton type="secondary" variant="outlined" @click="goBack">
-        <SIconRender name="chevron-left" size="small" />
+        <SIconRender name="chevron-left" size="small" class="s-mr-1" />
         <span>{{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}</span>
       </SButton>
       <Breadcrumbs :items="categoryUrls" class="s-ml-5" />
