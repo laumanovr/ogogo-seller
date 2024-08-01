@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <SLoader fullScreen v-if="isLoading" />
     <div class="login-block">
       <div class="login-logo">
         <img src="@/shared/ui/assets/Ogogo-logo.png" alt="img" />
@@ -11,6 +12,7 @@
         <div class="s-flex s-justify-between">
           <SInput
             class="s-w-full"
+            animated
             :rules="[requiredField]"
             v-model="loginObj.pin"
             v-maska:[maskOptions]
@@ -19,6 +21,7 @@
         </div>
         <div class="input-password s-mb-5">
           <SInput
+            animated
             type="password"
             :label="$t('lang-5e3537d8-1a60-49cc-879c-1a1ad38c9d9d')"
             width="100%"
@@ -43,21 +46,19 @@
 </template>
 
 <script lang="ts" setup>
-import { SButton, SForm, SInput } from "@tumarsoft/ogogo-ui";
+import { SButton, SForm, SInput, SLoader } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { requiredField } from "@/shared/lib/utils/rules";
-import { useLoaderStore } from "@/shared/store/loader";
 import { vMaska } from "maska";
 import { useAuthStore } from "@/shared/store/auth";
 import { maskOptions } from "@/shared/helpers/mask-option";
 
 const authStore = useAuthStore();
-const loaderStore = useLoaderStore();
 const router = useRouter();
-
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
+const isLoading = ref(false);
 
 const onSubmitLogin = () => {
   const removedDashesAndBrackets = loginObj.pin.replace(/\D/g, "");
@@ -65,14 +66,14 @@ const onSubmitLogin = () => {
 
   loginForm.value.validate().then((isValid: boolean) => {
     if (isValid) {
-      loaderStore.setLoaderState(true);
+      isLoading.value = true;
       authStore
         .login(loginObj)
         .then(() => {
-          router.push({ name: "profile" });
+          router.push({ name: "products" });
         })
         .finally(() => {
-          loaderStore.setLoaderState(false);
+          isLoading.value = false;
         });
     }
   });

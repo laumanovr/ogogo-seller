@@ -1,5 +1,6 @@
 <template>
   <div class="product-tabs-container s-mr-8 s-pt-4">
+    <SLoader v-if="isLoading"/>
     <STabs :tab-mode="'content-tabs'">
       <STabItem :value="TabValue.ONE" :active-tab="tab" @changeTab="selectTab">
         {{ $t("lang-d7069093-a1a5-4544-8a29-e516288d719b") }}
@@ -85,6 +86,7 @@ import {
   STabWindow,
   SInput,
   SCheckbox,
+  SLoader
 } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
@@ -97,6 +99,7 @@ const tab = ref("one");
 const selectedSampleIndex = ref(0);
 const selectedTemplates = ref([]);
 const isDisabled = ref(false);
+const isLoading = ref(false);
 const productTemplates = computed(() => productStore.getProducts);
 
 onMounted(() => {
@@ -104,7 +107,10 @@ onMounted(() => {
 });
 
 const fetchTemplates = () => {
-  productStore.getAllProducts({ productType: 14700 });
+  isLoading.value = true;
+  productStore.getAllProducts({ productType: 14700 }).finally(() => {
+    isLoading.value = false;
+  });
 };
 
 const selectTab = (selectedTab: string) => {
