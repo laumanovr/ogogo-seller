@@ -234,10 +234,12 @@ const onSelectFile = async (file: File) => {
 };
 
 const fetchProfileInfo = () => {
-  isLoading.value = true;
-  profileStore.getProfileInfo().finally(() => {
-    isLoading.value = false;
-  });
+  if (Object.values(currentUser.value || {}).length) {
+    isLoading.value = true;
+    profileStore.getProfileInfo().finally(() => {
+      isLoading.value = false;
+    });
+  }
 };
 
 const updateProfile = () => {
