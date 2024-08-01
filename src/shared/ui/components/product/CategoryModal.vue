@@ -1,5 +1,6 @@
 <template>
   <SModal v-model="isShowModal" height="auto">
+    <SLoader fullScreen v-if="isLoading" />
     <p class="font-bold s-mb-5">
       {{ $t("lang-bb00cbbb-a6f7-4c77-8bf7-558b18e8d505") }}
     </p>
@@ -41,7 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SSelect, SModal, SButton, SForm } from "@tumarsoft/ogogo-ui";
+import { SSelect, SModal, SButton, SForm, SLoader } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted, computed, nextTick } from "vue";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { useCategoryStore } from "@/entities/category/store/category.store";
@@ -53,6 +54,7 @@ const isShowModal = ref(false);
 const subCategorySelects = ref([]);
 const parentCategoryId = ref("");
 const productForm = ref(null);
+const isLoading = ref(false);
 
 const allCategories = computed(() =>
   categoryStore.categories.map((category) => ({
@@ -65,8 +67,11 @@ onMounted(() => {
   fetchAllCategories();
 });
 
-const fetchAllCategories = async () => {
-  await categoryStore.getAllCategories();
+const fetchAllCategories = () => {
+  isLoading.value = true;
+  categoryStore.getAllCategories().finally(() => {
+    isLoading.value = false;
+  });
 };
 
 const toggleModal = () => {

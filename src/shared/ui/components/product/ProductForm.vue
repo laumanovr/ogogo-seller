@@ -1,5 +1,6 @@
 <template>
   <div class="product-form-container">
+    <SLoader fullScreen v-if="isLoading" />
     <div class="s-text-title-1 s-mb-6 s-mt-6">
       {{ $t("lang-3c525f10-24ab-44fa-9eda-8a503e97b2e9") }}
     </div>
@@ -121,15 +122,13 @@
               @click="deleteImage(imageId)"
             />
           </div>
-          <!-- TODO: extract to FileInput component in ui kit -->
-          <label
-            for="photo"
-            class="add-content"
-            :class="{ error: isEmptyPhoto }"
-          >
-            <input type="file" id="photo" @change="onSelectPhoto" />
-            <span>+</span>
-          </label>
+          <SFileInput
+            size="medium"
+            class="s-ml-3"
+            :rules="[requiredField]"
+            v-model="selectedPhoto"
+            @change="onSelectPhoto"
+          />
         </div>
         <Comment
           :comment="validationFile?.photo?.validationComment"
@@ -157,11 +156,7 @@
               type="video/mp4"
             />
           </video>
-          <!-- TODO: extract to FileInput component in ui kit -->
-          <label for="video" class="add-content s-ml-6">
-            <input type="file" id="video" @change="onSelectVideo" />
-            <span>+</span>
-          </label>
+          <SFileInput size="medium" class="s-ml-5" @change="onSelectVideo" />
         </div>
         <Comment
           :comment="validationFile?.video?.validationComment"
@@ -227,6 +222,8 @@ import {
   SRadioButtonGroup,
   SIconRender,
   SForm,
+  SLoader,
+  SFileInput,
 } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
@@ -261,7 +258,8 @@ const videoKey = ref(0);
 const selectedCategoryId = route.query.id || props.productCategoryId;
 const propertyObject = ref<any>({});
 const productForm = ref(null);
-const isPhotoValid = ref(true);
+const isLoading = ref(false);
+const selectedPhoto = ref("");
 const productTemplate = computed(() => productStore.getProductTemplate);
 const validationName = computed(() => productStore.getValidationName);
 const validationDesc = computed(() => productStore.getValidationDescription);
@@ -271,28 +269,32 @@ const validationFile = computed(() => productStore.getValidationFile);
 const properties = computed(() => categoryStore.getCategoryWithProperties);
 
 onMounted(() => {
+  isLoading.value = true;
   if (props.mode === ProductMode.CREATE) {
     priceWithDiscount.value = 0;
   }
-  categoryStore.getCategoryWithPropertiesById(selectedCategoryId as string);
+  categoryStore
+    .getCategoryWithPropertiesById(selectedCategoryId as string)
+    .finally(() => {
+      isLoading.value = false;
+    });
 });
-
-const isEmptyPhoto = computed(
-  () => !isPhotoValid.value && !productTemplate.value.photos.length
-);
 
 const isPriceSelected = (priceType: number) => {
   return productTemplate.value.productPriceType == priceType;
 };
 
-// TODO: use FileInput component in ui kit with upload handler
-const onSelectPhoto = async (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  const file = target?.files[0];
+const onSelectPhoto = async (file: File) => {
   if (file) {
-    productStore.uploadFile(file).then((response) => {
-      productTemplate.value.photos.push(response.result.fileId);
-    });
+    isLoading.value = true;
+    productStore
+      .uploadFile(file)
+      .then((response) => {
+        productTemplate.value.photos.push(response.result.fileId);
+      })
+      .finally(() => {
+        isLoading.value = false;
+      });
   }
 };
 
@@ -316,18 +318,22 @@ const countDiscountPercentage = () => {
     (diffSum / productTemplate.value.price) * 100;
 };
 
-const onSelectVideo = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  const file = target?.files[0];
+const onSelectVideo = (file: File) => {
   if (file) {
-    productStore.uploadFile(file).then((response) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        videoKey.value++;
-        productTemplate.value.videos = [response.result.fileId];
-      };
-    });
+    isLoading.value = true;
+    productStore
+      .uploadFile(file)
+      .then((response) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          videoKey.value++;
+          productTemplate.value.videos = [response.result.fileId];
+        };
+      })
+      .finally(() => {
+        isLoading.value = false;
+      });
   }
 };
 
@@ -351,20 +357,30 @@ const prepareFormFields = () => {
 };
 
 const submitProduct = () => {
-  isPhotoValid.value = Boolean(productTemplate.value.photos.length);
   productForm.value.validate().then((isValid: boolean) => {
-    if (isValid && !isEmptyPhoto.value) {
+    if (isValid) {
       prepareFormFields();
+      isLoading.value = true;
       if (props.mode === ProductMode.CREATE) {
-        productStore.createProduct(productTemplate.value).then(() => {
-          router.push({ name: "products" });
-          alertStore.showSuccess("Успешно создано");
-        });
+        productStore
+          .createProduct(productTemplate.value)
+          .then(() => {
+            router.push({ name: "products" });
+            alertStore.showSuccess("Успешно создано");
+          })
+          .finally(() => {
+            isLoading.value = false;
+          });
       } else {
-        productStore.updateProduct(productTemplate.value).then(() => {
-          router.push({ name: "products" });
-          alertStore.showSuccess("Успешно обновлено");
-        });
+        productStore
+          .updateProduct(productTemplate.value)
+          .then(() => {
+            router.push({ name: "products" });
+            alertStore.showSuccess("Успешно обновлено");
+          })
+          .finally(() => {
+            isLoading.value = false;
+          });
       }
     }
   });
@@ -372,11 +388,17 @@ const submitProduct = () => {
 
 const saveAsDraft = () => {
   prepareFormFields();
+  isLoading.value = true;
   productTemplate.value.isSaveAsDraft = true;
-  productStore.createProduct(productTemplate.value).then(() => {
-    router.push({ name: "products" });
-    alertStore.showSuccess("Черновик создан");
-  });
+  productStore
+    .createProduct(productTemplate.value)
+    .then(() => {
+      router.push({ name: "products" });
+      alertStore.showSuccess("Черновик создан");
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 </script>
 
