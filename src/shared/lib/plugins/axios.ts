@@ -5,6 +5,7 @@ import { useAuthStore } from "@/shared/store/auth";
 import router from "@/app/router/";
 import { ErrorCodeEnum } from "../utils/error-dictionary";
 import { useAlertStore } from "@/shared/store/alert";
+import i18n from "@/shared/lib/plugins/i18n";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_SERVER;
 
@@ -77,10 +78,10 @@ export default function setup() {
           const alertStore = useAlertStore();
           if (error.response?.data?.error) {
             alertStore.showError(
-              error.response.data.error?.errorMessage || "Что-то пошло не так"
+              error.response.data.error?.errorMessage || i18n.global.t("lang-a42e481a-3030-401e-ae41-080883f1675a");
             );
           } else {
-            alertStore.showError(error?.message || "Что-то пошло не так");
+            alertStore.showError(error?.message || i18n.global.t("lang-a42e481a-3030-401e-ae41-080883f1675a"));
           }
         }
         return Promise.reject(error);
