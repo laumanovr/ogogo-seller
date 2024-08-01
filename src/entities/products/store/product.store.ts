@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { useLoaderStore } from "@/shared/store/loader";
 import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
 import {
@@ -10,10 +9,7 @@ import {
 } from "../api/product-api.types";
 import { ProductTemplateEntity } from "../model/types";
 
-// TODO: remove global loader and set local loader
-
 const productApi = new ProductApi();
-const loaderStore = useLoaderStore();
 
 export const useProductStore = defineStore("product", {
   state: (): Partial<IProductState> => ({
@@ -79,39 +75,26 @@ export const useProductStore = defineStore("product", {
   actions: {
     getAllProducts(payload: ProductPayload): Promise<ProductApiResponse> {
       return new Promise((resolve, _) => {
-        // TODO: remove global loader and set local loader
-        loaderStore.setLoaderState(true);
-        productApi
-          .getProducts(payload)
-          .then((response) => {
-            this.products = response.result.items;
-            this.hasProducts = Boolean(response.result.totalPages);
-            this.hasStatusProducts = Boolean(response.result.items.length);
-            this.totalItems = response.result.totalCount;
-            resolve(response);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+        productApi.getProducts(payload).then((response) => {
+          this.products = response.result.items;
+          this.hasProducts = Boolean(response.result.totalPages);
+          this.hasStatusProducts = Boolean(response.result.items.length);
+          this.totalItems = response.result.totalCount;
+          resolve(response);
+        });
       });
     },
     getExactProductById(id: string): Promise<ProductDetailApiResponse> {
       return new Promise((resolve, _) => {
-        loaderStore.setLoaderState(true);
-        productApi
-          .getProductById(id)
-          .then((response) => {
-            const foundProduct = response.result;
-            this.productCategoryId = foundProduct.categoryId;
-            this.setSelectedTemplateOrProduct({
-              product: foundProduct,
-              type: "product",
-            });
-            resolve(response);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
+        productApi.getProductById(id).then((response) => {
+          const foundProduct = response.result;
+          this.productCategoryId = foundProduct.categoryId;
+          this.setSelectedTemplateOrProduct({
+            product: foundProduct,
+            type: "product",
           });
+          resolve(response);
+        });
       });
     },
     setSelectedTemplateOrProduct(item: any) {
@@ -138,41 +121,23 @@ export const useProductStore = defineStore("product", {
       formData.append("file", file);
       formData.append("type", "0");
       return new Promise((resolve, _) => {
-        loaderStore.setLoaderState(true);
-        productApi
-          .uploadFile(formData)
-          .then((response) => {
-            resolve(response);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+        productApi.uploadFile(formData).then((response) => {
+          resolve(response);
+        });
       });
     },
     createProduct(payload: ProductTemplateEntity) {
       return new Promise((resolve, _) => {
-        loaderStore.setLoaderState(true);
-        productApi
-          .createProduct(payload)
-          .then((response: any) => {
-            resolve(response);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+        productApi.createProduct(payload).then((response: any) => {
+          resolve(response);
+        });
       });
     },
     updateProduct(payload: ProductTemplateEntity) {
       return new Promise((resolve, _) => {
-        loaderStore.setLoaderState(true);
-        productApi
-          .updateProduct(payload)
-          .then((response: any) => {
-            resolve(response);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+        productApi.updateProduct(payload).then((response: any) => {
+          resolve(response);
+        });
       });
     },
     setEmpty() {

@@ -1,12 +1,8 @@
 import { defineStore } from "pinia";
-import { useLoaderStore } from "@/shared/store/loader";
 import { IProfile } from "./profile-store.types";
 import { IProfileApi } from "../api/profile-api.types";
 import { ProfileApi } from "../api/profile.api";
 const profileApi = new ProfileApi();
-const loaderStore = useLoaderStore();
-
-// TODO: remove global loader and set local loader
 
 export const useProfileStore = defineStore("profile", {
   state: (): Partial<IProfile> => ({
@@ -26,44 +22,28 @@ export const useProfileStore = defineStore("profile", {
   },
   actions: {
     updateProfileInfo(payload: IProfile) {
-      loaderStore.setLoaderState(true);
-      profileApi
-        .updateProfile(payload)
-        .then((response) => {
-          return response;
-        })
-        .finally(() => {
-          loaderStore.setLoaderState(false);
+      return new Promise((resolve, _) => {
+        profileApi.updateProfile(payload).then((response) => {
+          resolve(response);
         });
+      });
     },
     getProfileInfo(): Promise<IProfileApi> {
       return new Promise((resolve, _) => {
-        loaderStore.setLoaderState(true);
-        profileApi
-          .getProfile()
-          .then((response) => {
-            this.profileObj.name = response.name;
-            this.profileObj.description = response.description;
-            this.profileObj.logoBase64 = response.logoBase64;
-            this.profileObj.version = response.version;
-            resolve(response);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+        profileApi.getProfile().then((response) => {
+          this.profileObj.name = response.name;
+          this.profileObj.description = response.description;
+          this.profileObj.logoBase64 = response.logoBase64;
+          this.profileObj.version = response.version;
+          resolve(response);
+        });
       });
     },
     updateUserPassword(payload: any) {
       return new Promise((resolve, _) => {
-        loaderStore.setLoaderState(true);
-        profileApi
-          .updatePassword(payload)
-          .then((response) => {
-            resolve(response);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+        profileApi.updatePassword(payload).then((response) => {
+          resolve(response);
+        });
       });
     },
   },
