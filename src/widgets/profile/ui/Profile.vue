@@ -1,5 +1,6 @@
 <template>
   <div class="profile-content">
+    <SLoader fullScreen v-if="isLoading" />
     <div class="profile-title">
       {{ $t("lang-82e229f2-c516-4ca4-aeae-b04cbf3f0bcf") }}
     </div>
@@ -97,13 +98,7 @@
               <div class="hint gray s-mb-3 mw-400">
                 {{ $t("lang-f1c8caf8-4ba1-45c7-94a5-42c4ec1bd59b") }}
               </div>
-              <!-- TODO: change to file input component -->
-              <label for="file">
-                <input type="file" id="file" @change="onSelectFile" />
-                <span class="upload-btn">
-                  {{ $t("lang-c1d4974f-d48f-4107-99d8-d6a188b31129") }}
-                </span>
-              </label>
+              <SFileInput buttonMode @change="onSelectFile" />
             </div>
           </div>
           <div class="data-title s-mb-2">
@@ -176,7 +171,14 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from "vue";
-import { SButton, SInput, STextArea, SIconRender } from "@tumarsoft/ogogo-ui";
+import {
+  SButton,
+  SInput,
+  STextArea,
+  SIconRender,
+  SLoader,
+  SFileInput,
+} from "@tumarsoft/ogogo-ui";
 import { useRouter } from "vue-router";
 import { useProfileStore } from "@/entities/profile/store/profile.store";
 import { useAuthStore } from "@/shared/store/auth";
@@ -191,6 +193,7 @@ const alertStore = useAlertStore();
 const tab = ref("");
 const newPassword = ref("");
 const repeatPassword = ref("");
+const isLoading = ref(false);
 const currentUser = computed(() => authStore.getCurrentProfile);
 const profileObj = computed(() => profileStore.getProfileObj);
 profileObj.value.id = currentUser.value?.tradeMarkId;
@@ -223,9 +226,7 @@ const convertToBase64 = (file: File) => {
   });
 };
 
-const onSelectFile = async (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  const file = target.files[0];
+const onSelectFile = async (file: File) => {
   if (file) {
     profileObj.value.logoFileName = file.name;
     profileObj.value.logoBase64 = await convertToBase64(file);
@@ -233,15 +234,21 @@ const onSelectFile = async (e: Event) => {
 };
 
 const fetchProfileInfo = () => {
-  profileStore.getProfileInfo();
+  isLoading.value = true;
+  profileStore.getProfileInfo().finally(() => {
+    isLoading.value = false;
+  });
 };
 
 const updateProfile = () => {
-  profileStore.updateProfileInfo(profileObj.value);
+  isLoading.value = true;
+  profileStore.updateProfileInfo(profileObj.value).finally(() => {
+    isLoading.value = false;
+  });
 };
 
 const logout = () => {
-  authStore.logout()
+  authStore.logout();
   router.push({ name: "login" });
 };
 
@@ -253,6 +260,7 @@ const updatePassword = () => {
     return;
   }
   if (newPassword.value.length) {
+    isLoading.value = true;
     profileStore
       .updateUserPassword({ newPassword: newPassword.value })
       .then(() => {
@@ -261,6 +269,9 @@ const updatePassword = () => {
         alertStore.showSuccess(
           i18n.global.t("lang-07c7e723-8d94-4595-9cbc-86754bf563d1")
         );
+      })
+      .finally(() => {
+        isLoading.value = false;
       });
   }
 };
@@ -339,19 +350,6 @@ const updatePassword = () => {
         object-fit: cover;
       }
     }
-  }
-  #file {
-    display: none;
-  }
-  .upload-btn {
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 11px 16px;
-    background: $white;
-    border-radius: 8px;
-    border: 1px solid $gray-200;
-    cursor: pointer;
   }
   .textarea-container {
     width: 100%;
