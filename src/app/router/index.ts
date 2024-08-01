@@ -1,5 +1,3 @@
-import { AuthMiddleware } from "@/app/router/middlware/auth";
-import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { useAuthStore } from "@/shared/store/auth";
 import { RouteLocationNormalized } from "vue-router";
@@ -26,8 +24,6 @@ const router = createRouter({
   routes,
 });
 
-const middlewares = [new AuthMiddleware(), new AccessRequestMiddleware()];
-
 router.beforeEach(
   (
     to: RouteLocationNormalized,
@@ -35,24 +31,15 @@ router.beforeEach(
     from: RouteLocationNormalized,
     next: Function
   ) => {
-    middlewares;
     const authStore = useAuthStore();
-    const isAuthenticated = Boolean(authStore.getSessionId),
-      requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+    const isAuthenticated = Boolean(authStore.getSessionId);
 
-    if (!isAuthenticated) {
-      if (
-        requiresAuth &&
-        to.name !== "password-reset" &&
-        to.name !== "seller-registration"
-      ) {
-        return next({ name: "login" });
-      }
+    if (isAuthenticated) {
       next();
     } else if (to.name === "login" && !isAuthenticated) {
-      next({ name: "profile" });
-    } else {
       next();
+    } else {
+      next({ name: "login" });
     }
   }
 );

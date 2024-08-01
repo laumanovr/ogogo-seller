@@ -28,12 +28,6 @@
             :rules="[requiredField]"
             v-model="loginObj.password"
           />
-          <!-- <router-link
-            to="/password-reset"
-            class="s-text-violet-500 font-semibold s-mt-2 cursor-pointer forgot"
-          >
-            {{ $t("lang-11d828ce-a252-4271-a12c-9291c52de2bd") }}
-          </router-link> -->
         </div>
         <div class="light">
           <SButton size="large" @click="onSubmitLogin" class="s-mb-2">
