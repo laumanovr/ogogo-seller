@@ -70,6 +70,7 @@
         :headers="tableHeaders"
         :data="tableData"
         :totalItems="totalItems"
+        :loading="isLoading"
         itemsPerPage="10"
         paginateRange="2"
         @onSelectPage="onChangePage"
@@ -268,6 +269,7 @@ const priceRange = ref({ min: 0, max: 0 });
 const selectedCategories = ref([]);
 const checkboxRefs: Ref<HTMLDivElement[]> = ref([]);
 const categoryModal = ref(null);
+const isLoading = ref(false);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? { statuses: [Number(tab.value)] } : {}
@@ -283,6 +285,7 @@ onMounted(() => {
 });
 
 const fetchProducts = (filterObj = {}) => {
+  isLoading.value = true;
   productStore
     .getAllProducts({ productType: ProductType.NEW, ...filterObj })
     .then(() => {
@@ -291,7 +294,12 @@ const fetchProducts = (filterObj = {}) => {
 };
 
 const fetchCategoriesByPage = (searchValue: string) => {
-  categoryStore.getCategoriesPagedList({ search: searchValue, pageSize: 30 });
+  isLoading.value = true;
+  categoryStore
+    .getCategoriesPagedList({ search: searchValue, pageSize: 30 })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const selectTab = (value: string) => {

@@ -1,5 +1,6 @@
 <template>
   <div class="product-update-content">
+    <SLoader fullScreen v-if="isLoading"/>
     <div class="s-flex s-items-center">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" size="small" class="s-mr-1" />
@@ -20,7 +21,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, computed } from "vue";
-import { SButton, SIconRender } from "@tumarsoft/ogogo-ui";
+import { SButton, SIconRender, SLoader } from "@tumarsoft/ogogo-ui";
 import ProductTemplate from "../../../shared/ui/components/product/ProductTemplate.vue";
 import ProductForm from "../../../shared/ui/components/product/ProductForm.vue";
 import Breadcrumbs from "@/shared/ui/components/Breadcrumbs/Breadcrumbs.vue";
@@ -37,10 +38,13 @@ const categoryStore = useCategoryStore();
 const productStore = useProductStore();
 
 const isShowForm = ref(false);
+const isLoading = ref(false);
 
 onMounted(() => {
+  isLoading.value = true;
   productStore.getExactProductById(route.params.id as string).then(() => {
     isShowForm.value = true;
+    isLoading.value = false;
   });
 });
 

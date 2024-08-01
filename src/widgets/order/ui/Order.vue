@@ -42,6 +42,7 @@
         :headers="headers"
         :data="orderData"
         :totalItems="totalItems"
+        :loading="isLoading"
         itemsPerPage="10"
         paginateRange="2"
         @onSelectPage="onChangePage"
@@ -136,6 +137,7 @@ const statuses = ref([
 const orderStore = useOrderStore();
 const tab = ref("one");
 const searchTimer = ref(null);
+const isLoading = ref(false);
 const orderData = computed(() => orderStore.getOrders);
 const isOrderExist = computed(() => orderStore.getIsOrderExist);
 const hasOrders = computed(() => orderStore.getHasOrders);
@@ -149,7 +151,10 @@ onMounted(() => {
 });
 
 const fetchOrders = (filterObj = {}) => {
-  orderStore.getAllOrders({ ...filterObj });
+  isLoading.value = true;
+  orderStore.getAllOrders({ ...filterObj }).finally(() => {
+    isLoading.value = false;
+  });
 };
 
 const selectTab = (value: string) => {
