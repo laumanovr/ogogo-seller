@@ -261,7 +261,7 @@ const statuses = ref([
   },
 ]);
 
-const tab = ref("one");
+const tab = ref(0);
 const searchTimer = ref(null);
 const isOpenFilterModal = ref(false);
 const modalContent = ref(null);
@@ -281,7 +281,7 @@ const tableData = computed(() => productStore.getProducts);
 const categories = computed(() => categoryStore.getPagedCategories);
 
 onMounted(() => {
-  selectTab(String(ProductStatus.ALL));
+  selectTab(ProductStatus.ALL);
 });
 
 const fetchProducts = (filterObj = {}) => {
@@ -302,7 +302,7 @@ const fetchCategoriesByPage = (searchValue: string) => {
     });
 };
 
-const selectTab = (value: string) => {
+const selectTab = (value: number) => {
   tab.value = value;
   fetchProducts(currentStatus.value);
 };
