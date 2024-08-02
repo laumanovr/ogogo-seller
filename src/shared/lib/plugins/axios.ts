@@ -78,10 +78,14 @@ export default function setup() {
           const alertStore = useAlertStore();
           if (error.response?.data?.error) {
             alertStore.showError(
-              error.response.data.error?.errorMessage || i18n.global.t("lang-a42e481a-3030-401e-ae41-080883f1675a");
+              error.response.data.error?.errorMessage ||
+                i18n.global.t("lang-a42e481a-3030-401e-ae41-080883f1675a")
             );
           } else {
-            alertStore.showError(error?.message || i18n.global.t("lang-a42e481a-3030-401e-ae41-080883f1675a"));
+            alertStore.showError(
+              error?.message ||
+                i18n.global.t("lang-a42e481a-3030-401e-ae41-080883f1675a")
+            );
           }
         }
         return Promise.reject(error);

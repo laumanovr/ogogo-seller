@@ -34,9 +34,11 @@ router.beforeEach(
     const authStore = useAuthStore();
     const isAuthenticated = Boolean(authStore.getSessionId);
 
-    if (isAuthenticated) {
-      next();
+    if (to.name === "login" && isAuthenticated) {
+      next({ name: "products" });
     } else if (to.name === "login" && !isAuthenticated) {
+      next();
+    } else if (isAuthenticated) {
       next();
     } else {
       next({ name: "login" });
