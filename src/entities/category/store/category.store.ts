@@ -1,6 +1,10 @@
 import { CategoryApiResponse } from "../api/category-api.types";
 import { defineStore } from "pinia";
-import { ICategoryState } from "./category-store.types";
+import {
+  CategoryProperty,
+  CategoryUrl,
+  ICategoryState,
+} from "./category-store.types";
 import { CategoryApi } from "../api/category.api";
 import {
   CategoryPagedPayload,
@@ -8,6 +12,7 @@ import {
   CategoryWithPropertiesResponse,
 } from "../api/category-api.types";
 import { useProductStore } from "@/entities/products/store/product.store";
+import { CategoryPagedEntity } from "../model/types";
 
 const productStore = useProductStore();
 const categoryApi = new CategoryApi();
@@ -20,13 +25,13 @@ export const useCategoryStore = defineStore("category", {
     categoryWithProperties: [],
   }),
   getters: {
-    getPagedCategories(): any {
+    getPagedCategories(): CategoryPagedEntity[] {
       return this.pagedCategories;
     },
-    getCategoryUrls(): any {
+    getCategoryUrls(): CategoryUrl[] {
       return this.categoryUrls;
     },
-    getCategoryWithProperties(): any {
+    getCategoryWithProperties(): CategoryProperty[] {
       return this.categoryWithProperties;
     },
   },
@@ -94,7 +99,7 @@ export const useCategoryStore = defineStore("category", {
           });
       });
     },
-    saveSelectedCategoryPath(categoryPathes: any) {
+    saveSelectedCategoryPath(categoryPathes: CategoryUrl[]) {
       this.categoryUrls = categoryPathes;
     },
   },

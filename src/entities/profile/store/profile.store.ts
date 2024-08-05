@@ -16,7 +16,7 @@ export const useProfileStore = defineStore("profile", {
     },
   }),
   getters: {
-    getProfileObj(): any {
+    getProfileObj(): IProfile {
       return this.profileObj;
     },
   },
@@ -49,7 +49,7 @@ export const useProfileStore = defineStore("profile", {
           });
       });
     },
-    updateUserPassword(payload: any) {
+    updateUserPassword(payload: object) {
       return new Promise((resolve, reject) => {
         profileApi
           .updatePassword(payload)

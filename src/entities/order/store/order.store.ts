@@ -1,5 +1,5 @@
 import { OrderApiResponse } from "./../api/order-api.types";
-import { OrderPayload } from "../";
+import { OrderEntity, OrderPayload } from "../";
 import { defineStore } from "pinia";
 import { IOrderState } from "./order-store.types";
 import { OrderApi } from "../api/order.api";
@@ -14,16 +14,16 @@ export const useOrderStore = defineStore("order", {
     totalItems: 0,
   }),
   getters: {
-    getOrders(): any {
+    getOrders(): OrderEntity[] {
       return this.orders;
     },
-    getIsOrderExist(): any {
+    getIsOrderExist(): boolean {
       return this.isOrderExist;
     },
-    getHasOrders(): any {
+    getHasOrders(): boolean {
       return this.hasOrders;
     },
-    getTotalItems(): any {
+    getTotalItems(): number {
       return this.totalItems;
     },
   },

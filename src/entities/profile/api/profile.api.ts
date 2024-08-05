@@ -19,7 +19,7 @@ export class ProfileApi {
       .then((response) => response.data.result)
       .catch((err) => Promise.reject(err));
   };
-  updatePassword = (payload: any) => {
+  updatePassword = (payload: object) => {
     return axios({
       method: "POST",
       url: "Auth/UpdateUserPassword",

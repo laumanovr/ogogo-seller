@@ -7,7 +7,13 @@ import {
   ProductImageResponse,
   ProductDetailApiResponse,
 } from "../api/product-api.types";
-import { ProductTemplateEntity } from "../model/types";
+import {
+  FileValidationEntity,
+  ProductEntity,
+  ProductTemplateEntity,
+  SelectedTemplate,
+  ValidationEntity,
+} from "../model/types";
 
 const productApi = new ProductApi();
 
@@ -38,37 +44,37 @@ export const useProductStore = defineStore("product", {
     productCategoryId: "",
   }),
   getters: {
-    getProducts(): any {
+    getProducts(): ProductEntity[] {
       return this.products;
     },
-    getHasProducts(): any {
+    getHasProducts(): boolean {
       return this.hasProducts;
     },
-    getHasStatusProducts(): any {
+    getHasStatusProducts(): boolean {
       return this.hasStatusProducts;
     },
-    getTotalItems(): any {
+    getTotalItems(): number {
       return this.totalItems;
     },
-    getProductTemplate(): any {
+    getProductTemplate(): ProductTemplateEntity {
       return this.productTemplate;
     },
-    getValidationName(): any {
+    getValidationName(): ValidationEntity {
       return this.productTemplate.validationDetails?.fields?.name;
     },
-    getValidationDescription(): any {
+    getValidationDescription(): ValidationEntity {
       return this.productTemplate.validationDetails?.fields?.description;
     },
-    getValidationPrice(): any {
+    getValidationPrice(): ValidationEntity {
       return this.productTemplate.validationDetails?.fields?.price;
     },
-    getValidationCount(): any {
+    getValidationCount(): ValidationEntity {
       return this.productTemplate.validationDetails?.fields?.countofproduct;
     },
-    getValidationFile(): any {
+    getValidationFile(): FileValidationEntity {
       return this.productTemplate.validationDetails?.files;
     },
-    getProductCategoryId(): any {
+    getProductCategoryId(): string {
       return this.productCategoryId;
     },
   },
@@ -107,7 +113,7 @@ export const useProductStore = defineStore("product", {
           });
       });
     },
-    setSelectedTemplateOrProduct(item: any) {
+    setSelectedTemplateOrProduct(item: SelectedTemplate) {
       this.productTemplate.templateId =
         item.type === "template" ? item.product.id : "";
       this.productTemplate.id = item.type === "product" ? item.product.id : "";
