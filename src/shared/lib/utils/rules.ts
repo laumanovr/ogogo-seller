@@ -1,5 +1,6 @@
 import i18n from "@/shared/lib/plugins/i18n";
 
+// TODO: Later we need to write test for this func
 export const requiredField = (value: any) => {
   return (
     (value && value.length >= 1) ||

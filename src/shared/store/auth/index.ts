@@ -6,6 +6,7 @@ import {
   ILogin,
   ILoginResultFail,
   ILoginResultSuccess,
+  IProfile,
 } from "./index.types";
 import { getCurrentUser, login } from "@/shared/api/auth";
 
@@ -25,7 +26,7 @@ export const useAuthStore = defineStore("auth", {
     getActiveSession(): boolean {
       return this.activeSession;
     },
-    getCurrentProfile(): any {
+    getCurrentProfile(): IProfile {
       return this.currentUser;
     },
   },
