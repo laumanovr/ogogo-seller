@@ -10,6 +10,8 @@ export interface ICategoryState {
 export interface CategoryProperty {
   key: string;
   selectedValueId: string;
+  propertyId: string;
+  allowedValues: object
 }
 
 export interface CategoryUrl {

@@ -36,6 +36,7 @@ export interface IProfile {
   lastName?: string;
   phone?: string;
   login?: string;
+  tradeMarkId?: string;
 }
 
 export interface makeAssertionOptionsType {

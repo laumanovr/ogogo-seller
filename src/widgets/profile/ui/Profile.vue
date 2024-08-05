@@ -229,7 +229,7 @@ const convertToBase64 = (file: File) => {
 const onSelectFile = async (file: File) => {
   if (file) {
     profileObj.value.logoFileName = file.name;
-    profileObj.value.logoBase64 = await convertToBase64(file);
+    profileObj.value.logoBase64 = (await convertToBase64(file)) as string;
   }
 };
 
