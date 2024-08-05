@@ -74,27 +74,37 @@ export const useProductStore = defineStore("product", {
   },
   actions: {
     getAllProducts(payload: ProductPayload): Promise<ProductApiResponse> {
-      return new Promise((resolve, _) => {
-        productApi.getProducts(payload).then((response) => {
-          this.products = response.result.items;
-          this.hasProducts = Boolean(response.result.totalPages);
-          this.hasStatusProducts = Boolean(response.result.items.length);
-          this.totalItems = response.result.totalCount;
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        productApi
+          .getProducts(payload)
+          .then((response) => {
+            this.products = response.result.items;
+            this.hasProducts = Boolean(response.result.totalPages);
+            this.hasStatusProducts = Boolean(response.result.items.length);
+            this.totalItems = response.result.totalCount;
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
+          });
       });
     },
     getExactProductById(id: string): Promise<ProductDetailApiResponse> {
-      return new Promise((resolve, _) => {
-        productApi.getProductById(id).then((response) => {
-          const foundProduct = response.result;
-          this.productCategoryId = foundProduct.categoryId;
-          this.setSelectedTemplateOrProduct({
-            product: foundProduct,
-            type: "product",
+      return new Promise((resolve, reject) => {
+        productApi
+          .getProductById(id)
+          .then((response) => {
+            const foundProduct = response.result;
+            this.productCategoryId = foundProduct.categoryId;
+            this.setSelectedTemplateOrProduct({
+              product: foundProduct,
+              type: "product",
+            });
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
           });
-          resolve(response);
-        });
       });
     },
     setSelectedTemplateOrProduct(item: any) {
@@ -120,24 +130,39 @@ export const useProductStore = defineStore("product", {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("type", "0");
-      return new Promise((resolve, _) => {
-        productApi.uploadFile(formData).then((response) => {
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        productApi
+          .uploadFile(formData)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
+          });
       });
     },
     createProduct(payload: ProductTemplateEntity) {
-      return new Promise((resolve, _) => {
-        productApi.createProduct(payload).then((response: any) => {
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        productApi
+          .createProduct(payload)
+          .then((response: any) => {
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
+          });
       });
     },
     updateProduct(payload: ProductTemplateEntity) {
-      return new Promise((resolve, _) => {
-        productApi.updateProduct(payload).then((response: any) => {
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        productApi
+          .updateProduct(payload)
+          .then((response: any) => {
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
+          });
       });
     },
     setEmpty() {

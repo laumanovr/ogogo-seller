@@ -22,28 +22,43 @@ export const useProfileStore = defineStore("profile", {
   },
   actions: {
     updateProfileInfo(payload: IProfile) {
-      return new Promise((resolve, _) => {
-        profileApi.updateProfile(payload).then((response) => {
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        profileApi
+          .updateProfile(payload)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
+          });
       });
     },
     getProfileInfo(): Promise<IProfileApi> {
-      return new Promise((resolve, _) => {
-        profileApi.getProfile().then((response) => {
-          this.profileObj.name = response.name;
-          this.profileObj.description = response.description;
-          this.profileObj.logoBase64 = response.logoBase64;
-          this.profileObj.version = response.version;
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        profileApi
+          .getProfile()
+          .then((response) => {
+            this.profileObj.name = response.name;
+            this.profileObj.description = response.description;
+            this.profileObj.logoBase64 = response.logoBase64;
+            this.profileObj.version = response.version;
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
+          });
       });
     },
     updateUserPassword(payload: any) {
-      return new Promise((resolve, _) => {
-        profileApi.updatePassword(payload).then((response) => {
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        profileApi
+          .updatePassword(payload)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
+          });
       });
     },
   },

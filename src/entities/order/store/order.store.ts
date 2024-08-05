@@ -29,14 +29,19 @@ export const useOrderStore = defineStore("order", {
   },
   actions: {
     getAllOrders(payload: OrderPayload): Promise<OrderApiResponse> {
-      return new Promise((resolve, _) => {
-        orderApi.getOrders(payload).then((response) => {
-          this.orders = response.result.items;
-          this.isOrderExist = Boolean(response.result.totalPages);
-          this.hasOrders = Boolean(response.result.items.length);
-          this.totalItems = response.result.totalCount;
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        orderApi
+          .getOrders(payload)
+          .then((response) => {
+            this.orders = response.result.items;
+            this.isOrderExist = Boolean(response.result.totalPages);
+            this.hasOrders = Boolean(response.result.items.length);
+            this.totalItems = response.result.totalCount;
+            resolve(response);
+          })
+          .catch(() => {
+            reject();
+          });
       });
     },
   },
