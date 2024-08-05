@@ -22,7 +22,7 @@ const closeAlert = (id: string) => {
 };
 
 const currentComponent = computed(() => {
-  if (Boolean(authStore.getSessionId)) {
+  if (authStore.getSessionId) {
     return Layout;
   }
   return Empty;
