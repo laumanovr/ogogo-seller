@@ -19,6 +19,8 @@ export interface ProductEntity {
   countOfProduct: number;
   photos: Array<string>;
   videos: Array<string>;
+  selected: boolean;
+  iconBase64: string;
 }
 
 export interface ProductTemplateEntity {
