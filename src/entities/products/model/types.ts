@@ -40,36 +40,33 @@ export interface ProductTemplateEntity {
   properties?: object;
   validationDetails?: {
     fields?: {
-      name?: {
-        validationComment: string;
-        moderationDate: string;
-      };
-      description?: {
-        validationComment: string;
-        moderationDate: string;
-      };
-      price?: {
-        validationComment: string;
-        moderationDate: string;
-      };
-      countofproduct?: {
-        validationComment: string;
-        moderationDate: string;
-      };
+      name?: ValidationEntity;
+      description?: ValidationEntity;
+      price?: ValidationEntity;
+      countofproduct?: ValidationEntity;
     };
     files?: {
-      photo?: {
-        validationComment: string;
-        moderationDate: string;
-      };
-      video?: {
-        validationComment: string;
-        moderationDate: string;
-      };
+      photo?: ValidationEntity;
+      video?: ValidationEntity;
     };
   };
 }
 
+export interface ValidationEntity {
+  validationComment: string;
+  moderationDate: string;
+}
+
+export interface FileValidationEntity {
+  photo?: ValidationEntity;
+  video?: ValidationEntity;
+}
+
 export interface ProductImageEntity {
   fileId: string;
+}
+
+export interface SelectedTemplate {
+  type: string;
+  product: any;
 }

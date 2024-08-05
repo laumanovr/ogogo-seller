@@ -23,13 +23,21 @@ export interface ILogin {
 }
 
 export interface AuthState {
-  currentUser: object;
+  currentUser: IProfile;
   needChangePassword: boolean | string;
   sessionId: string;
   activeSession: boolean;
   user?: IUser | null;
   theme?: any;
 }
+
+export interface IProfile {
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  login?: string;
+}
+
 export interface makeAssertionOptionsType {
   challenge: any;
   timeout: number;

@@ -1,13 +1,17 @@
-import { CategoryEntity } from "../model/types";
+import { CategoryEntity, CategoryPagedEntity } from "../model/types";
 
 export interface ICategoryState {
   categories: CategoryEntity[];
-  categoryUrls: object[];
-  pagedCategories: object[];
+  categoryUrls: CategoryUrl[];
+  pagedCategories: CategoryPagedEntity[];
   categoryWithProperties: CategoryProperty[];
 }
 
-interface CategoryProperty {
+export interface CategoryProperty {
   key: string;
   selectedValueId: string;
+}
+
+export interface CategoryUrl {
+  name: string
 }
