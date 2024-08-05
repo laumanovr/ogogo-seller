@@ -19,6 +19,7 @@ export enum ProductStatus {
 
 export enum ProductType {
   NEW = 14701,
+  TEMPLATE = 14700,
 }
 
 export enum PriceType {
@@ -48,10 +49,10 @@ export enum OrderStatus {
   ALL = 0,
   ACTIVE = 14400,
   CANCELLED = 14401,
-  ARCHIVED = 14402
+  ARCHIVED = 14402,
 }
 
 export enum PaymentType {
   CREDIT = 14500,
-  CASH = 14501
+  CASH = 14501,
 }
