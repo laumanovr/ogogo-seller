@@ -90,8 +90,8 @@ export const useProductStore = defineStore("product", {
             this.totalItems = response.result.totalCount;
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },
@@ -108,8 +108,8 @@ export const useProductStore = defineStore("product", {
             });
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },
@@ -142,8 +142,8 @@ export const useProductStore = defineStore("product", {
           .then((response) => {
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },
@@ -154,8 +154,8 @@ export const useProductStore = defineStore("product", {
           .then((response: any) => {
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },
@@ -166,8 +166,8 @@ export const useProductStore = defineStore("product", {
           .then((response: any) => {
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },

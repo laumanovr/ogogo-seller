@@ -28,8 +28,8 @@ export const useProfileStore = defineStore("profile", {
           .then((response) => {
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },
@@ -44,8 +44,8 @@ export const useProfileStore = defineStore("profile", {
             this.profileObj.version = response.version;
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },
@@ -56,8 +56,8 @@ export const useProfileStore = defineStore("profile", {
           .then((response) => {
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },

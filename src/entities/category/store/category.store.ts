@@ -44,8 +44,8 @@ export const useCategoryStore = defineStore("category", {
             this.categories = response.result;
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },
@@ -59,8 +59,8 @@ export const useCategoryStore = defineStore("category", {
             this.pagedCategories = response.items;
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },
@@ -94,8 +94,8 @@ export const useCategoryStore = defineStore("category", {
             }
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },

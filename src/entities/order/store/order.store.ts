@@ -39,8 +39,8 @@ export const useOrderStore = defineStore("order", {
             this.totalItems = response.result.totalCount;
             resolve(response);
           })
-          .catch(() => {
-            reject();
+          .catch((err) => {
+            reject(err);
           });
       });
     },
