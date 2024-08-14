@@ -123,6 +123,7 @@
             />
           </div>
           <SFileInput
+            mode="plus"
             size="medium"
             class="s-ml-3"
             :rules="[requiredField]"
@@ -156,7 +157,12 @@
               type="video/mp4"
             />
           </video>
-          <SFileInput size="medium" class="s-ml-5" @change="onSelectVideo" />
+          <SFileInput
+            mode="plus"
+            size="medium"
+            class="s-ml-5"
+            @change="onSelectVideo"
+          />
         </div>
         <Comment
           :comment="validationFile?.video?.validationComment"
