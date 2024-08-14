@@ -66,10 +66,12 @@ export default function setup() {
             break;
           case 403:
             showError = false;
-            await authStore.logout;
-            router.push({ name: "login" });
+            authStore.logout().then(() => {
+              router.push({ name: "login" });
+            });
             break;
           case 500:
+            showError = true;
             const { t } = useI18n();
             alert(t("lang-a42e481a-3030-401e-ae41-080883f1675a"));
             break;
