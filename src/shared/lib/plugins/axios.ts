@@ -62,7 +62,9 @@ export default function setup() {
         switch (error?.response?.status) {
           case 401:
             showError = false;
-            router.push({ name: "login" });
+            authStore.logout().then(() => {
+              router.push({ name: "login" });
+            });
             break;
           case 403:
             showError = false;
