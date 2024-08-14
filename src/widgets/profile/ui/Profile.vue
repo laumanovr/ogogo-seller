@@ -98,7 +98,7 @@
               <div class="hint gray s-mb-3 mw-400">
                 {{ $t("lang-f1c8caf8-4ba1-45c7-94a5-42c4ec1bd59b") }}
               </div>
-              <SFileInput buttonMode @change="onSelectFile" />
+              <SFileInput mode="button" @change="onSelectFile" />
             </div>
           </div>
           <div class="data-title s-mb-2">
