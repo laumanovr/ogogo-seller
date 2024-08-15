@@ -114,7 +114,7 @@
             v-for="imageId in productTemplate.photos"
             :key="imageId"
           >
-            <img :src="getFileById(imageId)" alt="img" />
+            <img :src="getFileById(imageId)" @error="onFileError" alt="img" />
             <SIconRender
               name="close"
               class="close-icon"
@@ -235,6 +235,7 @@ import { ref, onMounted, computed } from "vue";
 import { useProductStore } from "@/entities/products/store/product.store";
 import { useCategoryStore } from "@/entities/category/store/category.store";
 import { useProfileStore } from "@/entities/profile/store/profile.store";
+import { useAuthStore } from "@/shared/store/auth";
 import { requiredField } from "@/shared/lib/utils/rules";
 import Comment from "./Comment.vue";
 import { useRoute } from "vue-router";
@@ -257,6 +258,7 @@ const alertStore = useAlertStore();
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 const profileStore = useProfileStore();
+const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
 const priceWithDiscount = ref(0);
@@ -302,6 +304,12 @@ const onSelectPhoto = async (file: File) => {
         isLoading.value = false;
       });
   }
+};
+
+const onFileError = () => {
+  authStore.logout().then(() => {
+    router.push({ name: "login" });
+  });
 };
 
 const deleteImage = (imgUrl: string) => {
